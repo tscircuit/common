@@ -1,4 +1,3 @@
-// Import the ArduinoShield component
 import { ArduinoShield } from "./ArduinoShield";
 
 export default () => (

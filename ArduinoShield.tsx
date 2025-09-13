@@ -1,106 +1,149 @@
-import React from 'react'
+import React from "react";
 
-interface ArduinoShieldProps {
-  name?: string
-  children?: React.ReactNode
-}
+// 2.54mm pin spacing
+const PITCH = 2.54;
+// Header Y offset between digital and analog (center-to-center)
+const DIGITAL_ANALOG_Y_DIST = 15.24;
 
-export const ArduinoShield: React.FC<ArduinoShieldProps> = ({ 
-  name = "SHIELD1", 
-  children 
-}) => (
-  <group name={name}>
-    {/* Digital header (8-pin) */}
-    <pinheader
-      name="J1"
-      pinCount={8}
-      gender="female"
-      schFacingDirection="down"
-      showSilkscreenPinLabels
-      pcbX="-10mm"
-      pcbY="0mm"
-      pcbRotation="-90deg"
-      pinLabels={{
-        pin1: "D0",
-        pin2: "D1",
-        pin3: "D2",
-        pin4: "D3",
-        pin5: "D4",
-        pin6: "D5",
-        pin7: "D6",
-        pin8: "D7",
-      }}
-    />
+/**
+ * Props for ArduinoShield
+ * @param name - Name of the shield/group
+ * @param children - Any child components to render inside the shield group
+ * @param showResetButton - Show reset button (bonus)
+ * @param showLed - Show LED (bonus)
+ */
+export const ArduinoShield = ({
+  name = "ArduinoShield",
+  children,
+  showResetButton = false,
+  showLed = true,
+}: {
+  name?: string;
+  children?: React.ReactNode;
+  showResetButton?: boolean;
+  showLed?: boolean;
+}) => {
+  // Pin label arrays
+  const digitalPins = ["D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7"];
+  const analogPins = ["A0", "A1", "A2", "A3", "A4", "A5"];
+  const powerPins = ["RESET", "3.3V", "5V", "GND", "GND", "VIN"];
+  const icspPins = ["MISO", "VCC", "SCK", "MOSI", "RESET", "GND"];
 
-    {/* Analog/aux header (6-pin) */}
-    <pinheader
-      name="J2"
-      pinCount={6}
-      gender="female"
-      schFacingDirection="down"
-      showSilkscreenPinLabels
-      pcbX="10mm"
-      pcbY="0mm"
-      pcbRotation="-90deg"
-      pinLabels={{
-        pin1: "A0",
-        pin2: "A1",
-        pin3: "A2",
-        pin4: "A3",
-        pin5: "A4",
-        pin6: "A5",
-      }}
-    />
+  const digitalHeader = {
+    pcbX: 0,
+    pcbY: 0,
+    pcbRotation: 0,
+  };
+  const analogHeader = {
+    pcbX: 15.24,
+    pcbY: 0,
+    pcbRotation: 0,
+  };
+  // Power header: top, horizontal
+  const powerHeader = {
+    pcbX: 2.54 * 2, // Centered above digital
+    pcbY: -2.54 * 2,
+    pcbRotation: 90,
+  };
+  // ICSP header: bottom, horizontal (6-pin, 2x3)
+  const icspHeader = {
+    pcbX: 7.62, // Centered between digital/analog
+    pcbY: 13.5, // Below headers
+    pcbRotation: 0,
+  };
 
-    {/* Power header (8-pin) */}
-    <pinheader
-      name="J3"
-      pinCount={8}
-      gender="female"
-      schFacingDirection="up"
-      showSilkscreenPinLabels
-      pcbX="-10mm"
-      pcbY="12.7mm"
-      pcbRotation="-90deg"
-      pinLabels={{
-        pin1: "NC",
-        pin2: "IOREF",
-        pin3: "RESET",
-        pin4: "3V3",
-        pin5: "5V",
-        pin6: "GND",
-        pin7: "GND",
-        pin8: "VIN",
-      }}
-    />
+  // Bonus: Reset button and LED positions
+  const resetButton = {
+    pcbX: 1,
+    pcbY: -5,
+  };
+  const led = {
+    pcbX: 13,
+    pcbY: -5,
+  };
 
-    {/* PWM/Communication header (10-pin) */}
-    <pinheader
-      name="J4"
-      pinCount={10}
-      gender="female"
-      schFacingDirection="up"
-      showSilkscreenPinLabels
-      pcbX="10mm"
-      pcbY="15.24mm"
-      pcbRotation="-90deg"
-      pinLabels={{
-        pin1: "D8",
-        pin2: "D9",
-        pin3: "D10",
-        pin4: "D11",
-        pin5: "D12",
-        pin6: "D13",
-        pin7: "GND",
-        pin8: "AREF",
-        pin9: "SDA",
-        pin10: "SCL",
-      }}
-    />
+  // Placeholder module group positions
+  const modulePlaceholders = [
+    { name: "OLED", pcbX: 2, pcbY: 8 },
+    { name: "RTC", pcbX: 8, pcbY: 8 },
+    { name: "RF", pcbX: 13, pcbY: 8 },
+  ];
 
-    {/* Any components placed as children will be part of the shield */}
-    {children}
-  </group>
-)
-
-export default ArduinoShield
+  return (
+    <group name={name}>
+      <board>
+      {/* Digital header (female) */}
+      <pinheader
+        name="Digital"
+        pinCount={8}
+        pitch={PITCH}
+        gender="female"
+        pcbX={digitalHeader.pcbX}
+        pcbY={digitalHeader.pcbY}
+        pcbRotation={digitalHeader.pcbRotation}
+        showSilkscreenPinLabels={true}
+        pcbPinLabels={digitalPins.reduce((acc, pin, i) => ({ ...acc, [i + 1]: pin }), {} as Record<string, string>)}
+      />
+      {/* Analog header (female) */}
+      <pinheader
+        name="Analog"
+        pinCount={6}
+        pitch={PITCH}
+        gender="female"
+        pcbX={analogHeader.pcbX}
+        pcbY={analogHeader.pcbY}
+        pcbRotation={analogHeader.pcbRotation}
+        showSilkscreenPinLabels={true}
+        pcbPinLabels={analogPins.reduce((acc, pin, i) => ({ ...acc, [i + 1]: pin }), {} as Record<string, string>)}
+      />
+      {/* Power header (female) */}
+      <pinheader
+        name="Power"
+        pinCount={6}
+        pitch={PITCH}
+        gender="female"
+        pcbX={powerHeader.pcbX}
+        pcbY={powerHeader.pcbY}
+        pcbRotation={powerHeader.pcbRotation}
+        showSilkscreenPinLabels={true}
+        pcbPinLabels={powerPins.reduce((acc, pin, i) => ({ ...acc, [i + 1]: pin }), {} as Record<string, string>)}
+      />
+      {/* ICSP header (male, 2x3) */}
+      <pinheader
+        name="ICSP"
+        pinCount={6}
+        pitch={PITCH}
+        gender="male"
+        doubleRow={true}
+        pcbX={icspHeader.pcbX}
+        pcbY={icspHeader.pcbY}
+        pcbRotation={icspHeader.pcbRotation}
+        showSilkscreenPinLabels={true}
+        pcbPinLabels={icspPins.reduce((acc, pin, i) => ({ ...acc, [i + 1]: pin }), {} as Record<string, string>)}
+      />
+      {/* Optional reset button */}
+      {showResetButton && (
+        <switch 
+          name="RESET_BTN" 
+          pcbX={resetButton.pcbX} 
+          pcbY={resetButton.pcbY} 
+          type="spst"
+          footprint="SW_SPST_6x6x5mm"
+        />
+      )}
+      {/* Optional LED */}
+      {showLed && (
+        <led name="SHIELD_LED" pcbX={led.pcbX} pcbY={led.pcbY} footprint="0805" />
+      )}
+      {/* Placeholder module groups */}
+      {modulePlaceholders.map((mod) => (
+        <group name={mod.name} key={mod.name} pcbX={mod.pcbX} pcbY={mod.pcbY}>
+          {/* Placeholder for {mod.name} module */}
+        </group>
+      ))}
+      {/* Render children */}
+      {children}
+    </board>
+    </group>
+  );
+};
