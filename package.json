@@ -1,5 +1,5 @@
 {
-  "name": "@tsci/seveibar.@tscircuit/common",
+  "name": "@tsci/seveibar-tscircuit-common",
   "version": "1.0.0",
   "main": "index.tsx",
   "keywords": [
@@ -13,7 +13,12 @@
     "start": "tsci dev"
   },
   "devDependencies": {
-    "@types/react": "^19.1.12",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
     "tscircuit": "^0.0.625"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }

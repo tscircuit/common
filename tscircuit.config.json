@@ -1,3 +1,7 @@
 {
-  "mainEntrypoint": "index.tsx"
+  "mainEntrypoint": "index.tsx",
+  "entrypoints": {
+    "simple": "index.tsx",
+    "arduino-shield": "ArduinoShield.tsx"
+  }
 }
