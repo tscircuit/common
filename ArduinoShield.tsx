@@ -13,12 +13,12 @@ export const ArduinoShield = ({ name = "SHIELD1", children }: { name?: string, c
         pcbX="25.35mm"
         pcbY="-24mm"
         pinLabels={{
-          pin1: "D0",
-          pin2: "D1",
-          pin3: "D2",
-          pin4: "D3",
-          pin5: "D4",
-          pin6: "D5",
+          pin1: "A0",
+          pin2: "A1",
+          pin3: "A2",
+          pin4: "A3",
+          pin5: "A4",
+          pin6: "A5",
         }}
       />
 
