@@ -1,2 +1,2 @@
-import { ArduinoShield } from "./ArduinoShield"
+import { ArduinoShield } from "./ArduinoShield.circuit"
 export default ArduinoShield
