@@ -28,7 +28,7 @@ export const XiaoBoardFootprint = () => (
     <silkscreentext pcbX={12.5} pcbY={-5.08} text="SCK" layer="top" anchorAlignment="center_right" />
     <silkscreentext pcbX={12.5} pcbY={-2.54} text="MISO" layer="top" anchorAlignment="center_right" />
     <silkscreentext pcbX={12.5} pcbY={0} text="MOSI" layer="top" anchorAlignment="center_right" />
-    <silkscreentext pcbX={12.5} pcbY={2.54} text="3V3" layer="top" anchorAlignment="center_right" />
+    <silkscreentext pcbX={12.5} pcbY={2.54} text="V3_3" layer="top" anchorAlignment="center_right" />
     <silkscreentext pcbX={12.5} pcbY={5.08} text="GND" layer="top" anchorAlignment="center_right" />
     <silkscreentext pcbX={12.5} pcbY={7.62} text="VUSB" layer="top" anchorAlignment="center_right" />
 

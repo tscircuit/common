@@ -17,7 +17,7 @@ export const XiaoBoard = (props: ChipProps) => (
       pin9: "D8_5CK",
       pin10: "D9_MOSI",
       pin11: "D10_MISO",
-      pin12: "3V3",
+      pin12: "V3_3",
       pin13: "GND",
       pin14: "VUSB",
     }}
@@ -31,7 +31,7 @@ export const XiaoBoard = (props: ChipProps) => (
         pins: [
           "VUSB",
           "GND",
-          "3V3",
+          "V3_3",
           "D10_MISO",
           "D9_MOSI",
           "D8_5CK",
