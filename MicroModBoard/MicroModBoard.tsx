@@ -10,7 +10,7 @@ export const MicroModBoard = ({
   const pinLabels = {
     pin2: ["V3_3_1"],
     pin74: ["V3_3_2"],
-    pin6: ["N_REST"],
+    pin6: ["N_RESET"],
     pin11: ["N_BOOT"],
     pin4: ["V3_3_EN"],
     pin72: ["RTC_V3"],
@@ -95,7 +95,7 @@ export const MicroModBoard = ({
               pins: [
                 "V3_3_1",
                 "V3_3_2",
-                "N_REST",
+                "N_RESET",
                 "N_BOOT",
                 "V3_3_EN",
                 "RTC_V3",
