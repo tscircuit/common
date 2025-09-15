@@ -1,612 +1,107 @@
-export const MicroModBoardFootprint = ({
-  variant,
-}: {
-  variant: "processor" | "function"
+import React, { ReactElement } from "react"
+import { SmtPadProps, PlatedHoleProps } from "@tscircuit/props"
+
+// ---------- Helpers ----------
+const createSmtPad = (props: SmtPadProps): ReactElement =>
+  React.createElement("smtpad", props as any)
+
+const createPlatedHole = (props: PlatedHoleProps): ReactElement =>
+  React.createElement("platedhole", props as any)
+
+interface MicroModBoardFootprintProps {
+  variant?: "processor" | "function"
+}
+
+export const MicroModBoardFootprint: React.FC<MicroModBoardFootprintProps> = ({
+  variant = "processor",
 }) => {
-  let pcbYValue = variant === "processor" ? -9.725 : -31.225
+  const padWidth = 0.35
+  const topPadHeight = 1.45
+  const bottomPadHeight = 1.95
+  const pitch = 0.5
+  const pcbYValue = variant === "processor" ? -9.725 : -31.225
+
+  const generatePads = () => {
+    const pads: ReactElement[] = []
+
+    // Top row (odd pins, right to left) → starts at 5.25 and ends at -9.25
+    let x = 9.25
+    for (let pn = 1; pn <= 75; pn += 2) {
+      if (pn >= 24 && pn <= 31) {
+        x -= pitch
+        continue // skip nonexistent pins but keep spacing
+      }
+      pads.push(
+        createSmtPad({
+          portHints: [`pin${pn}`],
+          width: padWidth,
+          height: topPadHeight,
+          pcbX: x,
+          pcbY: pcbYValue,
+          layer: "top",
+          shape: "rect",
+        }),
+      )
+      x -= pitch
+    }
+
+    // Bottom row (even pins, right to left) → starts at 9 and ends at -9
+    x = 9
+    for (let pn = 2; pn <= 74; pn += 2) {
+      if (pn >= 24 && pn <= 31) {
+        x -= pitch
+        continue // skip nonexistent pins but keep spacing
+      }
+      pads.push(
+        createSmtPad({
+          portHints: [`pin${pn}`],
+          width: padWidth,
+          height: bottomPadHeight,
+          pcbX: x,
+          pcbY: pcbYValue + 0.25,
+          layer: "bottom",
+          shape: "rect",
+        }),
+      )
+      x -= pitch
+    }
+
+    return pads
+  }
+
+  const mountingHoles =
+    variant === "function"
+      ? [
+          createPlatedHole({
+            portHints: ["HOLE_PAD_1"],
+            holeDiameter: 3.82,
+            outerDiameter: 5.62,
+            pcbX: -19,
+            pcbY: 11.5,
+            shape: "circle",
+          }),
+          createPlatedHole({
+            portHints: ["HOLE_PAD_2"],
+            holeDiameter: 3.82,
+            outerDiameter: 5.62,
+            pcbX: 19,
+            pcbY: 11.5,
+            shape: "circle",
+          }),
+        ]
+      : createPlatedHole({
+          portHints: ["HOLE_PAD_1"],
+          holeDiameter: 3.82,
+          outerDiameter: 5.62,
+          pcbX: 4.2,
+          pcbY: 11,
+          shape: "circle",
+        })
 
   return (
     <footprint>
-      <smtpad
-        portHints={["pin1"]}
-        width={0.35}
-        height={1.45}
-        pcbX={9.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin3"]}
-        width={0.35}
-        height={1.45}
-        pcbX={8.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin5"]}
-        width={0.35}
-        height={1.45}
-        pcbX={8.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin7"]}
-        width={0.35}
-        height={1.45}
-        pcbX={7.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin9"]}
-        width={0.35}
-        height={1.45}
-        pcbX={7.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin11"]}
-        width={0.35}
-        height={1.45}
-        pcbX={6.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin13"]}
-        width={0.35}
-        height={1.45}
-        pcbX={6.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin15"]}
-        width={0.35}
-        height={1.45}
-        pcbX={5.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin17"]}
-        width={0.35}
-        height={1.45}
-        pcbX={5.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin19"]}
-        width={0.35}
-        height={1.45}
-        pcbX={4.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin21"]}
-        width={0.35}
-        height={1.45}
-        pcbX={4.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin23"]}
-        width={0.35}
-        height={1.45}
-        pcbX={3.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin33"]}
-        width={0.35}
-        height={1.45}
-        pcbX={1.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin35"]}
-        width={0.35}
-        height={1.45}
-        pcbX={0.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin37"]}
-        width={0.35}
-        height={1.45}
-        pcbX={0.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin39"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-0.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin41"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-0.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin43"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-1.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin45"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-1.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin47"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-2.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin49"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-2.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin51"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-3.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin53"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-3.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin55"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-4.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin57"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-4.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin59"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-5.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-
-      <smtpad
-        portHints={["pin61"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-5.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin63"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-6.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin65"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-6.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin67"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-7.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin69"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-7.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin71"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-8.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin73"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-8.75}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin75"]}
-        width={0.35}
-        height={1.45}
-        pcbX={-9.25}
-        pcbY={pcbYValue}
-        shape="rect"
-      />
-
-      <smtpad
-        portHints={["pin2"]}
-        width={0.35}
-        height={1.95}
-        pcbX={9}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin4"]}
-        width={0.35}
-        height={1.95}
-        pcbX={8.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin6"]}
-        width={0.35}
-        height={1.95}
-        pcbX={8}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin8"]}
-        width={0.35}
-        height={1.95}
-        pcbX={7.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin10"]}
-        width={0.35}
-        height={1.95}
-        pcbX={7}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin12"]}
-        width={0.35}
-        height={1.95}
-        pcbX={6.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin14"]}
-        width={0.35}
-        height={1.95}
-        pcbX={6}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin16"]}
-        width={0.35}
-        height={1.95}
-        pcbX={5.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin18"]}
-        width={0.35}
-        height={1.95}
-        pcbX={5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin20"]}
-        width={0.35}
-        height={1.95}
-        pcbX={4.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin22"]}
-        width={0.35}
-        height={1.95}
-        pcbX={4}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin32"]}
-        width={0.35}
-        height={1.95}
-        pcbX={1.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin34"]}
-        width={0.35}
-        height={1.95}
-        pcbX={1}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin36"]}
-        width={0.35}
-        height={1.95}
-        pcbX={0.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin38"]}
-        width={0.35}
-        height={1.95}
-        pcbX={0}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin40"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-0.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin42"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-1}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin44"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-1.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin46"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-2}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin48"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-2.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin50"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-3}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin52"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-3.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin54"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-4}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin56"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-4.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin58"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin60"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-5.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin62"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-6}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin64"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-6.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin66"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-7}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin68"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-7.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin70"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-8}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin72"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-8.5}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      <smtpad
-        portHints={["pin74"]}
-        width={0.35}
-        height={1.95}
-        pcbX={-9}
-        pcbY={pcbYValue + 0.25}
-        layer="bottom"
-        shape="rect"
-      />
-      {variant === "processor" && (
-        <>
-          <platedhole
-            holeDiameter={3.82}
-            outerDiameter={5.62}
-            pcbX={4.2}
-            pcbY={11}
-            shape="circle"
-          />
-        </>
-      )}
-      {variant === "function" && (
-        <>
-          <platedhole
-            holeDiameter={3.82}
-            outerDiameter={5.62}
-            pcbX={-19}
-            pcbY={11.5}
-            shape="circle"
-          />
-          <platedhole
-            holeDiameter={3.82}
-            outerDiameter={5.62}
-            pcbX={19}
-            pcbY={11.5}
-            shape="circle"
-          />
-        </>
-      )}
+      {generatePads()}
+      {Array.isArray(mountingHoles) ? mountingHoles : [mountingHoles]}
     </footprint>
   )
 }

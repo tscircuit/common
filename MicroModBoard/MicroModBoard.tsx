@@ -8,7 +8,7 @@ export const MicroModBoard = ({
 }: ChipProps & { children?: any; variant?: "processor" | "function" }) => {
   let outline
   const pinLabels = {
-    pin2: ["V3_3"],
+    pin2: ["V3_3_1"],
     pin74: ["V3_3_2"],
     pin6: ["N_REST"],
     pin11: ["N_BOOT"],
@@ -75,6 +75,8 @@ export const MicroModBoard = ({
     pin65: ["G9"],
     pin63: ["G10"],
     pin8: ["G11"],
+    pin76: ["HOLE_PAD_1"],
+    ...(variant === "function" ? { pin77: ["HOLE_PAD_2"] } : {}),
   }
 
   outline = variant === "processor" ? processorOutline : functionOutline
@@ -91,7 +93,7 @@ export const MicroModBoard = ({
             leftSide: {
               direction: "top-to-bottom",
               pins: [
-                "V3_3",
+                "V3_3_1",
                 "V3_3_2",
                 "N_REST",
                 "N_BOOT",
@@ -163,6 +165,8 @@ export const MicroModBoard = ({
                 "G9",
                 "G10",
                 "G11",
+                "HOLE_PAD_1",
+                ...(variant === "function" ? ["HOLE_PAD_2"] : []),
               ],
             },
           }}
@@ -206,8 +210,9 @@ export const MicroModBoard = ({
             pin20: {
               marginBottom: 1,
             },
-            pin60: {
-              marginTop: -0.4,
+
+            pin8: {
+              marginBottom: 0.3,
             },
           }}
         />
