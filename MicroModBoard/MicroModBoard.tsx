@@ -1,6 +1,6 @@
 import type { ChipProps } from "@tscircuit/props"
 import { MicroModBoardFootprint } from "./MicroModBoardFootprint"
-import { outlineBuilder } from "../util/outlineBuilder"
+import { processorOutline, functionOutline } from "./outlines/boardOutlines"
 
 export const MicroModBoard = ({
   variant = "processor",
@@ -77,49 +77,7 @@ export const MicroModBoard = ({
     pin8: ["G11"],
   }
 
-  if (variant === "function") {
-    outline = outlineBuilder(0, 32.5)
-      .lineTo(19, 32.5)
-      .corner({ radius: 1, turn: "ccw" })
-      .lineTo(19, -28.5)
-      .corner({ radius: 0.5, turn: "ccw" })
-      .lineTo(10, -28.5)
-      .corner({ radius: 0.5, turn: "cw" })
-      .lineTo(10, -32.5)
-      .lineTo(3.28, -32.5)
-      .lineTo(3.28, -29.5)
-      .arcTo(2.08, -29.5, { radius: 0.6, sweep: true }) // half-circle
-      .lineTo(2.08, -32.5)
-      .lineTo(-10, -32.5)
-      .lineTo(-10, -28.5)
-      .corner({ radius: 0.5, turn: "cw" })
-      .lineTo(-19, -28.5)
-      .corner({ radius: 0.5, turn: "ccw" })
-      .lineTo(-19, 32.5)
-      .corner({ radius: 1, turn: "ccw" })
-      .toArray()
-  } else {
-    outline = outlineBuilder(-9, 11)
-      .lineTo(11, 11)
-      .corner({ radius: 1, turn: "ccw" })
-      .lineTo(11, -7)
-      .corner({ radius: 0.5, turn: "ccw" })
-      .lineTo(10, -7)
-      .corner({ radius: 0.5, turn: "cw" })
-      .lineTo(10, -11)
-      .lineTo(3.28, -11)
-      .lineTo(3.28, -8)
-      .arcTo(2.08, -8, { radius: 0.6, sweep: true }) // half-circle
-      .lineTo(2.08, -11)
-      .lineTo(-10, -11)
-      .lineTo(-10, -7)
-      .corner({ radius: 0.5, turn: "cw" })
-      .lineTo(-11, -7)
-      .corner({ radius: 0.5, turn: "ccw" })
-      .lineTo(-11, 11)
-      .corner({ radius: 1, turn: "ccw" })
-      .toArray()
-  }
+  outline = variant === "processor" ? processorOutline : functionOutline
 
   return (
     <board outline={outline}>
