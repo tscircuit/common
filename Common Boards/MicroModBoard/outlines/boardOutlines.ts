@@ -1,4 +1,4 @@
-import { outlineBuilder } from "../../util/outlineBuilder"
+import { outlineBuilder } from "../../../util/outlineBuilder"
 
 export const processorOutline = outlineBuilder(-9, 11)
   .lineTo(11, 11)
