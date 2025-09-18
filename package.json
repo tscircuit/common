@@ -17,6 +17,6 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
     "@types/react": "^19.1.12",
-    "tscircuit": "^0.0.625"
+    "tscircuit": "^0.0.655"
   }
 }
