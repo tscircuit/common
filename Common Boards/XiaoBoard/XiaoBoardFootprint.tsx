@@ -10,7 +10,7 @@ const createPlatedHole = (props: PlatedHoleProps): ReactElement =>
 const createHole = (props: HoleProps): ReactElement =>
   React.createElement("hole", props as any)
 
-interface StampBoardFootprintProps {
+interface XiaoBoardFootprintProps {
   top?: number
   bottom?: number
   left?: number
@@ -23,11 +23,12 @@ interface StampBoardFootprintProps {
   bottomPadWidth?: number // width of bottom pads (defaults to padWidth if not specified)
   bottomPadHeight?: number // height of bottom pads (defaults to padLength if not specified)
   bottomPitch?: number // pitch between bottom pads (defaults to pitch if not specified)
+  variant?: "RP2040" | string // Add variant prop with RP2040 as a possible value
 }
 
-export const StampBoardFootprint: React.FC<StampBoardFootprintProps> = ({
-  top = 4,
-  bottom = 2,
+export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
+  top = 0,
+  bottom = 0,
   left = 7,
   right = 7,
   pitch = 2.54,
@@ -38,7 +39,26 @@ export const StampBoardFootprint: React.FC<StampBoardFootprintProps> = ({
   bottomPadWidth = 1.016,
   bottomPadHeight = 2.032,
   bottomPitch = 2.54,
+  variant,
 }) => {
+  // Adjust configuration based on variant
+  const isRP2040 = variant === "RP2040"
+
+  // Apply variant-specific overrides
+  if (isRP2040) {
+    top = 4
+    bottom = 2
+    left = 7
+    right = 7
+    pitch = 2.54
+    padLength = 3
+    padWidth = 2
+    edgeClearance = 1.2
+    componentWidth = 17
+    bottomPadWidth = 1.016
+    bottomPadHeight = 2.032
+    bottomPitch = 2.54
+  }
   // calculate left/right row X positions based on componentWidth
   const leftRowX = -componentWidth / 2 + 0.25
   const rightRowX = componentWidth / 2 - 0.25

@@ -13,7 +13,7 @@
     "build:lib": "tsup --dts --format esm ./index.tsx",
     "build:circuit": "tsci build",
     "snapshot": "tsci snapshot",
-    "snapshot:update": "tsci snapshot --update",
+    "snapshot:update": "tsci snapshot --update --3d",
     "start": "tsci dev",
     "format": "biome format --write",
     "format:check": "biome format"
