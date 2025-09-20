@@ -1,3 +1,3 @@
-export * from "./Common Boards/ArduinoShield/ArduinoShield.circuit"
-export * from "./Common Boards/MicroModBoard/MicroModBoard"
+export * from "./lib/ArduinoShield/ArduinoShield.circuit"
+export * from "./lib/MicroModBoard/MicroModBoard"
 // export * from "./Common Boards/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"

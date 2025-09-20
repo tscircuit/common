@@ -1,8 +1,8 @@
 import { test, expect } from "bun:test"
-import { ArduinoShield } from "../Common Boards/ArduinoShield/ArduinoShield.circuit"
-import { RaspberryPiHatBoard } from "../Common Boards/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
-import { MicroModBoard } from "../Common Boards/MicroModBoard/MicroModBoard"
-import { XiaoBoard } from "../Common Boards/XiaoBoard/XiaoBoard.circuit"
+import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
+import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
+import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
+import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
