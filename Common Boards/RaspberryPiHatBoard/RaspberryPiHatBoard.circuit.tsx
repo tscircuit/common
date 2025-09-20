@@ -1,6 +1,5 @@
 import type { ChipProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
-import { RaspberryPiHatBoardFootprint } from "./RaspberryPiHatBoardFootprint"
 
 export const MicroModBoard = (props: ChipProps & { children?: any }) => {
   const outline = new OutlineBuilder(0, 28)
