@@ -23,7 +23,8 @@ interface XiaoBoardFootprintProps {
   bottomPadWidth?: number // width of bottom pads (defaults to padWidth if not specified)
   bottomPadHeight?: number // height of bottom pads (defaults to padLength if not specified)
   bottomPitch?: number // pitch between bottom pads (defaults to pitch if not specified)
-  variant?: "RP2040" | string // Add variant prop with RP2040 as a possible value
+  variant?: "RP2040" | "Receiver" // Add variant prop with RP2040 as a possible value
+  withPlatedHoles?: boolean
 }
 
 export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
@@ -32,14 +33,15 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
   left = 7,
   right = 7,
   pitch = 2.54,
-  padLength = 3,
-  padWidth = 2,
+  padLength = 2,
+  padWidth = 3,
   edgeClearance = 1.2,
   componentWidth = 17,
   bottomPadWidth = 1.016,
   bottomPadHeight = 2.032,
   bottomPitch = 2.54,
   variant,
+  withPlatedHoles = false,
 }) => {
   // Adjust configuration based on variant
   const isRP2040 = variant === "RP2040"
@@ -51,8 +53,8 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
     left = 7
     right = 7
     pitch = 2.54
-    padLength = 3
-    padWidth = 2
+    padLength = 2
+    padWidth = 3
     edgeClearance = 1.2
     componentWidth = 17
     bottomPadWidth = 1.016
@@ -131,54 +133,88 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
     if (left > 0) {
       const yOffset = ((left - 1) / 2) * pitch
       for (let i = 0; i < left; i++) {
-        const halfPad = padLength / 2
-        pads.push(
-          createHole({
-            diameter: 0.7,
-            pcbX: leftRowX - halfPad + 0.86,
-            pcbY: yOffset - i * pitch,
-          }),
-        )
-        pads.push(
-          createPlatedHole({
-            portHints: [`pin${pinNumber}`],
-            holeDiameter: 0.85,
-            rectPadWidth: padLength,
-            rectPadHeight: padWidth,
-            pcbX: leftRowX,
-            pcbY: yOffset - i * pitch,
-            shape: "circular_hole_with_rect_pad",
-            holeOffsetX: 0.63,
-          }),
-        )
-        pinNumber++
+        const halfPad = padWidth / 2
+        if (variant !== "Receiver") {
+          pads.push(
+            createHole({
+              diameter: 0.7,
+              pcbX: leftRowX - halfPad + 0.86,
+              pcbY: yOffset - i * pitch,
+            }),
+          )
+        }
+        if (withPlatedHoles) {
+          pads.push(
+            createPlatedHole({
+              portHints: [`pin${pinNumber}`],
+              holeDiameter: 0.85,
+              rectPadWidth: padWidth,
+              rectPadHeight: padLength,
+              pcbX: leftRowX,
+              pcbY: yOffset - i * pitch,
+              shape: "circular_hole_with_rect_pad",
+              holeOffsetX: 0.63,
+            }),
+          )
+          pinNumber++
+        } else {
+          pads.push(
+            createSmtPad({
+              portHints: [`pin${pinNumber}`],
+              width: padWidth,
+              height: padLength,
+              pcbX: leftRowX,
+              pcbY: yOffset - i * pitch,
+              layer: "top",
+              shape: "rect",
+            }),
+          )
+          pinNumber++
+        }
       }
     }
 
     if (right > 0) {
       const yOffset = ((right - 1) / 2) * pitch
       for (let i = 0; i < right; i++) {
-        const halfPad = padLength / 2
-        pads.push(
-          createHole({
-            diameter: 0.7,
-            pcbX: rightRowX + halfPad - 0.86,
-            pcbY: yOffset - i * pitch,
-          }),
-        )
-        pads.push(
-          createPlatedHole({
-            portHints: [`pin${pinNumber}`],
-            holeDiameter: 0.85,
-            rectPadWidth: padLength,
-            rectPadHeight: padWidth,
-            pcbX: rightRowX,
-            pcbY: yOffset - i * pitch,
-            shape: "circular_hole_with_rect_pad",
-            holeOffsetX: -0.63,
-          }),
-        )
-        pinNumber++
+        const halfPad = padWidth / 2
+        if (variant !== "Receiver") {
+          pads.push(
+            createHole({
+              diameter: 0.7,
+              pcbX: rightRowX + halfPad - 0.86,
+              pcbY: yOffset - i * pitch,
+            }),
+          )
+        }
+        if (withPlatedHoles) {
+          pads.push(
+            createPlatedHole({
+              portHints: [`pin${pinNumber}`],
+              holeDiameter: 0.85,
+              rectPadWidth: padWidth,
+              rectPadHeight: padLength,
+              pcbX: rightRowX,
+              pcbY: yOffset - i * pitch,
+              shape: "circular_hole_with_rect_pad",
+              holeOffsetX: -0.63,
+            }),
+          )
+          pinNumber++
+        } else {
+          pads.push(
+            createSmtPad({
+              portHints: [`pin${pinNumber}`],
+              width: padWidth,
+              height: padLength,
+              pcbX: rightRowX,
+              pcbY: yOffset - i * pitch,
+              layer: "top",
+              shape: "rect",
+            }),
+          )
+          pinNumber++
+        }
       }
     }
 

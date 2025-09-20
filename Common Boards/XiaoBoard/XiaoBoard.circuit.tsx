@@ -4,10 +4,15 @@ import { outlineBuilder } from "../../util/outlineBuilder"
 
 interface XiaoBoardProps extends ChipProps {
   children?: any
-  variant?: "RP2040" | string
+  variant?: "RP2040" | "Receiver"
+  withPlatedHoles?: boolean
 }
 
-export const XiaoBoard = ({ variant, ...props }: XiaoBoardProps) => {
+export const XiaoBoard = ({
+  variant,
+  withPlatedHoles = false,
+  ...props
+}: XiaoBoardProps) => {
   const DefaultPinLabels = {
     pin1: "A0",
     pin2: "A1",
@@ -97,7 +102,12 @@ export const XiaoBoard = ({ variant, ...props }: XiaoBoardProps) => {
       <group>
         <chip
           name={props.name}
-          footprint={<XiaoBoardFootprint variant={variant} />}
+          footprint={
+            <XiaoBoardFootprint
+              variant={variant}
+              withPlatedHoles={withPlatedHoles}
+            />
+          }
           pinLabels={variant === "RP2040" ? RP2040PinLabels : DefaultPinLabels}
           schWidth={1.5}
           schPinArrangement={
