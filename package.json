@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "dev": "tsci dev",
+    "build": "npm run build:lib",
     "build:lib": "tsup --dts --format esm ./index.tsx",
     "build:circuit": "tsci build",
     "snapshot": "tsci snapshot",
