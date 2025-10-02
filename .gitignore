@@ -28,3 +28,4 @@ yarn-error.log*
 
 *.diff.png
 *.diff.svg
+.vercel
