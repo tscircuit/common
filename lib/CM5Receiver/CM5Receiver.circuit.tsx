@@ -1,5 +1,6 @@
 import type { ChipProps } from "@tscircuit/props"
-import type { CM5LeftPinLabels, CM5RightPinLabels } from "./CM5Connector"
+import type { CM5LeftPinLabels } from "./CM5LeftConnector"
+import type { CM5RightPinLabels } from "./CM5RightConnector"
 import { CM5LeftConnector } from "./CM5LeftConnector"
 import { CM5RightConnector } from "./CM5RightConnector"
 
