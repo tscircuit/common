@@ -1,7 +1,16 @@
 {
   "name": "@tscircuit/common",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -22,7 +31,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
     "@types/react": "^19.1.12",
-    "tscircuit": "^0.0.660",
+    "tscircuit": "^0.0.701",
     "tsup": "^8.5.0"
   }
 }

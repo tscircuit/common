@@ -7,5 +7,5 @@ test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
   expect(MicroModBoard).toBeDefined()
-  expect(XiaoBoard).toBeDefined()
+  expect(XiaoBoard).toBeDefined() // TODO: Add tests
 })
