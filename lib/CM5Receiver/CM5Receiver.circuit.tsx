@@ -10,8 +10,8 @@ export const CM5Receiver = (
   const { connections, name, ...groupProps } = props
   return (
     <group {...groupProps}>
-      <CM5LeftConnector name={name} connections={connections} />
-      <CM5RightConnector name={name} connections={connections} />
+      <CM5LeftConnector name={`${name}_LEFT`} connections={connections} />
+      <CM5RightConnector name={`${name}_RIGHT`} connections={connections} />
     </group>
   )
 }

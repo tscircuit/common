@@ -110,7 +110,7 @@ export type CM5LeftPinLabels =
 export const CM5LeftConnector = (props: ChipProps) => (
   <CM5Connector
     side="left"
-    name={`${props.name}_LEFT`}
+    name={props.name}
     connections={props.connections}
     schX={-3.01}
     pcbX={-33.98}
