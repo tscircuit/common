@@ -107,13 +107,17 @@ const pinLabelsRightSide = {
 export type CM5RightPinLabels =
   (typeof pinLabelsRightSide)[keyof typeof pinLabelsRightSide][number]
 
-export const CM5RightConnector = (props: {
-  connections?: ChipProps["connections"]
-}) => (
+export const CM5RightConnector = (props: ChipProps) => (
   <CM5Connector
     side="right"
-    name="CM5_RIGHT"
+    name={`${props.name}_RIGHT`}
     pinLabels={pinLabelsRightSide}
     connections={props.connections}
+    schPinArrangement={{
+      rightSide: {
+        direction: "top-to-bottom",
+        pins: [...Object.keys(pinLabelsRightSide)],
+      },
+    }}
   />
 )

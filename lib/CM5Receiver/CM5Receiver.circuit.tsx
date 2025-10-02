@@ -6,9 +6,12 @@ import { CM5RightConnector } from "./CM5RightConnector"
 
 export const CM5Receiver = (
   props: ChipProps<CM5LeftPinLabels & CM5RightPinLabels>,
-) => (
-  <group>
-    <CM5LeftConnector connections={props.connections} />
-    <CM5RightConnector connections={props.connections} />
-  </group>
-)
+) => {
+  const { connections, name, ...groupProps } = props
+  return (
+    <group {...groupProps}>
+      <CM5LeftConnector name={name} connections={connections} />
+      <CM5RightConnector name={name} connections={connections} />
+    </group>
+  )
+}
