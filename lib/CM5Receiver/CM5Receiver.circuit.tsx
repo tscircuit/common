@@ -1,11 +1,13 @@
-import { CM5Connector } from "./CM5Connector"
 import type { ChipProps } from "@tscircuit/props"
+import type { CM5LeftPinLabels, CM5RightPinLabels } from "./CM5Connector"
+import { CM5LeftConnector } from "./CM5LeftConnector"
+import { CM5RightConnector } from "./CM5RightConnector"
 
-export const CM5Receiver = (props: ChipProps) => {
-  return (
-    <group>
-      <CM5Connector side="right" name="JP1" />
-      <CM5Connector side="left" schX={-3.01} pcbX={-33.98} name="JP2" />
-    </group>
-  )
-}
+export const CM5Receiver = (
+  props: ChipProps<CM5LeftPinLabels & CM5RightPinLabels>,
+) => (
+  <group>
+    <CM5LeftConnector connections={props.connections} />
+    <CM5RightConnector connections={props.connections} />
+  </group>
+)

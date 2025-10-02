@@ -1,10 +1,11 @@
 import type { ChipProps } from "@tscircuit/props"
 
-type PinLabels = {
-  [key: `pin${number}`]: [string]
-}
+export type CM5RightPinLabels =
+  (typeof pinLabelsRightSide)[keyof typeof pinLabelsRightSide][number]
+export type CM5LeftPinLabels =
+  (typeof pinLabelsLeftSide)[keyof typeof pinLabelsLeftSide][number]
 
-const pinLabelsRightSide: PinLabels = {
+const pinLabelsRightSide = {
   pin1: ["GND_1"],
   pin2: ["GND_2"],
   pin3: ["Ethernet_Pair3_P"],
@@ -105,9 +106,9 @@ const pinLabelsRightSide: PinLabels = {
   pin98: ["GND_21"],
   pin99: ["PMIC_Enable"],
   pin100: ["CAM_GPIO1"],
-} as const
+}
 
-const pinLabelsLeftSide: PinLabels = {
+const pinLabelsLeftSide = {
   pin1: ["USB_OTG_ID"],
   pin2: ["PCIe_CLK_nREQ"],
   pin3: ["USB_N"],
@@ -208,11 +209,9 @@ const pinLabelsLeftSide: PinLabels = {
   pin98: ["GND_51"],
   pin99: ["HDMI0_SDA"],
   pin100: ["HDMI0_SCL"],
-} as const
+}
 
-export const CM5Connector = (
-  props: ChipProps<PinLabels> & { side: "left" | "right" },
-) => {
+export const CM5Connector = (props: ChipProps & { side: "left" | "right" }) => {
   const pinLabels =
     props.side === "left" ? pinLabelsLeftSide : pinLabelsRightSide
 
@@ -1081,3 +1080,5 @@ export const CM5Connector = (
     />
   )
 }
+
+// Left and right wrappers moved to their own files
