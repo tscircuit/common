@@ -24,7 +24,7 @@
     "build:circuit": "tsci build",
     "snapshot": "tsci snapshot",
     "snapshot:update": "tsci snapshot --update --3d",
-    "start": "tsci dev",
+    "start": "bunx tsci dev",
     "format": "biome format --write",
     "format:check": "biome format"
   },
