@@ -1,7 +1,23 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
+import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 
-export const RaspberryPiHatBoard = (props: ChipProps & { children?: any }) => {
+type RaspberryPiHatBoardProps = ChipProps &
+  BoardProps & { children?: any; boardName?: string }
+
+export const RaspberryPiHatBoard = ({
+  boardName,
+  children,
+  ...rest
+}: RaspberryPiHatBoardProps) => {
+  const { boardProps, chipProps } = splitBoardAndChipProps({
+    ...rest,
+    boardName,
+  })
+
+  const { name, ...chipRest } = chipProps as ChipProps
+  const resolvedChipName = name ?? "JP1"
+
   const outline = new OutlineBuilder(0, 28)
     .lineTo(32.5, 28)
     .corner({ radius: 1, turn: "ccw" })
@@ -71,10 +87,11 @@ export const RaspberryPiHatBoard = (props: ChipProps & { children?: any }) => {
   }
 
   return (
-    <board outline={outline}>
+    <board {...boardProps} outline={outline}>
       <group>
         <chip
-          name="JP1"
+          {...chipRest}
+          name={resolvedChipName}
           schWidth={3.5}
           pinLabels={pinLabels}
           layer="bottom"
@@ -167,7 +184,7 @@ export const RaspberryPiHatBoard = (props: ChipProps & { children?: any }) => {
         <hole diameter={2.8} pcbX={29} pcbY={-24.5} />
         <hole diameter={2.8} pcbX={-29} pcbY={-24.5} />
         <hole diameter={2.8} pcbX={29} pcbY={24.5} />
-        {props.children}
+        {children}
       </group>
     </board>
   )
