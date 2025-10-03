@@ -1,7 +1,16 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { ArduinoShieldFootprint } from "./ArduinoShieldFootprint"
 
-export const ArduinoShield = (props: ChipProps & { children?: any }) => (
+interface ArduinoShieldProps extends ChipProps {
+  children?: any
+  boardProps?: BoardProps
+}
+
+export const ArduinoShield = ({
+  children,
+  boardProps,
+  ...chipProps
+}: ArduinoShieldProps) => (
   <board
     outline={[
       { x: -34.29, y: 26.67 }, // top-left corner
@@ -14,10 +23,12 @@ export const ArduinoShield = (props: ChipProps & { children?: any }) => (
       { x: 34.29, y: -26.67 }, // bottom-right corner
       { x: -34.29, y: -26.67 }, // bottom-left corner
     ]}
+    {...boardProps}
   >
     <group>
       <chip
-        name={props.name}
+        {...chipProps}
+        name={chipProps.name}
         pinLabels={{
           pin1: "A0",
           pin2: "A1",
@@ -106,7 +117,7 @@ export const ArduinoShield = (props: ChipProps & { children?: any }) => (
         }}
         footprint={<ArduinoShieldFootprint />}
       />
-      {props.children}
+      {children}
     </group>
   </board>
 )

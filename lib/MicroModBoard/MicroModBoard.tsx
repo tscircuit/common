@@ -1,11 +1,19 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { MicroModBoardFootprint } from "./MicroModBoardFootprint"
 import { processorOutline, functionOutline } from "./outlines/boardOutlines"
 
+interface MicroModBoardProps extends ChipProps {
+  children?: any
+  variant?: "processor" | "function"
+  boardProps?: BoardProps
+}
+
 export const MicroModBoard = ({
   variant = "processor",
-  ...props
-}: ChipProps & { children?: any; variant?: "processor" | "function" }) => {
+  boardProps,
+  children,
+  ...chipProps
+}: MicroModBoardProps) => {
   let outline
   const pinLabels = {
     pin2: ["V3_3_1"],
@@ -82,10 +90,11 @@ export const MicroModBoard = ({
   outline = variant === "processor" ? processorOutline : functionOutline
 
   return (
-    <board outline={outline}>
+    <board outline={outline} {...boardProps}>
       <group>
         <chip
-          name={props.name}
+          {...chipProps}
+          name={chipProps.name}
           footprint={<MicroModBoardFootprint variant={variant} />}
           schWidth={2.8}
           pinLabels={pinLabels}
@@ -216,7 +225,7 @@ export const MicroModBoard = ({
             },
           }}
         />
-        {props.children}
+        {children}
       </group>
     </board>
   )

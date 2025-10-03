@@ -1,7 +1,16 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
 
-export const RaspberryPiHatBoard = (props: ChipProps & { children?: any }) => {
+interface RaspberryPiHatBoardProps extends ChipProps {
+  children?: any
+  boardProps?: BoardProps
+}
+
+export const RaspberryPiHatBoard = ({
+  children,
+  boardProps,
+  ...chipProps
+}: RaspberryPiHatBoardProps) => {
   const outline = new OutlineBuilder(0, 28)
     .lineTo(32.5, 28)
     .corner({ radius: 1, turn: "ccw" })
@@ -71,9 +80,10 @@ export const RaspberryPiHatBoard = (props: ChipProps & { children?: any }) => {
   }
 
   return (
-    <board outline={outline}>
+    <board outline={outline} {...boardProps}>
       <group>
         <chip
+          {...chipProps}
           name="JP1"
           schWidth={3.5}
           pinLabels={pinLabels}
@@ -167,7 +177,7 @@ export const RaspberryPiHatBoard = (props: ChipProps & { children?: any }) => {
         <hole diameter={2.8} pcbX={29} pcbY={-24.5} />
         <hole diameter={2.8} pcbX={-29} pcbY={-24.5} />
         <hole diameter={2.8} pcbX={29} pcbY={24.5} />
-        {props.children}
+        {children}
       </group>
     </board>
   )
