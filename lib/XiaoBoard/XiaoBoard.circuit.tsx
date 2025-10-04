@@ -1,18 +1,29 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { XiaoBoardFootprint } from "./XiaoBoardFootprint"
 import { outlineBuilder } from "../../util/outlineBuilder"
+import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 
-interface XiaoBoardProps extends ChipProps {
+type XiaoBoardProps = (ChipProps & BoardProps) & {
   children?: any
   variant?: "RP2040" | "Receiver"
   withPlatedHoles?: boolean
+  boardName?: string
 }
 
 export const XiaoBoard = ({
   variant,
   withPlatedHoles = false,
-  ...props
+  boardName,
+  children,
+  ...rest
 }: XiaoBoardProps) => {
+  const { boardProps, chipProps } = splitBoardAndChipProps({
+    ...rest,
+    boardName,
+  })
+
+  const { name, ...chipRest } = chipProps as ChipProps
+
   const DefaultPinLabels = {
     pin1: "A0",
     pin2: "A1",
@@ -98,10 +109,11 @@ export const XiaoBoard = ({
     .toArray()
 
   return (
-    <board outline={outline}>
+    <board {...boardProps} outline={outline}>
       <group>
         <chip
-          name={props.name}
+          {...chipRest}
+          name={name}
           footprint={
             <XiaoBoardFootprint
               variant={variant}
@@ -133,7 +145,7 @@ export const XiaoBoard = ({
             },
           })}
         />
-        {props.children}
+        {children}
       </group>
     </board>
   )
