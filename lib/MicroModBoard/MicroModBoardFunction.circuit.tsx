@@ -1,4 +1,9 @@
 import { MicroModBoard } from "./MicroModBoard"
+
 export default () => (
-  <MicroModBoard name="MicroModBoardFunction" variant="function" />
+  <MicroModBoard
+    name="MicroModBoardFunction"
+    boardName="MicroModBoardFunctionBoard"
+    variant="function"
+  />
 )
