@@ -35,6 +35,7 @@ export const ArduinoShield = ({
       <group>
         <chip
           {...chipRest}
+          obstructsWithinBounds={false}
           name={name}
           pinLabels={{
             pin1: "A0",
