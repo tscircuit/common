@@ -99,11 +99,11 @@ export const MicroModBoard = ({
   outline = variant === "processor" ? processorOutline : functionOutline
 
   return (
-    <board {...boardProps} outline={outline}>
+    <board {...{ ...boardProps, name: `${name}_board` }} outline={outline}>
       <group>
         <chip
           {...chipRest}
-          name={`${name}_chip`}
+          name={`${name}`}
           footprint={<MicroModBoardFootprint variant={variant} />}
           schWidth={2.8}
           pinLabels={pinLabels}
