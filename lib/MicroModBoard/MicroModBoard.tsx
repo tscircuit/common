@@ -103,7 +103,7 @@ export const MicroModBoard = ({
       <group>
         <chip
           {...chipRest}
-          name={name}
+          name={`${name}_chip`}
           footprint={<MicroModBoardFootprint variant={variant} />}
           schWidth={2.8}
           pinLabels={pinLabels}
