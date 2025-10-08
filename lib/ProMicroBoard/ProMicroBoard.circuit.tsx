@@ -112,5 +112,3 @@ export const ProMicroBoard = ({
 }
 
 // export default () => <ProMicroBoard name="U1" />
-
-

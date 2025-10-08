@@ -225,4 +225,3 @@ export const ProMicroBoardFootprint = () => (
     <silkscreentext text="10" fontSize={0.8} pcbX={5} pcbY={-20.32} />
   </footprint>
 )
-
