@@ -7,7 +7,11 @@ interface ArduinoShieldProps {
 }
 
 export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
-  const { boardProps, chipProps = {} } = splitBoardAndChipProps(rest) as {
+  console.log("raw props:", rest)
+
+  const { boardProps, chipProps = {} } = splitBoardAndChipProps({
+    ...rest,
+  }) as {
     boardProps: any
     chipProps: Record<string, any>
   }
