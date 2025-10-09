@@ -21,7 +21,7 @@ export const MicroModBoard = ({
     chipProps: Record<string, any>
   }
 
-  const resolvedName = chipProps.name
+  const resolvedName = `${chipProps.name}_chip`
   const { name: _, ...chipRest } = chipProps
 
   let outline
@@ -100,11 +100,11 @@ export const MicroModBoard = ({
   outline = variant === "processor" ? processorOutline : functionOutline
 
   return (
-    <board {...{ ...boardProps, name: `${name}_board` }} outline={outline}>
+    <board {...boardProps} outline={outline}>
       <group>
         <chip
           {...chipRest}
-          name={`${resolvedName}_chip`}
+          name={resolvedName}
           footprint={<MicroModBoardFootprint variant={variant} />}
           schWidth={2.8}
           pinLabels={pinLabels}

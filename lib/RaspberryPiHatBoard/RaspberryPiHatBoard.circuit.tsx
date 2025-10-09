@@ -14,7 +14,7 @@ export const RaspberryPiHatBoard = ({
     ...rest,
   }) as { boardProps: any; chipProps: Record<string, any> }
 
-  const resolvedChipName = chipProps.name
+  const resolvedChipName = `${chipProps.name}_chip`
   const { name: _, ...chipRest } = chipProps
 
   const outline = new OutlineBuilder(0, 28)
@@ -90,7 +90,7 @@ export const RaspberryPiHatBoard = ({
       <group>
         <chip
           {...chipRest}
-          name={`${resolvedChipName}_chip`}
+          name={resolvedChipName}
           schWidth={3.5}
           pinLabels={pinLabels}
           layer="bottom"

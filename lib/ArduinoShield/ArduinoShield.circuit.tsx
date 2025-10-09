@@ -12,7 +12,7 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
     chipProps: Record<string, any>
   }
 
-  const resolvedName = chipProps.name
+  const resolvedName = `${chipProps.name}_chip`
   const { name: _, ...chipRest } = chipProps
 
   return (
@@ -34,7 +34,7 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
         <chip
           {...chipRest}
           obstructsWithinBounds={false}
-          name={`${resolvedName}_chip`}
+          name={resolvedName}
           pinLabels={{
             pin1: "A0",
             pin2: "A1",

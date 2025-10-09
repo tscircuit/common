@@ -1,2 +1,4 @@
 import { ArduinoShield } from "./ArduinoShield.circuit"
-export default ArduinoShield
+export default () => {
+  return <ArduinoShield testprop="hello world" />
+}
