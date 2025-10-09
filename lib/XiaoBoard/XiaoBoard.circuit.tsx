@@ -2,12 +2,15 @@ import { XiaoBoardFootprint } from "./XiaoBoardFootprint"
 import { outlineBuilder } from "../../util/outlineBuilder"
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 
-interface XiaoBoardProps {
-  variant?: "RP2040" | "Receiver"
-  withPlatedHoles?: boolean
-  children?: React.ReactNode
-  [key: string]: any
-}
+import { ChipProps, BoardProps } from "@tscircuit/props"
+
+type XiaoBoardProps = ChipProps &
+  BoardProps & {
+    children?: any
+    boardName?: string
+    variant?: "RP2040" | "Receiver"
+    withPlatedHoles?: boolean
+  }
 
 export const XiaoBoard = ({
   variant,

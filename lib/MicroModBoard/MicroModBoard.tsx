@@ -2,11 +2,14 @@ import { MicroModBoardFootprint } from "./MicroModBoardFootprint"
 import { processorOutline, functionOutline } from "./outlines/boardOutlines"
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 
-interface MicroModBoardProps {
-  variant?: "processor" | "function"
-  children?: React.ReactNode
-  [key: string]: any
-}
+import { ChipProps, BoardProps } from "@tscircuit/props"
+
+type MicroModBoardProps = ChipProps &
+  BoardProps & {
+    children?: any
+    boardName?: string
+    variant?: "processor" | "function"
+  }
 
 export const MicroModBoard = ({
   variant = "processor",

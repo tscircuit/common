@@ -1,10 +1,12 @@
 import { OutlineBuilder } from "../../util/outlineBuilder"
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
+import { ChipProps, BoardProps } from "@tscircuit/props"
 
-interface RaspberryPiHatBoardProps {
-  children?: React.ReactNode
-  [key: string]: any
-}
+type RaspberryPiHatBoardProps = ChipProps &
+  BoardProps & {
+    children?: any
+    boardName?: string
+  }
 
 export const RaspberryPiHatBoard = ({
   children,
