@@ -1,28 +1,29 @@
 import { describe, expect, test } from "bun:test"
-import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { splitBoardAndChipProps } from "../util/splitBoardAndChipProps"
 
-describe("splitBoardAndChipProps", () => {
-  test("separates board-specific props while preserving chip props", () => {
-    const props = {
-      name: "U1",
-      autorouter: "auto" as BoardProps["autorouter"],
-      material: "fr4" as BoardProps["material"],
-      pcbX: "10mm" as ChipProps["pcbX"],
-      boardName: "BoardRef",
-      schWidth: 2 as BoardProps["schWidth"],
-    }
+test("splits board-specific props to boardProps and others to chipProps", () => {
+  const props = {
+    name: "U1",
+    autorouter: "auto",
+    pcbX: "10mm",
+    boardAnchorAlignment: "center",
+    boardAnchorPosition: [0, 0],
+    schWidth: 2,
+  }
 
-    const { boardProps, chipProps } = splitBoardAndChipProps(props)
+  const { boardProps, chipProps } = splitBoardAndChipProps(props)
 
-    expect(boardProps.autorouter).toBe("auto")
-    expect(boardProps.material).toBe("fr4")
-    expect(boardProps.name).toBe("BoardRef")
-    expect(boardProps.pcbX).toBe("10mm")
-    expect(boardProps.schWidth).toBe(2)
+  // Only board-specific props should be in boardProps
+  expect(boardProps).toEqual({
+    autorouter: "auto",
+    boardAnchorAlignment: "center",
+    boardAnchorPosition: [0, 0],
+  })
 
-    expect(chipProps.name).toBe("U1")
-    expect("autorouter" in chipProps).toBe(false)
-    expect(chipProps.pcbX).toBe("10mm")
+  // All other props should be in chipProps
+  expect(chipProps).toEqual({
+    name: "U1",
+    pcbX: "10mm",
+    schWidth: 2,
   })
 })
