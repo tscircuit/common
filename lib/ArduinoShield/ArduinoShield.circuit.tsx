@@ -1,14 +1,11 @@
 import { ArduinoShieldFootprint } from "./ArduinoShieldFootprint"
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
+import { ChipProps, BoardProps } from "@tscircuit/props"
 
-interface ArduinoShieldProps {
-  children?: React.ReactNode
-  [key: string]: any
-}
+type ArduinoShieldProps = ChipProps &
+  BoardProps & { children?: any; boardName?: string }
 
 export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
-  console.log("raw props:", rest)
-
   const { boardProps, chipProps = {} } = splitBoardAndChipProps({
     ...rest,
   }) as {
