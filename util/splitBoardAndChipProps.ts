@@ -1,34 +1,27 @@
-import type { BoardProps, ChipProps } from "@tscircuit/props"
-import {
-  boardProps as boardPropsSchema,
-  chipProps as chipPropsSchema,
-} from "@tscircuit/props"
+export const splitBoardAndChipProps = (props: any = {}) => {
+  // Board-specific properties - these only make sense for the board component
+  const boardOnlyProps = [
+    "autorouter", // Autorouter configuration
+    "boardAnchorAlignment", // Board anchor alignment
+    "boardAnchorPosition", // Board anchor position
+  ]
 
-type CombinedProps = Partial<BoardProps & ChipProps> & { boardName?: string }
+  const boardProps: Record<string, any> = {}
+  const chipProps: Record<string, any> = {}
 
-const boardPropKeys = new Set<string>(
-  Array.from(boardPropsSchema.keyof().options),
-)
-const chipPropKeys = new Set<string>(
-  Array.from(chipPropsSchema.keyof().options),
-)
-
-export const splitBoardAndChipProps = (props: CombinedProps) => {
-  const { boardName, ...rest } = props
-
-  const boardProps = Object.fromEntries(
-    Object.entries(rest).filter(([key]) => boardPropKeys.has(key)),
-  ) as Partial<BoardProps>
-
-  const chipProps = Object.fromEntries(
-    Object.entries(rest).filter(([key]) => chipPropKeys.has(key)),
-  ) as Partial<ChipProps>
-
-  if (boardName !== undefined) {
-    boardProps.name = boardName
-  } else if (chipProps.name !== undefined && boardProps.name === undefined) {
-    boardProps.name = chipProps.name
+  // Only include board-specific props in boardProps
+  for (const prop of boardOnlyProps) {
+    if (prop in props) {
+      boardProps[prop] = props[prop]
+    }
   }
+
+  // All other props go to the chip component
+  Object.entries(props).forEach(([key, value]) => {
+    if (!boardOnlyProps.includes(key)) {
+      chipProps[key] = value
+    }
+  })
 
   return { boardProps, chipProps }
 }
