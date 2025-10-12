@@ -116,8 +116,7 @@ export const XiaoBoard = ({
 
   return (
     <board {...boardProps} outline={outline}>
-      <group>
-        <chip
+      <chip
           {...chipRest}
           name={resolvedName}
           footprint={
@@ -126,6 +125,8 @@ export const XiaoBoard = ({
               withPlatedHoles={withPlatedHoles}
             />
           }
+          pcbX={0}
+          pcbY={0}
           pinLabels={variant === "RP2040" ? RP2040PinLabels : DefaultPinLabels}
           schWidth={1.5}
           schPinArrangement={
@@ -150,9 +151,8 @@ export const XiaoBoard = ({
               },
             },
           })}
-        />
-        {children}
-      </group>
+      />
+      {children}
     </board>
   )
 }

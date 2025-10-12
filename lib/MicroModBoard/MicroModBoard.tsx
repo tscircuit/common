@@ -104,12 +104,13 @@ export const MicroModBoard = ({
 
   return (
     <board {...boardProps} outline={outline}>
-      <group>
-        <chip
+      <chip
           {...chipRest}
           name={resolvedName}
           footprint={<MicroModBoardFootprint variant={variant} />}
           schWidth={2.8}
+          pcbX={0}
+          pcbY={0}
           pinLabels={pinLabels}
           schPinArrangement={{
             leftSide: {
@@ -237,9 +238,8 @@ export const MicroModBoard = ({
               marginBottom: 0.3,
             },
           }}
-        />
-        {children}
-      </group>
+      />
+      {children}
     </board>
   )
 }

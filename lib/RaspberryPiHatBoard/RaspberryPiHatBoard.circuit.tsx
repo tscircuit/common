@@ -89,15 +89,15 @@ export const RaspberryPiHatBoard = ({
 
   return (
     <board {...boardProps} outline={outline}>
-      <group>
-        <chip
+      <chip
           {...chipRest}
           name={resolvedChipName}
           schWidth={3.5}
           pinLabels={pinLabels}
           layer="bottom"
           footprint="pinrow40_rows2_nopinlabels_p2.54_id1.016_od1.524"
-          pcbY={23.23}
+          pcbX={0}
+          pcbY={0}
           pcbRotation={180}
           showPinAliases
           schPinArrangement={{
@@ -180,13 +180,12 @@ export const RaspberryPiHatBoard = ({
               marginBottom: 0.3,
             },
           }}
-        />
-        <hole diameter={2.8} pcbX={-29} pcbY={24.5} />
-        <hole diameter={2.8} pcbX={29} pcbY={-24.5} />
-        <hole diameter={2.8} pcbX={-29} pcbY={-24.5} />
-        <hole diameter={2.8} pcbX={29} pcbY={24.5} />
-        {children}
-      </group>
+      />
+      <hole diameter={2.8} pcbX={-29} pcbY={24.5} />
+      <hole diameter={2.8} pcbX={29} pcbY={-24.5} />
+      <hole diameter={2.8} pcbX={-29} pcbY={-24.5} />
+      <hole diameter={2.8} pcbX={29} pcbY={24.5} />
+      {children}
     </board>
   )
 }
