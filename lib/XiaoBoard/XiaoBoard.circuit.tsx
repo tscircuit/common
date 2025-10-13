@@ -117,40 +117,40 @@ export const XiaoBoard = ({
   return (
     <board {...boardProps} outline={outline}>
       <chip
-          {...chipRest}
-          name={resolvedName}
-          footprint={
-            <XiaoBoardFootprint
-              variant={variant}
-              withPlatedHoles={withPlatedHoles}
-            />
-          }
-          pcbX={0}
-          pcbY={0}
-          pinLabels={variant === "RP2040" ? RP2040PinLabels : DefaultPinLabels}
-          schWidth={1.5}
-          schPinArrangement={
-            variant === "RP2040" ? rp2040PinArrangement : defaultPinArrangement
-          }
-          {...(variant === "RP2040" && {
-            schPinStyle: {
-              pin2: {
-                marginBottom: 0.2,
-              },
-              pin3: {
-                marginBottom: 0.3,
-              },
-              pin15: {
-                marginBottom: 0.2,
-              },
-              pin16: {
-                marginBottom: 0.2,
-              },
-              pin13: {
-                marginBottom: 0.3,
-              },
+        {...chipRest}
+        name={resolvedName}
+        footprint={
+          <XiaoBoardFootprint
+            variant={variant}
+            withPlatedHoles={withPlatedHoles}
+          />
+        }
+        pcbX={0}
+        pcbY={0}
+        pinLabels={variant === "RP2040" ? RP2040PinLabels : DefaultPinLabels}
+        schWidth={1.5}
+        schPinArrangement={
+          variant === "RP2040" ? rp2040PinArrangement : defaultPinArrangement
+        }
+        {...(variant === "RP2040" && {
+          schPinStyle: {
+            pin2: {
+              marginBottom: 0.2,
             },
-          })}
+            pin3: {
+              marginBottom: 0.3,
+            },
+            pin15: {
+              marginBottom: 0.2,
+            },
+            pin16: {
+              marginBottom: 0.2,
+            },
+            pin13: {
+              marginBottom: 0.3,
+            },
+          },
+        })}
       />
       {children}
     </board>

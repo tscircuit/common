@@ -90,96 +90,96 @@ export const RaspberryPiHatBoard = ({
   return (
     <board {...boardProps} outline={outline}>
       <chip
-          {...chipRest}
-          name={resolvedChipName}
-          schWidth={3.5}
-          pinLabels={pinLabels}
-          layer="bottom"
-          footprint="pinrow40_rows2_nopinlabels_p2.54_id1.016_od1.524"
-          pcbX={0}
-          pcbY={23.23}
-          pcbRotation={180}
-          showPinAliases
-          schPinArrangement={{
-            leftSide: {
-              direction: "top-to-bottom",
-              pins: [
-                "V3_3_1",
-                "V3_3_2",
-                "V5_1",
-                "V5_2",
-                "GPIO_14",
-                "GPIO_15",
-                "GPIO_3",
-                "GPIO_2",
-                "GPIO_20",
-                "GPIO_21",
-                "GPIO_9",
-                "GPIO_10",
-                "GND_1",
-                "GND_2",
-                "GND_3",
-                "GND_4",
-                "GND_5",
-                "GND_6",
-                "GND_7",
-                "GND_8",
-              ],
-            },
-            rightSide: {
-              direction: "top-to-bottom",
-              pins: [
-                "GPIO_18",
-                "GPIO_11",
-                "GPIO_24",
-                "GPIO_25",
-                "GPIO_8",
-                "GPIO_7",
-                "GPIO_12",
-                "GPIO_13",
-                "GPIO_26",
-                "GPIO_19",
-                "GPIO_16",
-                "GPIO_6",
-                "GPIO_5",
-                "GPIO_0",
-                "GPIO_22",
-                "GPIO_27",
-                "GPIO_17",
-                "GPIO_4",
-                "GPIO_1",
-              ],
-            },
-          }}
-          schPinStyle={{
-            pin3: {
-              marginBottom: 0.3,
-            },
-            pin6: {
-              marginBottom: 0.3,
-            },
-            pin40: {
-              marginBottom: 0.3,
-            },
-            pin21: {
-              marginBottom: 0.3,
-            },
-            pin32: {
-              marginBottom: 0.3,
-            },
-            pin30: {
-              marginBottom: 0.3,
-            },
-            pin12: {
-              marginBottom: 0.3,
-            },
-            pin14: {
-              marginBottom: 0.3,
-            },
-            pin25: {
-              marginBottom: 0.3,
-            },
-          }}
+        {...chipRest}
+        name={resolvedChipName}
+        schWidth={3.5}
+        pinLabels={pinLabels}
+        layer="bottom"
+        footprint="pinrow40_rows2_nopinlabels_p2.54_id1.016_od1.524"
+        pcbX={0}
+        pcbY={23.23}
+        pcbRotation={180}
+        showPinAliases
+        schPinArrangement={{
+          leftSide: {
+            direction: "top-to-bottom",
+            pins: [
+              "V3_3_1",
+              "V3_3_2",
+              "V5_1",
+              "V5_2",
+              "GPIO_14",
+              "GPIO_15",
+              "GPIO_3",
+              "GPIO_2",
+              "GPIO_20",
+              "GPIO_21",
+              "GPIO_9",
+              "GPIO_10",
+              "GND_1",
+              "GND_2",
+              "GND_3",
+              "GND_4",
+              "GND_5",
+              "GND_6",
+              "GND_7",
+              "GND_8",
+            ],
+          },
+          rightSide: {
+            direction: "top-to-bottom",
+            pins: [
+              "GPIO_18",
+              "GPIO_11",
+              "GPIO_24",
+              "GPIO_25",
+              "GPIO_8",
+              "GPIO_7",
+              "GPIO_12",
+              "GPIO_13",
+              "GPIO_26",
+              "GPIO_19",
+              "GPIO_16",
+              "GPIO_6",
+              "GPIO_5",
+              "GPIO_0",
+              "GPIO_22",
+              "GPIO_27",
+              "GPIO_17",
+              "GPIO_4",
+              "GPIO_1",
+            ],
+          },
+        }}
+        schPinStyle={{
+          pin3: {
+            marginBottom: 0.3,
+          },
+          pin6: {
+            marginBottom: 0.3,
+          },
+          pin40: {
+            marginBottom: 0.3,
+          },
+          pin21: {
+            marginBottom: 0.3,
+          },
+          pin32: {
+            marginBottom: 0.3,
+          },
+          pin30: {
+            marginBottom: 0.3,
+          },
+          pin12: {
+            marginBottom: 0.3,
+          },
+          pin14: {
+            marginBottom: 0.3,
+          },
+          pin25: {
+            marginBottom: 0.3,
+          },
+        }}
       />
       <hole diameter={2.8} pcbX={-29} pcbY={24.5} />
       <hole diameter={2.8} pcbX={29} pcbY={-24.5} />
