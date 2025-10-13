@@ -104,142 +104,142 @@ export const MicroModBoard = ({
 
   return (
     <board {...boardProps} outline={outline}>
-      <group>
-        <chip
-          {...chipRest}
-          name={resolvedName}
-          footprint={<MicroModBoardFootprint variant={variant} />}
-          schWidth={2.8}
-          pinLabels={pinLabels}
-          schPinArrangement={{
-            leftSide: {
-              direction: "top-to-bottom",
-              pins: [
-                "V3_3_1",
-                "V3_3_2",
-                "N_RESET",
-                "N_BOOT",
-                "V3_3_EN",
-                "RTC_V3",
-                "USB_VIN",
-                "USB_D_N",
-                "USB_D_P",
-                "USBHOST_D_N",
-                "USBHOST_D_P",
-                "CAN_TX",
-                "CAN_RX",
-                "SWDIO",
-                "SWDCK",
-                "AUD_MCLK",
-                "AUD_OUT",
-                "AUD_IN",
-                "AUD_LRCLK",
-                "AUD_BCLK",
-                "I2C_SCL",
-                "I2C_SDA",
-                "I2C_N_INT",
-                "I2C_SCL1",
-                "I2C_SDA1",
-                "BATT_VIN_3",
-                "GND1",
-                "GND2",
-                "GND3",
-                "GND4",
-                "GND5",
-                "GND6",
-                "GND7",
-              ],
-            },
-            rightSide: {
-              direction: "top-to-bottom",
-              pins: [
-                "SPI_SCK1",
-                "SPI_SDO1",
-                "SPI_SDI1",
-                "SDIO_DATA1",
-                "SDIO_DATA2",
-                "SPI_N_CS1",
-                "SPI_SCK",
-                "SPI_SDO",
-                "SPI_SDI",
-                "SPI_N_CS",
-                "A0",
-                "A1",
-                "PWM0",
-                "PWM1",
-                "D0",
-                "D1",
-                "TX1",
-                "RX1",
-                "RTS1",
-                "CTS1",
-                "TX2",
-                "RX2",
-                "G0",
-                "G1",
-                "G2",
-                "G3",
-                "G4",
-                "G5",
-                "G6",
-                "G7",
-                "G8",
-                "G9",
-                "G10",
-                "G11",
-                "HOLE_PAD_1",
-                ...(variant === "function" ? ["HOLE_PAD_2"] : []),
-              ],
-            },
-          }}
-          schPinStyle={{
-            pin11: {
-              marginBottom: 0.3,
-            },
-            pin72: {
-              marginBottom: 0.3,
-            },
-            pin3: {
-              marginBottom: 0.3,
-            },
-            pin35: {
-              marginBottom: 0.3,
-            },
-            pin41: {
-              marginBottom: 0.3,
-            },
-            pin21: {
-              marginBottom: 0.3,
-            },
-            pin50: {
-              marginBottom: 0.3,
-            },
-            pin51: {
-              marginBottom: 0.3,
-            },
-            pin49: {
-              marginBottom: 0.4,
-            },
-            pin70: {
-              marginBottom: 0.3,
-            },
-            pin55: {
-              marginBottom: 0.3,
-            },
-            pin18: {
-              marginBottom: 0.6,
-            },
-            pin20: {
-              marginBottom: 1,
-            },
+      <chip
+        {...chipRest}
+        name={resolvedName}
+        footprint={<MicroModBoardFootprint variant={variant} />}
+        schWidth={2.8}
+        pcbX={0}
+        pcbY={0}
+        pinLabels={pinLabels}
+        schPinArrangement={{
+          leftSide: {
+            direction: "top-to-bottom",
+            pins: [
+              "V3_3_1",
+              "V3_3_2",
+              "N_RESET",
+              "N_BOOT",
+              "V3_3_EN",
+              "RTC_V3",
+              "USB_VIN",
+              "USB_D_N",
+              "USB_D_P",
+              "USBHOST_D_N",
+              "USBHOST_D_P",
+              "CAN_TX",
+              "CAN_RX",
+              "SWDIO",
+              "SWDCK",
+              "AUD_MCLK",
+              "AUD_OUT",
+              "AUD_IN",
+              "AUD_LRCLK",
+              "AUD_BCLK",
+              "I2C_SCL",
+              "I2C_SDA",
+              "I2C_N_INT",
+              "I2C_SCL1",
+              "I2C_SDA1",
+              "BATT_VIN_3",
+              "GND1",
+              "GND2",
+              "GND3",
+              "GND4",
+              "GND5",
+              "GND6",
+              "GND7",
+            ],
+          },
+          rightSide: {
+            direction: "top-to-bottom",
+            pins: [
+              "SPI_SCK1",
+              "SPI_SDO1",
+              "SPI_SDI1",
+              "SDIO_DATA1",
+              "SDIO_DATA2",
+              "SPI_N_CS1",
+              "SPI_SCK",
+              "SPI_SDO",
+              "SPI_SDI",
+              "SPI_N_CS",
+              "A0",
+              "A1",
+              "PWM0",
+              "PWM1",
+              "D0",
+              "D1",
+              "TX1",
+              "RX1",
+              "RTS1",
+              "CTS1",
+              "TX2",
+              "RX2",
+              "G0",
+              "G1",
+              "G2",
+              "G3",
+              "G4",
+              "G5",
+              "G6",
+              "G7",
+              "G8",
+              "G9",
+              "G10",
+              "G11",
+              "HOLE_PAD_1",
+              ...(variant === "function" ? ["HOLE_PAD_2"] : []),
+            ],
+          },
+        }}
+        schPinStyle={{
+          pin11: {
+            marginBottom: 0.3,
+          },
+          pin72: {
+            marginBottom: 0.3,
+          },
+          pin3: {
+            marginBottom: 0.3,
+          },
+          pin35: {
+            marginBottom: 0.3,
+          },
+          pin41: {
+            marginBottom: 0.3,
+          },
+          pin21: {
+            marginBottom: 0.3,
+          },
+          pin50: {
+            marginBottom: 0.3,
+          },
+          pin51: {
+            marginBottom: 0.3,
+          },
+          pin49: {
+            marginBottom: 0.4,
+          },
+          pin70: {
+            marginBottom: 0.3,
+          },
+          pin55: {
+            marginBottom: 0.3,
+          },
+          pin18: {
+            marginBottom: 0.6,
+          },
+          pin20: {
+            marginBottom: 1,
+          },
 
-            pin8: {
-              marginBottom: 0.3,
-            },
-          }}
-        />
-        {children}
-      </group>
+          pin8: {
+            marginBottom: 0.3,
+          },
+        }}
+      />
+      {children}
     </board>
   )
 }
