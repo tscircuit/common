@@ -97,7 +97,7 @@ export const RaspberryPiHatBoard = ({
           layer="bottom"
           footprint="pinrow40_rows2_nopinlabels_p2.54_id1.016_od1.524"
           pcbX={0}
-          pcbY={0}
+          pcbY={23.23}
           pcbRotation={180}
           showPinAliases
           schPinArrangement={{
