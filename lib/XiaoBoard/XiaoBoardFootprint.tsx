@@ -76,7 +76,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
           radius: 0.5715,
           pcbX: -1.396,
           pcbY: 8.442,
-          layer: "top",
+          layer: "bottom",
           shape: "circle",
         }),
         createSmtPad({
@@ -84,7 +84,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
           radius: 0.5715,
           pcbX: 1.144,
           pcbY: 8.442,
-          layer: "top",
+          layer: "bottom",
           shape: "circle",
         }),
       )
@@ -95,7 +95,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
           radius: 0.5715,
           pcbX: -1.396,
           pcbY: 5.902,
-          layer: "top",
+          layer: "bottom",
           shape: "circle",
         }),
         createSmtPad({
@@ -103,7 +103,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
           radius: 0.5715,
           pcbX: 1.144,
           pcbY: 5.902,
-          layer: "top",
+          layer: "bottom",
           shape: "circle",
         }),
       )
@@ -123,7 +123,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
             height: bottomPadH,
             pcbX: xOffset - i * actualBottomPitch,
             pcbY: -9.7 + edgeClearance,
-            layer: "top",
+            layer: "bottom",
             shape: "rect",
           }),
         )
