@@ -4,6 +4,7 @@ export const splitBoardAndChipProps = (props: any = {}) => {
     "autorouter", // Autorouter configuration
     "boardAnchorAlignment", // Board anchor alignment
     "boardAnchorPosition", // Board anchor position
+    "pcbGap", // PCB gap
   ]
 
   const boardProps: Record<string, any> = {}
