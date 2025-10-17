@@ -125,6 +125,7 @@ export const XiaoBoard = ({
             withPlatedHoles={withPlatedHoles}
           />
         }
+        doNotPlace
         pcbX={0}
         pcbY={0}
         pinLabels={variant === "RP2040" ? RP2040PinLabels : DefaultPinLabels}
