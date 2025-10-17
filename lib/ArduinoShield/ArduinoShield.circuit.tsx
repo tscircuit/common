@@ -34,6 +34,7 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
       <chip
         {...chipRest}
         obstructsWithinBounds={false}
+        doNotPlace
         name={resolvedName}
         pcbX={0}
         pcbY={0}
