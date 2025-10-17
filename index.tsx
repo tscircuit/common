@@ -1,5 +1,6 @@
 export * from "./lib/ArduinoShield/ArduinoShield.circuit"
 export * from "./lib/MicroModBoard/MicroModBoard"
+export * from "./lib/ProMicroBoard/ProMicroBoard.circuit"
 export * from "./lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 export * from "./lib/XiaoBoard/XiaoBoard.circuit"
 // export * from "./Common Boards/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
