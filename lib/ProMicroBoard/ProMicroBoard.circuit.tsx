@@ -7,19 +7,16 @@ type ProMicroBoardProps = ChipProps &
   BoardProps & {
     children?: any
     variant?: "5V" | "3V3"
-    withPlatedHoles?: boolean
   }
 
 export const ProMicroBoard = ({
   variant,
-  withPlatedHoles = false,
   children,
   ...rest
 }: ProMicroBoardProps) => {
   const { boardProps, chipProps = {} } = splitBoardAndChipProps({
     ...rest,
     variant,
-    withPlatedHoles,
   }) as {
     boardProps: any
     chipProps: Record<string, any>
@@ -109,12 +106,7 @@ export const ProMicroBoard = ({
       <chip
         {...chipRest}
         name={resolvedName}
-        footprint={
-          <ProMicroBoardFootprint
-            variant={variant}
-            withPlatedHoles={withPlatedHoles}
-          />
-        }
+        footprint={<ProMicroBoardFootprint variant={variant} />}
         doNotPlace
         pcbX={0}
         pcbY={0}
