@@ -8,14 +8,12 @@ interface ProMicroBoardFootprintProps {
   left?: number
   right?: number
   pitch?: number
-  variant?: "5V" | "3V3"
 }
 
 export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
   left = 12,
   right = 12,
   pitch = 2.54,
-  variant,
 }) => {
   const leftRowX = -7.6
   const rightRowX = 7.6
@@ -28,8 +26,8 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
     pads.push(
       createPlatedHole({
         portHints: [`${pinNumber++}`],
-        holeDiameter: 0.85,
-        outerDiameter: 1.8,
+        holeDiameter: 1.01,
+        outerDiameter: 1.87,
         pcbX: leftRowX,
         pcbY: yOffset - i * pitch,
         shape: "circle",
@@ -42,8 +40,8 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
     pads.push(
       createPlatedHole({
         portHints: [`${pinNumber++}`],
-        holeDiameter: 0.85,
-        outerDiameter: 1.8,
+        holeDiameter: 1.01,
+        outerDiameter: 1.87,
         pcbX: rightRowX,
         pcbY: yOffsetRight - i * pitch,
         shape: "circle",

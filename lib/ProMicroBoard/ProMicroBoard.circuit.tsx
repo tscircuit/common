@@ -106,7 +106,7 @@ export const ProMicroBoard = ({
       <chip
         {...chipRest}
         name={resolvedName}
-        footprint={<ProMicroBoardFootprint variant={variant} />}
+        footprint={<ProMicroBoardFootprint />}
         doNotPlace
         pcbX={0}
         pcbY={0}
