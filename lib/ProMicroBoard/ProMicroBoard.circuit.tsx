@@ -1,4 +1,3 @@
-
 import { ProMicroBoardFootprint } from "./ProMicroBoardFootprint"
 import { outlineBuilder } from "../../util/outlineBuilder"
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
@@ -59,11 +58,37 @@ export const ProMicroBoard = ({
   const defaultPinArrangement = {
     leftSide: {
       direction: "top-to-bottom" as const,
-      pins: ["RAW", "GND1", "RST", "VCC", "A3", "A2", "A1", "A0", "SCK", "MISO", "MOSI", "D10" ],
+      pins: [
+        "RAW",
+        "GND1",
+        "RST",
+        "VCC",
+        "A3",
+        "A2",
+        "A1",
+        "A0",
+        "SCK",
+        "MISO",
+        "MOSI",
+        "D10",
+      ],
     },
     rightSide: {
       direction: "top-to-bottom" as const,
-      pins: ["TXO", "RX1", "GND2", "GND3", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9" ],
+      pins: [
+        "TXO",
+        "RX1",
+        "GND2",
+        "GND3",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "D8",
+        "D9",
+      ],
     },
   }
 
