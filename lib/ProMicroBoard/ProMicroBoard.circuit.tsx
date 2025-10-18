@@ -6,17 +6,11 @@ import { ChipProps, BoardProps } from "@tscircuit/props"
 type ProMicroBoardProps = ChipProps &
   BoardProps & {
     children?: any
-    variant?: "5V" | "3V3"
   }
 
-export const ProMicroBoard = ({
-  variant,
-  children,
-  ...rest
-}: ProMicroBoardProps) => {
+export const ProMicroBoard = ({ children, ...rest }: ProMicroBoardProps) => {
   const { boardProps, chipProps = {} } = splitBoardAndChipProps({
     ...rest,
-    variant,
   }) as {
     boardProps: any
     chipProps: Record<string, any>
