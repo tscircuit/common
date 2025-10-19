@@ -15,13 +15,16 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
   right = 12,
   pitch = 2.54,
 }) => {
-  const leftRowX = -7.6
-  const rightRowX = 7.6
+  const leftRowX = -7.62
+  const rightRowX = 7.62
+  const boardHeight = 33.02
+  const topMargin = 3.81
+  const boardTop = boardHeight / 2
+  const firstHoleY = boardTop - topMargin
 
   const pads: ReactElement[] = []
   let pinNumber = 1
 
-  const yOffset = ((left - 1) / 2) * pitch
   for (let i = 0; i < left; i++) {
     pads.push(
       createPlatedHole({
@@ -29,13 +32,12 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
         holeDiameter: 1.01,
         outerDiameter: 1.87,
         pcbX: leftRowX,
-        pcbY: yOffset - i * pitch,
+        pcbY: firstHoleY - i * pitch,
         shape: "circle",
       }),
     )
   }
 
-  const yOffsetRight = ((right - 1) / 2) * pitch
   for (let i = 0; i < right; i++) {
     pads.push(
       createPlatedHole({
@@ -43,7 +45,7 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
         holeDiameter: 1.01,
         outerDiameter: 1.87,
         pcbX: rightRowX,
-        pcbY: yOffsetRight - i * pitch,
+        pcbY: firstHoleY - i * pitch,
         shape: "circle",
       }),
     )

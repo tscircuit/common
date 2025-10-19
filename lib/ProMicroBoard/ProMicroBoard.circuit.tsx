@@ -1,5 +1,4 @@
 import { ProMicroBoardFootprint } from "./ProMicroBoardFootprint"
-import { outlineBuilder } from "../../util/outlineBuilder"
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 import { ChipProps, BoardProps } from "@tscircuit/props"
 
@@ -83,20 +82,17 @@ export const ProMicroBoard = ({ children, ...rest }: ProMicroBoardProps) => {
     },
   }
 
-  const outline = outlineBuilder(0, 17.8)
-    .lineTo(8.9, 17.8)
-    .corner({ radius: 1.8, turn: "ccw" })
-    .lineTo(8.9, -17.8)
-    .corner({ radius: 1.8, turn: "ccw" })
-    .lineTo(-8.9, -17.8)
-    .corner({ radius: 1.8, turn: "ccw" })
-    .lineTo(-8.9, 17.8)
-    .corner({ radius: 1.8, turn: "ccw" })
-    .lineTo(0, 17.8)
-    .toArray()
-
   return (
-    <board {...boardProps} outline={outline}>
+    <board
+      {...boardProps}
+      outline={[
+        { x: -8.89, y: 16.51 },
+        { x: 8.89, y: 16.51 },
+        { x: 8.89, y: -16.51 },
+        { x: -8.89, y: -16.51 },
+        { x: -8.89, y: 16.51 },
+      ]}
+    >
       <chip
         {...chipRest}
         name={resolvedName}
