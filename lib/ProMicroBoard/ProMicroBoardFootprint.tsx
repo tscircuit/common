@@ -22,7 +22,6 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
   const boardTop = boardHeight / 2
   const firstHoleY = boardTop - topMargin
 
-
   const pads: ReactElement[] = []
   let pinNumber = 1
 
