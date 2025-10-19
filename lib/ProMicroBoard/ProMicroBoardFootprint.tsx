@@ -25,23 +25,10 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
   const pads: ReactElement[] = []
   let pinNumber = 1
 
-  for (let i = 0; i < left; i++) {
-    pads.push(
-      createPlatedHole({
-        portHints: [`${pinNumber}++`],
-        holeDiameter: 1.01,
-        outerDiameter: 1.87,
-        pcbX: leftRowX,
-        pcbY: firstHoleY - i * pitch,
-        shape: "circle",
-      }),
-    )
-  }
-
   for (let i = 0; i < right; i++) {
     pads.push(
       createPlatedHole({
-        portHints: [`${pinNumber}++`],
+        portHints: [`${pinNumber}`],
         holeDiameter: 1.01,
         outerDiameter: 1.87,
         pcbX: rightRowX,
@@ -49,6 +36,21 @@ export const ProMicroBoardFootprint: React.FC<ProMicroBoardFootprintProps> = ({
         shape: "circle",
       }),
     )
+    pinNumber++
+  }
+
+  for (let i = 0; i < left; i++) {
+    pads.push(
+      createPlatedHole({
+        portHints: [`${pinNumber}`],
+        holeDiameter: 1.01,
+        outerDiameter: 1.87,
+        pcbX: leftRowX,
+        pcbY: firstHoleY - i * pitch,
+        shape: "circle",
+      }),
+    )
+    pinNumber++
   }
 
   return <footprint>{pads}</footprint>

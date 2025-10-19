@@ -63,6 +63,7 @@ export const ProMicroBoard = ({ children, ...rest }: ProMicroBoardProps) => {
         "D9",
       ],
     },
+
     rightSide: {
       direction: "top-to-bottom" as const,
       pins: [
