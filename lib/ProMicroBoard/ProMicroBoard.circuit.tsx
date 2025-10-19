@@ -49,23 +49,6 @@ export const ProMicroBoard = ({ children, ...rest }: ProMicroBoardProps) => {
     leftSide: {
       direction: "top-to-bottom" as const,
       pins: [
-        "RAW",
-        "GND1",
-        "RST",
-        "VCC",
-        "A3",
-        "A2",
-        "A1",
-        "A0",
-        "SCK",
-        "MISO",
-        "MOSI",
-        "D10",
-      ],
-    },
-    rightSide: {
-      direction: "top-to-bottom" as const,
-      pins: [
         "TXO",
         "RX1",
         "GND2",
@@ -78,6 +61,23 @@ export const ProMicroBoard = ({ children, ...rest }: ProMicroBoardProps) => {
         "D7",
         "D8",
         "D9",
+      ],
+    },
+    rightSide: {
+      direction: "top-to-bottom" as const,
+      pins: [
+        "RAW",
+        "GND1",
+        "RST",
+        "VCC",
+        "A3",
+        "A2",
+        "A1",
+        "A0",
+        "SCK",
+        "MISO",
+        "MOSI",
+        "D10",
       ],
     },
   }
