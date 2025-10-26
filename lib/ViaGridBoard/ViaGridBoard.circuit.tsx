@@ -21,9 +21,6 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
   const resolvedName = `${chipProps.name}_chip`
   const { name: _, ...chipRest } = chipProps
 
-  // Counter to generate unique via names
-  let viaCounter = 0
-
   return (
     <board
       {...boardProps}
@@ -42,7 +39,6 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
       />
 
       {["BL", "TL", "TR", "BR"].map((cornerPositionName, index) => {
-        //console.log(cornerPositionName, index)
         const x = (cornerPositionName.includes("R") ? 90 : 0) + 5
         const y = (cornerPositionName.includes("T") ? 55 : 0) + 5
         const rotation = index * 90
