@@ -21,6 +21,9 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
   const resolvedName = `${chipProps.name}_chip`
   const { name: _, ...chipRest } = chipProps
 
+  // Counter to generate unique via names
+  let viaCounter = 0
+
   return (
     <board
       {...boardProps}
@@ -66,16 +69,17 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         )
       })}
 
-      <ViaGridPlus pcbX={30} pcbY={25} />
-      <ViaGridPlus pcbX={70} pcbY={25} />
-      <ViaGridPlus pcbX={30} pcbY={40} />
-      <ViaGridPlus pcbX={70} pcbY={40} />
+      <ViaGridPlus pcbX={30} pcbY={25} startIndex={0} />
+      <ViaGridPlus pcbX={70} pcbY={25} startIndex={5} />
+      <ViaGridPlus pcbX={30} pcbY={40} startIndex={10} />
+      <ViaGridPlus pcbX={70} pcbY={40} startIndex={15} />
 
       {horizontalEdgeViaGridCells.map((cell) => (
         <ViaGridVia
           pcbX={cell.center.x}
           pcbY={cell.center.y}
           key={cell.index}
+          viaIndex={cell.index + 20}
         />
       ))}
 
@@ -84,6 +88,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
           pcbX={cell.center.x}
           pcbY={cell.center.y}
           key={cell.index}
+          viaIndex={cell.index + 54}
         />
       ))}
 

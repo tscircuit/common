@@ -1,28 +1,31 @@
 import { CommonLayoutProps, GroupProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
 
-export const ViaGridVia = (props: CommonLayoutProps) => {
+export const ViaGridVia = (props: CommonLayoutProps & { viaIndex: number }) => {
+  const { viaIndex, ...restProps } = props
   return (
     <via
+      name={`via_${viaIndex}`}
       fromLayer="top"
       toLayer="bottom"
       outerDiameter="1.5mm"
       holeDiameter="0.3mm"
       // pcbX={0}
       // pcbY={0}
-      {...props}
+      {...restProps}
     />
   )
 }
 
-export const ViaGridPlus = (props: GroupProps) => {
+export const ViaGridPlus = (props: GroupProps & { startIndex: number }) => {
+  const { startIndex, ...restProps } = props
   return (
-    <group {...props}>
-      <ViaGridVia pcbX={0} pcbY={0} />
-      <ViaGridVia pcbX={2.5} pcbY={0} />
-      <ViaGridVia pcbX={0} pcbY={2.5} />
-      <ViaGridVia pcbX={-2.5} pcbY={0} />
-      <ViaGridVia pcbX={0} pcbY={-2.5} />
+    <group {...restProps}>
+      <ViaGridVia pcbX={0} pcbY={0} viaIndex={startIndex} />
+      <ViaGridVia pcbX={2.5} pcbY={0} viaIndex={startIndex + 1} />
+      <ViaGridVia pcbX={0} pcbY={2.5} viaIndex={startIndex + 2} />
+      <ViaGridVia pcbX={-2.5} pcbY={0} viaIndex={startIndex + 3} />
+      <ViaGridVia pcbX={0} pcbY={-2.5} viaIndex={startIndex + 4} />
     </group>
   )
 }
