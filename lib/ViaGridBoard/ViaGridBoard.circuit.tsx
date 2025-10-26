@@ -42,7 +42,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
       />
 
       {["BL", "TL", "TR", "BR"].map((cornerPositionName, index) => {
-        console.log(cornerPositionName, index)
+        //console.log(cornerPositionName, index)
         const x = (cornerPositionName.includes("R") ? 90 : 0) + 5
         const y = (cornerPositionName.includes("T") ? 55 : 0) + 5
         const rotation = index * 90
@@ -116,7 +116,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         pcbX={50}
         pcbY={2.5}
       />
-
+      <net name="GND" />
       <copperpour
         connectsTo="net.GND"
         layer="top"
