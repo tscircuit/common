@@ -1,15 +1,7 @@
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 import { ChipProps, BoardProps } from "@tscircuit/props"
 import { grid } from "@tscircuit/math-utils"
-import { ViaGridVia, ViaGridPlus } from "./viaGridElements"
-
-import {
-  pacmanPolygonPoints,
-  PCMN1,
-  PCMN2,
-  PCMN3,
-  PCMN4,
-} from "./pacmanPolygon"
+import { ViaGridVia, ViaGridPlus, pacmanPolygonOutline } from "./viaGridElements"
 
 type ViaGridBoardProps = ChipProps &
   BoardProps & { children?: any; boardName?: string }
@@ -43,7 +35,44 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         color="blue"
       />
 
-      {pacmanGridCells.map((cell) => (
+
+      {["BL", "TL", "TR", "BR"].map( (cornerPositionName, index ) => {
+        console.log (cornerPositionName, index);
+        const x = (cornerPositionName.includes("R") ? 90 : 0) + 5;
+        const y = (cornerPositionName.includes("T") ? 55 : 0) + 5;
+        const rotation = index*90;
+        return (
+
+      
+        <chip
+          name={cornerPositionName}
+          pcbX={x}
+          pcbY={y}
+          pcbRotation={-rotation}    //{(cell.index-1)*90}
+          footprint={
+            <footprint>
+              <smtpad
+                pcbX="0mm"
+                pcbY="0mm"
+                layer="top"
+                shape="polygon"
+                portHints={["pin1"]}
+                points={pacmanPolygonOutline}
+              />
+            </footprint>
+          }
+        />
+       
+        )
+        
+
+
+//   const cornerPosition = getCornerPosition(cornerPositionName)
+//   return <SemiCircleCorner name={`${cornerPositionName}_CORNER`} pcbX={cornerPosition.x} pcbY={cornerPosition.y} cornerPositionName={cornerPositionName} />
+// )
+      })}
+
+      {/* {pacmanGridCells.map((cell) => (
         <chip
           name={"PCMN" + cell.index}
           pcbX={cell.center.x}
@@ -56,10 +85,6 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
                 pcbY="0mm"
                 layer="top"
                 shape="polygon"
-                //radius="2.5mm"
-
-                //width="5mm"
-                //height="5mm"
                 portHints={["pin1"]}
                 points={
                   cell.index === 0
@@ -76,7 +101,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
             </footprint>
           }
         />
-      ))}
+      ))} */}
 
       <ViaGridPlus pcbX={30} pcbY={25} />
       <ViaGridPlus pcbX={70} pcbY={25} />
