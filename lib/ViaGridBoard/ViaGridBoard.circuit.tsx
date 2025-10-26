@@ -48,6 +48,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
             name={cornerPositionName}
             pcbX={x}
             pcbY={y}
+            noSchematicRepresentation={true}
             pcbRotation={-rotation} //{(cell.index-1)*90}
             footprint={
               <footprint>
@@ -90,6 +91,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
 
       <chip
         name="TOP_RECT"
+        noSchematicRepresentation={true}
         footprint={
           <footprint>
             <smtpad
