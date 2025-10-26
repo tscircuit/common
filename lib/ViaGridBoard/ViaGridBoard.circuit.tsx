@@ -10,7 +10,6 @@ import {
 type ViaGridBoardProps = ChipProps &
   BoardProps & { children?: any; boardName?: string }
 
-//export const ViaGridBoard = (props: ViaGridBoardProps) => {
 export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
   const { boardProps, chipProps = {} } = splitBoardAndChipProps({
     ...rest,
@@ -64,42 +63,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
             }
           />
         )
-
-        //   const cornerPosition = getCornerPosition(cornerPositionName)
-        //   return <SemiCircleCorner name={`${cornerPositionName}_CORNER`} pcbX={cornerPosition.x} pcbY={cornerPosition.y} cornerPositionName={cornerPositionName} />
-        // )
       })}
-
-      {/* {pacmanGridCells.map((cell) => (
-        <chip
-          name={"PCMN" + cell.index}
-          pcbX={cell.center.x}
-          pcbY={cell.center.y}
-          //pcbRotation="180deg"    //{(cell.index-1)*90}
-          footprint={
-            <footprint>
-              <smtpad
-                pcbX="0mm"
-                pcbY="0mm"
-                layer="top"
-                shape="polygon"
-                portHints={["pin1"]}
-                points={
-                  cell.index === 0
-                    ? PCMN1
-                    : cell.index === 1
-                      ? PCMN4
-                      : cell.index === 2
-                        ? PCMN2
-                        : cell.index === 3
-                          ? PCMN3
-                          : []
-                }
-              />
-            </footprint>
-          }
-        />
-      ))} */}
 
       <ViaGridPlus pcbX={30} pcbY={25} />
       <ViaGridPlus pcbX={70} pcbY={25} />
@@ -160,19 +124,6 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
     </board>
   )
 }
-
-const pacmanGridCells = grid({
-  rows: 2,
-  cols: 2,
-  // width: 90,
-  // height: 55,
-  xSpacing: 90, // if you want to provide the spacing instead of width
-  ySpacing: 55, // if you want to provide the spacing instead of height
-  offsetX: 90 / 2 + 5, // optional
-  offsetY: 55 / 2 + 5, // optional
-  yDirection: "up-is-negative", // optional, default: "cartesian"
-  // centered: true  // optional, default: true
-})
 
 const horizontalEdgeViaGridCells = grid({
   rows: 2,
