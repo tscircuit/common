@@ -37,7 +37,10 @@ export const ViaGridBoard = ({
   const resolvedName = chipProps.name || "VG1"
   const { name: _, ...chipRest } = chipProps
 
-  const config = size === "custom" ? { rows: rows || 10, cols: cols || 10, pitch } : VIAGRID_CONFIGS[size]
+  const config =
+    size === "custom"
+      ? { rows: rows || 10, cols: cols || 10, pitch }
+      : VIAGRID_CONFIGS[size]
   const actualRows = config.rows
   const actualCols = config.cols
   const actualPitch = config.pitch
@@ -70,7 +73,13 @@ export const ViaGridBoard = ({
       <chip
         {...chipRest}
         name={resolvedName}
-        footprint={<ViaGridBoardFootprint rows={actualRows} cols={actualCols} pitch={actualPitch} />}
+        footprint={
+          <ViaGridBoardFootprint
+            rows={actualRows}
+            cols={actualCols}
+            pitch={actualPitch}
+          />
+        }
         doNotPlace
         pcbX={0}
         pcbY={0}
