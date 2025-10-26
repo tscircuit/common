@@ -45,6 +45,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         const rotation = index * 90
         return (
           <chip
+            key={"pacman_" + cornerPositionName}
             name={cornerPositionName}
             pcbX={x}
             pcbY={y}
