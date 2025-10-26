@@ -1,7 +1,11 @@
 import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 import { ChipProps, BoardProps } from "@tscircuit/props"
 import { grid } from "@tscircuit/math-utils"
-import { ViaGridVia, ViaGridPlus, pacmanPolygonOutline } from "./viaGridElements"
+import {
+  ViaGridVia,
+  ViaGridPlus,
+  pacmanPolygonOutline,
+} from "./viaGridElements"
 
 type ViaGridBoardProps = ChipProps &
   BoardProps & { children?: any; boardName?: string }
@@ -35,41 +39,35 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         color="blue"
       />
 
-
-      {["BL", "TL", "TR", "BR"].map( (cornerPositionName, index ) => {
-        console.log (cornerPositionName, index);
-        const x = (cornerPositionName.includes("R") ? 90 : 0) + 5;
-        const y = (cornerPositionName.includes("T") ? 55 : 0) + 5;
-        const rotation = index*90;
+      {["BL", "TL", "TR", "BR"].map((cornerPositionName, index) => {
+        console.log(cornerPositionName, index)
+        const x = (cornerPositionName.includes("R") ? 90 : 0) + 5
+        const y = (cornerPositionName.includes("T") ? 55 : 0) + 5
+        const rotation = index * 90
         return (
-
-      
-        <chip
-          name={cornerPositionName}
-          pcbX={x}
-          pcbY={y}
-          pcbRotation={-rotation}    //{(cell.index-1)*90}
-          footprint={
-            <footprint>
-              <smtpad
-                pcbX="0mm"
-                pcbY="0mm"
-                layer="top"
-                shape="polygon"
-                portHints={["pin1"]}
-                points={pacmanPolygonOutline}
-              />
-            </footprint>
-          }
-        />
-       
+          <chip
+            name={cornerPositionName}
+            pcbX={x}
+            pcbY={y}
+            pcbRotation={-rotation} //{(cell.index-1)*90}
+            footprint={
+              <footprint>
+                <smtpad
+                  pcbX="0mm"
+                  pcbY="0mm"
+                  layer="top"
+                  shape="polygon"
+                  portHints={["pin1"]}
+                  points={pacmanPolygonOutline}
+                />
+              </footprint>
+            }
+          />
         )
-        
 
-
-//   const cornerPosition = getCornerPosition(cornerPositionName)
-//   return <SemiCircleCorner name={`${cornerPositionName}_CORNER`} pcbX={cornerPosition.x} pcbY={cornerPosition.y} cornerPositionName={cornerPositionName} />
-// )
+        //   const cornerPosition = getCornerPosition(cornerPositionName)
+        //   return <SemiCircleCorner name={`${cornerPositionName}_CORNER`} pcbX={cornerPosition.x} pcbY={cornerPosition.y} cornerPositionName={cornerPositionName} />
+        // )
       })}
 
       {/* {pacmanGridCells.map((cell) => (

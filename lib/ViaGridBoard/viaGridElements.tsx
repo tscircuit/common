@@ -29,13 +29,10 @@ export const ViaGridPlus = (props: GroupProps) => {
 
 export default ViaGridPlus
 
-
-
 export const pacmanPolygonOutline = new OutlineBuilder(-0.2, -0.2)
-  .lineTo(-0.2,  2.5)
-  .arcTo (-2.5,  0,      { radius: 2.5, sweep: true })
-  .arcTo (0,    -2.5,    { radius: 2.5, sweep: true })
-  .arcTo (2.5,  -0.2,    { radius: 2.5, sweep: true })
-  .lineTo(-0.2,  -0.2)
+  .lineTo(-0.2, 2.5)
+  .arcTo(-2.5, 0, { radius: 2.5, sweep: true })
+  .arcTo(0, -2.5, { radius: 2.5, sweep: true })
+  .arcTo(2.5, -0.2, { radius: 2.5, sweep: true })
+  .lineTo(-0.2, -0.2)
   .toArray()
-
