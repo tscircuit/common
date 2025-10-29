@@ -114,16 +114,23 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         pcbX={50}
         pcbY={2.5}
       />
-      <net name="GND" />
-      <copperpour
-        connectsTo="net.GND"
-        layer="top"
-        // outline=[
-        //   { x: 5, y: 5 },
-        //   { x: 5, y: 60 },
-        //   { x: 95, y: 60 },
-        //   { x: 95, y: 5 }
-        // ]
+
+      <chip name="U1" footprint="soic8" pcbX={20} pcbY={40} />
+      <chip
+        name="U2"
+        footprint="soic8"
+        pcbX={50}
+        pcbY={30}
+        connections={{
+          pin1: "U1.pin8",
+          pin2: "U1.pin7",
+          pin3: "U1.pin6",
+          pin4: "U1.pin5",
+          pin5: "U1.pin4",
+          pin6: "U1.pin3",
+          pin7: "U1.pin2",
+          pin8: "U1.pin1",
+        }}
       />
     </board>
   )
