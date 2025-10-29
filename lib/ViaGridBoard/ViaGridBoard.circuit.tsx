@@ -115,7 +115,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         pcbY={2.5}
       />
       <net name="GND" />
-      <copperpour
+      {/* <copperpour
         connectsTo="net.GND"
         layer="top"
         // outline=[
@@ -124,7 +124,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         //   { x: 95, y: 60 },
         //   { x: 95, y: 5 }
         // ]
-      />
+      /> */}
     </board>
   )
 }
