@@ -11,27 +11,17 @@ type ViaGridBoardProps = ChipProps &
   BoardProps & { children?: any; boardName?: string }
 
 export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
-  const { boardProps, chipProps = {} } = splitBoardAndChipProps({
+  const { boardProps = {} } = splitBoardAndChipProps({
     ...rest,
   }) as {
     boardProps: any
-    chipProps: Record<string, any>
   }
 
-  const resolvedName = `${chipProps.name}_chip`
-  const { name: _, ...chipRest } = chipProps
-
   return (
-    <board
-      {...boardProps}
-      width="100mm"
-      height="65mm"
-      boardAnchorPosition={{ x: 0, y: 0 }}
-      boardAnchorAlignment="bottom_left"
-    >
+    <board {...boardProps} width="100mm" height="65mm">
       <pcbnoterect //User.1 kicad rect shows outer bounds of usable area
-        pcbX={50}
-        pcbY={32.5}
+        pcbX={0}
+        pcbY={0}
         width={90}
         height={55}
         strokeWidth={0.3}
@@ -39,8 +29,8 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
       />
 
       {["BL", "TL", "TR", "BR"].map((cornerPositionName, index) => {
-        const x = (cornerPositionName.includes("R") ? 90 : 0) + 5
-        const y = (cornerPositionName.includes("T") ? 55 : 0) + 5
+        const x = (cornerPositionName.includes("R") ? 90 : 0) + 5 - 50
+        const y = (cornerPositionName.includes("T") ? 55 : 0) + 5 - 32.5
         const rotation = index * 90
         return (
           <chip
@@ -66,15 +56,15 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         )
       })}
 
-      <ViaGridPlus pcbX={30} pcbY={25} startIndex={0} />
-      <ViaGridPlus pcbX={70} pcbY={25} startIndex={5} />
-      <ViaGridPlus pcbX={30} pcbY={40} startIndex={10} />
-      <ViaGridPlus pcbX={70} pcbY={40} startIndex={15} />
+      <ViaGridPlus pcbX={-20} pcbY={-7.5} startIndex={0} />
+      <ViaGridPlus pcbX={20} pcbY={-7.5} startIndex={5} />
+      <ViaGridPlus pcbX={-20} pcbY={7.5} startIndex={10} />
+      <ViaGridPlus pcbX={20} pcbY={7.5} startIndex={15} />
 
       {horizontalEdgeViaGridCells.map((cell) => (
         <ViaGridVia
-          pcbX={cell.center.x}
-          pcbY={cell.center.y}
+          pcbX={cell.center.x - 50}
+          pcbY={cell.center.y - 32.5}
           key={cell.index}
           viaIndex={cell.index + 20}
         />
@@ -82,8 +72,8 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
 
       {verticalEdgeViaGridCells.map((cell) => (
         <ViaGridVia
-          pcbX={cell.center.x}
-          pcbY={cell.center.y}
+          pcbX={cell.center.x - 50}
+          pcbY={cell.center.y - 32.5}
           key={cell.index}
           viaIndex={cell.index + 54}
         />
@@ -91,8 +81,8 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
 
       <chip
         name="TOP_RECT"
-        pcbX={50}
-        pcbY={62.5}
+        pcbX={0}
+        pcbY={30}
         noSchematicRepresentation={true}
         footprint={
           <footprint>
@@ -108,12 +98,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         }
       />
 
-      <silkscreentext
-        text="VIAGRID TOP"
-        fontSize="1.5mm"
-        pcbX={50}
-        pcbY={2.5}
-      />
+      <silkscreentext text="VIAGRID TOP" fontSize="1.5mm" pcbX={0} pcbY={-30} />
       <net name="GND" />
       {/* <copperpour
         connectsTo="net.GND"
@@ -137,8 +122,8 @@ const horizontalEdgeViaGridCells = grid({
   // height: 45,
   xSpacing: 5, // if you want to provide the spacing instead of width
   ySpacing: 45, // if you want to provide the spacing instead of height
-  offsetX: 90 / 2 + 5, // optional
-  offsetY: 55 / 2 + 5, // optional
+  offsetX: 50, // optional
+  offsetY: 32.5, // optional
   yDirection: "up-is-negative", // optional, default: "cartesian"
   // centered: true  // optional, default: true
 })
@@ -150,8 +135,8 @@ const verticalEdgeViaGridCells = grid({
   // height: 45,
   xSpacing: 80, // if you want to provide the spacing instead of width
   ySpacing: 5, // if you want to provide the spacing instead of height
-  offsetX: 90 / 2 + 5, // optional
-  offsetY: 55 / 2 + 5, // optional
+  offsetX: 50, // optional
+  offsetY: 32.5, // optional
   yDirection: "up-is-negative", // optional, default: "cartesian"
   // centered: true  // optional, default: true
 })
