@@ -27,7 +27,7 @@ export const MicroModBoard = ({
   const resolvedName = `${chipProps.name}_chip`
   const { name: _, ...chipRest } = chipProps
 
-  let outline
+  let outline: any
   const pinLabels = {
     pin2: ["V3_3_1"],
     pin74: ["V3_3_2"],
