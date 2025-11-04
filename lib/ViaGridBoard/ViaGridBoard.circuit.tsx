@@ -91,12 +91,12 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
 
       <chip
         name="TOP_RECT"
+        pcbX={50}
+        pcbY={62.5}
         noSchematicRepresentation={true}
         footprint={
           <footprint>
             <smtpad
-              pcbX="50mm"
-              pcbY="62.5mm"
               layer="top"
               shape="rect"
               width="40mm"
@@ -125,6 +125,7 @@ export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
         //   { x: 95, y: 5 }
         // ]
       /> */}
+      {children}
     </board>
   )
 }
