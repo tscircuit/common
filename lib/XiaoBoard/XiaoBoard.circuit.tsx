@@ -8,19 +8,35 @@ type XiaoBoardProps = ChipProps &
   BoardProps & {
     children?: any
     boardName?: string
-    variant?: "RP2040" | "Receiver"
     withPlatedHoles?: boolean
   }
 
+type InternalXiaoBoardProps = XiaoBoardProps & {
+  variant?: "RP2040" | "Receiver"
+}
+
 export const XiaoBoard = ({
-  variant,
   withPlatedHoles = false,
   children,
   ...rest
 }: XiaoBoardProps) => {
+  return (
+    <XiaoBoardInternal
+      withPlatedHoles={withPlatedHoles}
+      children={children}
+      {...rest}
+    />
+  )
+}
+
+export const XiaoBoardInternal = ({
+  variant,
+  withPlatedHoles = false,
+  children,
+  ...rest
+}: InternalXiaoBoardProps) => {
   const { boardProps, chipProps = {} } = splitBoardAndChipProps({
     ...rest,
-    variant,
     withPlatedHoles,
   }) as {
     boardProps: any
