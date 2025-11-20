@@ -41,8 +41,6 @@ export const XiaoReceiver = (
       pinLabels={PIN_LABELS}
       schPinArrangement={PIN_ARRANGEMENT}
       schWidth={1.5}
-      pcbX={0}
-      pcbY={0}
       doNotPlace
     >
       <silkscreenpath
