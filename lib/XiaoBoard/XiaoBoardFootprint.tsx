@@ -23,7 +23,7 @@ interface XiaoBoardFootprintProps {
   bottomPadWidth?: number // width of bottom pads (defaults to padWidth if not specified)
   bottomPadHeight?: number // height of bottom pads (defaults to padLength if not specified)
   bottomPitch?: number // pitch between bottom pads (defaults to pitch if not specified)
-  variant?: "RP2040" | "Receiver" // Add variant prop with RP2040 as a possible value
+  variant?: "RP2040" | "Receiver" | "ReceiverTHT" // Add variant prop with RP2040 as a possible value
   withPlatedHoles?: boolean
 }
 
@@ -41,10 +41,12 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
   bottomPadHeight = 2.032,
   bottomPitch = 2.54,
   variant,
-  withPlatedHoles = false,
+  withPlatedHoles = false
 }) => {
   // Adjust configuration based on variant
   const isRP2040 = variant === "RP2040"
+  // const isReceiverTHT = variant === "ReceiverTHT"
+  const isReceiverTHT = true
 
   // Apply variant-specific overrides
   if (isRP2040) {
@@ -61,6 +63,21 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
     bottomPadHeight = 2.032
     bottomPitch = 2.54
   }
+
+  if (isReceiverTHT) {
+    left = 7
+    right = 7
+    pitch = 2.54
+    padLength = 2
+    padWidth = 3
+    edgeClearance = 1.2
+    componentWidth = 17
+    bottomPadWidth = 1.016
+    bottomPadHeight = 2.032
+    bottomPitch = 2.54
+    withPlatedHoles = true
+  }
+
   // calculate left/right row X positions based on componentWidth
   const leftRowX = -componentWidth / 2 + 0.25
   const rightRowX = componentWidth / 2 - 0.25
@@ -153,7 +170,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
               pcbX: leftRowX,
               pcbY: yOffset - i * pitch,
               shape: "circular_hole_with_rect_pad",
-              holeOffsetX: 0.63,
+              holeOffsetX: -0.63,
             }),
           )
           pinNumber++
@@ -197,7 +214,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
               pcbX: rightRowX,
               pcbY: yOffset - i * pitch,
               shape: "circular_hole_with_rect_pad",
-              holeOffsetX: -0.63,
+              holeOffsetX: 0.63,
             }),
           )
           pinNumber++
