@@ -30,14 +30,15 @@ const PIN_ARRANGEMENT = {
 }
 
 export const XiaoReceiver = (
-  props: ChipProps<typeof PIN_LABELS> & { children?: any },
+  props: ChipProps<typeof PIN_LABELS> & { children?: any, throughHole?: boolean }
 ) => {
-  const { children, ...rest } = props
+  props.throughHole = false;
+  const { children, throughHole , ...rest } = props
 
   return (
     <chip
       {...rest}
-      footprint={<XiaoBoardFootprint variant="Receiver" />}
+      footprint={<XiaoBoardFootprint variant="Receiver" withPlatedHoles={throughHole} />}
       pinLabels={PIN_LABELS}
       schPinArrangement={PIN_ARRANGEMENT}
       schWidth={1.5}
