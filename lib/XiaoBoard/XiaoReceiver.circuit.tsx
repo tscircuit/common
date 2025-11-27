@@ -32,7 +32,6 @@ const PIN_ARRANGEMENT = {
 export const XiaoReceiver = (
   props: ChipProps<typeof PIN_LABELS> & { children?: any, throughHole?: boolean }
 ) => {
-  props.throughHole = false;
   const { children, throughHole , ...rest } = props
 
   return (
