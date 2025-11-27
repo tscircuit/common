@@ -41,7 +41,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
   bottomPadHeight = 2.032,
   bottomPitch = 2.54,
   variant,
-  withPlatedHoles = false
+  withPlatedHoles = false,
 }) => {
   // Adjust configuration based on variant
   const isRP2040 = variant === "RP2040"
