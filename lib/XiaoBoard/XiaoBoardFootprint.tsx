@@ -61,6 +61,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
     bottomPadHeight = 2.032
     bottomPitch = 2.54
   }
+
   // calculate left/right row X positions based on componentWidth
   const leftRowX = -componentWidth / 2 + 0.25
   const rightRowX = componentWidth / 2 - 0.25
@@ -153,7 +154,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
               pcbX: leftRowX,
               pcbY: yOffset - i * pitch,
               shape: "circular_hole_with_rect_pad",
-              holeOffsetX: 0.63,
+              holeOffsetX: -0.63,
             }),
           )
           pinNumber++
@@ -197,7 +198,7 @@ export const XiaoBoardFootprint: React.FC<XiaoBoardFootprintProps> = ({
               pcbX: rightRowX,
               pcbY: yOffset - i * pitch,
               shape: "circular_hole_with_rect_pad",
-              holeOffsetX: -0.63,
+              holeOffsetX: 0.63,
             }),
           )
           pinNumber++
