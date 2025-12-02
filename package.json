@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "tsci dev",
     "build": "npm run build:lib",
-    "build:lib": "tsup --dts --format esm ./index.tsx",
+    "build:lib": "tsup-node --dts --format esm ./index.tsx",
     "build:circuit": "tsci build",
     "snapshot": "tsci snapshot",
     "snapshot:update": "tsci snapshot --update --3d",
