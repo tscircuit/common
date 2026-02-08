@@ -20,15 +20,13 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
     <board
       {...boardProps}
       outline={[
-        { x: -34.29, y: 26.67 }, // top-left corner
-        { x: 32.29, y: 26.67 }, // top-right (sharp)
-        { x: 34.29, y: 24.67 }, // top-right (sharp)
-        { x: 34.29, y: 13.89 }, // start top slanted transition
-        { x: 36.83, y: 11.35 }, // outward notch top
-        { x: 36.83, y: -21.35 }, // outward notch bottom
-        { x: 34.29, y: -23.89 }, // end bottom slanted transition
-        { x: 34.29, y: -26.67 }, // bottom-right corner
-        { x: -34.29, y: -26.67 }, // bottom-left corner
+        { x: -34.29, y: -26.67 },
+        { x: 32.26, y: -26.67 },
+        { x: 34.29, y: -24.64 },
+        { x: 34.29, y: 17.27 },
+        { x: 31.75, y: 19.81 },
+        { x: 31.75, y: 26.67 },
+        { x: -34.29, y: 26.67 },
       ]}
     >
       <chip
@@ -48,13 +46,13 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
           pin7: "VIN",
           pin8: "NC",
           pin9: "IOREF",
-          pin10: "RES",
-          pin11: "V3_3",
-          pin12: "V5",
-          pin13: "GND0",
-          pin14: "GND1",
-          pin15: "RX",
-          pin16: "TX",
+          pin10: "RESET",
+          pin11: "3.3V",
+          pin12: "5V",
+          pin13: "GND1",
+          pin14: "GND2",
+          pin15: "D0",
+          pin16: "D1",
           pin17: "D2",
           pin18: "D3",
           pin19: "D4",
@@ -67,7 +65,7 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
           pin26: "D11",
           pin27: "D12",
           pin28: "D13",
-          pin29: "GND2",
+          pin29: "GND",
           pin30: "AREF",
           pin31: "SDA",
           pin32: "SCL",
@@ -84,12 +82,12 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
               "A4",
               "A5",
               "IOREF",
-              "RES",
+              "RESET",
               "VIN",
-              "V5",
-              "V3_3",
+              "5V",
+              "3.3V",
               "AREF",
-              "GND0",
+              "GND",
               "GND1",
               "GND2",
             ],
@@ -97,8 +95,8 @@ export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
           rightSide: {
             direction: "top-to-bottom",
             pins: [
-              "RX",
-              "TX",
+              "D0",
+              "D1",
               "D2",
               "D3",
               "D4",
