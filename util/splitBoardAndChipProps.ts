@@ -1,12 +1,14 @@
-export const splitBoardAndChipProps = (props: any = {}) => {
-  // Board-specific properties - these only make sense for the board component
-  const boardOnlyProps = [
-    "autorouter", // Autorouter configuration
-    "boardAnchorAlignment", // Board anchor alignment
-    "boardAnchorPosition", // Board anchor position
-    "pcbGap", // PCB gap
-  ]
+import {
+  boardProps as boardPropsSchema,
+  chipProps as chipPropsSchema,
+} from "@tscircuit/props"
 
+const boardOnlyProps = Object.keys(boardPropsSchema.shape).filter(
+  (prop) => !(prop in chipPropsSchema.shape),
+)
+const boardOnlyPropSet = new Set(boardOnlyProps)
+
+export const splitBoardAndChipProps = (props: any = {}) => {
   const boardProps: Record<string, any> = {}
   const chipProps: Record<string, any> = {}
 
@@ -18,11 +20,11 @@ export const splitBoardAndChipProps = (props: any = {}) => {
   }
 
   // All other props go to the chip component
-  Object.entries(props).forEach(([key, value]) => {
-    if (!boardOnlyProps.includes(key)) {
+  for (const [key, value] of Object.entries(props)) {
+    if (!boardOnlyPropSet.has(key)) {
       chipProps[key] = value
     }
-  })
+  }
 
   return { boardProps, chipProps }
 }
