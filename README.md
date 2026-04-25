@@ -6,7 +6,10 @@ These are community-contributed "common" boards or components distributed with [
 import { ArduinoShield } from "tscircuit/common"
 
 return (
-  <ArduinoShield connections={{ GND1: "net.GND" }}>
+  <ArduinoShield
+    chipProps={{ connections: { GND1: "net.GND" } }}
+    boardProps={{ solderMaskColor: "blue", autorouter: "auto" }}
+  >
     {/* ... */}
   </ArduinoShield>
 )
