@@ -1,6 +1,7 @@
-import { XiaoBoard } from "./XiaoBoard.circuit"
-import type { ChipProps } from "@tscircuit/props"
+import { XiaoBoard, type XiaoBoardProps } from "./XiaoBoard.circuit"
 
-export const XiaoBoardRP2040 = (props: ChipProps & { children?: any }) => {
+export const XiaoBoardRP2040 = (
+  props: Omit<XiaoBoardProps, "variant" | "withPlatedHoles">,
+) => {
   return <XiaoBoard variant="RP2040" {...props} withPlatedHoles />
 }

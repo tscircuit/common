@@ -1,31 +1,25 @@
 import { MicroModBoardFootprint } from "./MicroModBoardFootprint"
 import { processorOutline, functionOutline } from "./outlines/boardOutlines"
-import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
 
-import { ChipProps, BoardProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 
-type MicroModBoardProps = ChipProps &
-  BoardProps & {
-    children?: any
-    boardName?: string
-    variant?: "processor" | "function"
-  }
+type MicroModBoardProps = {
+  boardProps?: BoardProps
+  chipProps?: Partial<ChipProps>
+  children?: any
+  variant?: "processor" | "function"
+}
 
 export const MicroModBoard = ({
+  boardProps = {},
+  chipProps = {},
   variant = "processor",
   children,
-  ...rest
 }: MicroModBoardProps) => {
-  const { boardProps, chipProps = {} } = splitBoardAndChipProps({
-    ...rest,
-    variant,
-  }) as {
-    boardProps: any
-    chipProps: Record<string, any>
-  }
-
-  const resolvedName = `${chipProps.name}_chip`
-  const { name: _, ...chipRest } = chipProps
+  const defaultName =
+    variant === "function" ? "MicroModBoardFunction" : "MicroModBoardProcessor"
+  const { name = defaultName, ...chipRest } = chipProps
+  const resolvedName = `${name}_chip`
 
   let outline: any
   const pinLabels = {

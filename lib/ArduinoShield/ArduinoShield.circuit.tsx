@@ -1,20 +1,19 @@
 import { ArduinoShieldFootprint } from "./ArduinoShieldFootprint"
-import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
-import { ChipProps, BoardProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 
-type ArduinoShieldProps = ChipProps &
-  BoardProps & { children?: any; boardName?: string }
+type ArduinoShieldProps = {
+  boardProps?: BoardProps
+  chipProps?: Partial<ChipProps>
+  children?: any
+}
 
-export const ArduinoShield = ({ children, ...rest }: ArduinoShieldProps) => {
-  const { boardProps, chipProps = {} } = splitBoardAndChipProps({
-    ...rest,
-  }) as {
-    boardProps: any
-    chipProps: Record<string, any>
-  }
-
-  const resolvedName = `${chipProps.name}_chip`
-  const { name: _, ...chipRest } = chipProps
+export const ArduinoShield = ({
+  boardProps = {},
+  chipProps = {},
+  children,
+}: ArduinoShieldProps) => {
+  const { name = "ArduinoShield", ...chipRest } = chipProps
+  const resolvedName = `${name}_chip`
 
   return (
     <board

@@ -1,22 +1,18 @@
 import { ProMicroBoardFootprint } from "./ProMicroBoardFootprint"
-import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
-import { ChipProps, BoardProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 
-type ProMicroBoardProps = ChipProps &
-  BoardProps & {
-    children?: any
-  }
+type ProMicroBoardProps = {
+  boardProps?: BoardProps
+  chipProps?: Partial<ChipProps>
+  children?: any
+}
 
-export const ProMicroBoard = ({ children, ...rest }: ProMicroBoardProps) => {
-  const { boardProps, chipProps = {} } = splitBoardAndChipProps({
-    ...rest,
-  }) as {
-    boardProps: any
-    chipProps: Record<string, any>
-  }
-
-  const resolvedName = chipProps.name
-  const { name: _, ...chipRest } = chipProps
+export const ProMicroBoard = ({
+  boardProps = {},
+  chipProps = {},
+  children,
+}: ProMicroBoardProps) => {
+  const { name: resolvedName = "ProMicroBoard", ...chipRest } = chipProps
 
   const DefaultPinLabels = {
     pin1: "RAW",

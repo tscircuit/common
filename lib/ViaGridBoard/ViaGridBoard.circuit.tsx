@@ -1,5 +1,4 @@
-import { splitBoardAndChipProps } from "../../util/splitBoardAndChipProps"
-import { ChipProps, BoardProps } from "@tscircuit/props"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { grid } from "@tscircuit/math-utils"
 import {
   ViaGridVia,
@@ -7,16 +6,16 @@ import {
   pacmanPolygonOutline,
 } from "./viaGridElements"
 
-type ViaGridBoardProps = ChipProps &
-  BoardProps & { children?: any; boardName?: string }
+type ViaGridBoardProps = {
+  boardProps?: BoardProps
+  chipProps?: Partial<ChipProps>
+  children?: any
+}
 
-export const ViaGridBoard = ({ children, ...rest }: ViaGridBoardProps) => {
-  const { boardProps = {} } = splitBoardAndChipProps({
-    ...rest,
-  }) as {
-    boardProps: any
-  }
-
+export const ViaGridBoard = ({
+  boardProps = {},
+  children,
+}: ViaGridBoardProps) => {
   return (
     <board {...boardProps} width="100mm" height="65mm">
       <pcbnoterect //User.1 kicad rect shows outer bounds of usable area

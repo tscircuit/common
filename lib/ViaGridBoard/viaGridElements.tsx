@@ -1,4 +1,4 @@
-import { CommonLayoutProps, GroupProps } from "@tscircuit/props"
+import type { CommonLayoutProps, GroupProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
 
 export const ViaGridVia = (props: CommonLayoutProps & { viaIndex: number }) => {
