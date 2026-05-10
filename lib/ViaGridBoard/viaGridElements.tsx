@@ -1,17 +1,15 @@
 import type { CommonLayoutProps, GroupProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
 
-export const ViaGridVia = (props: CommonLayoutProps & { viaIndex: number }) => {
-  const { viaIndex, ...restProps } = props
+export const ViaGridVia = (props: CommonLayoutProps & { viaIndex?: number; name?: string }) => {
+  const { viaIndex, name, ...restProps } = props
   return (
     <via
-      name={`via_${viaIndex}`}
+      name={name ?? `via_${viaIndex}`}
       fromLayer="top"
       toLayer="bottom"
-      outerDiameter="1.5mm"
-      holeDiameter="0.3mm"
-      // pcbX={0}
-      // pcbY={0}
+      outerDiameter="1.2mm"
+      holeDiameter="0.6mm"
       {...restProps}
     />
   )
