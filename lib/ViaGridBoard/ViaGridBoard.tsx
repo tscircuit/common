@@ -24,7 +24,7 @@ export const ViaGridBoard = ({
   children,
 }: ViaGridBoardProps) => {
   const { rows, cols } = typeof size === "string" ? SIZES[size] : size
-  
+
   const pitch = 2.54
   const margin = 3
   const width = (cols - 1) * pitch + margin * 2
@@ -39,11 +39,7 @@ export const ViaGridBoard = ({
   })
 
   return (
-    <board
-      {...boardProps}
-      width={`${width}mm`}
-      height={`${height}mm`}
-    >
+    <board {...boardProps} width={`${width}mm`} height={`${height}mm`}>
       {cells.map((cell) => {
         const rowLabel = String.fromCharCode(65 + cell.row) // A, B, C...
         const colLabel = (cell.col + 1).toString() // 1, 2, 3...
