@@ -33,5 +33,8 @@
     "@types/react": "^19.1.12",
     "tscircuit": "^0.0.1672",
     "tsup": "^8.5.0"
+  },
+  "dependencies": {
+    "@tscircuit/math-utils": "^0.0.36"
   }
 }
