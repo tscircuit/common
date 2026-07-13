@@ -42,6 +42,35 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
 
   await circuit.renderUntilSettled()
 
+  const circuitJson = circuit.getCircuitJson() as any[]
+  const rp2040 = circuitJson.find(
+    (element) =>
+      element.type === "source_component" &&
+      element.manufacturer_part_number === "RP2040",
+  )
+  const rp2040PcbComponent = circuitJson.find(
+    (element) =>
+      element.type === "pcb_component" &&
+      element.source_component_id === rp2040.source_component_id,
+  )
+  const groundPort = circuitJson.find(
+    (element) =>
+      element.type === "source_port" &&
+      element.source_component_id === rp2040.source_component_id &&
+      element.pin_number === 57,
+  )
+  const thermalPad = circuitJson.find(
+    (element) =>
+      element.type === "pcb_smtpad" &&
+      element.pcb_component_id === rp2040PcbComponent.pcb_component_id &&
+      element.port_hints?.includes("thermalpad"),
+  )
+  const thermalPadPort = circuitJson.find(
+    (element) =>
+      element.type === "pcb_port" &&
+      element.pcb_port_id === thermalPad.pcb_port_id,
+  )
+
   expect(circuit.db.source_group.getWhere({ name: "MCU" })).toBeDefined()
   expect(
     circuit.db.source_component
@@ -50,10 +79,9 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
   ).toBe(true)
   expect(circuit.db.pcb_component.list().length).toBeGreaterThan(0)
   expect(circuit.db.source_net.getWhere({ name: "USER_IO" })).toBeDefined()
+  expect(thermalPadPort.source_port_id).toBe(groundPort.source_port_id)
   expect(
-    circuit
-      .getCircuitJson()
-      .filter((element) => element.type.endsWith("_error")),
+    circuitJson.filter((element) => element.type.endsWith("_error")),
   ).toEqual([])
 })
 
