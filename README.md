@@ -14,3 +14,12 @@ return (
   </ArduinoShield>
 )
 ```
+
+The RP2040 subcircuit includes the microcontroller, QSPI flash, crystal, USB-C,
+power regulation, decoupling, boot/run controls, and SWD test points:
+
+```tsx
+import { Microcontroller_RP2040 } from "@tscircuit/common"
+
+return <Microcontroller_RP2040 name="MCU" pcbX={0} pcbY={0} />
+```

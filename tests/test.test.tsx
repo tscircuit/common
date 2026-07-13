@@ -1,13 +1,60 @@
 import { test, expect } from "bun:test"
+import { Circuit } from "tscircuit"
 import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
+import { Microcontroller_RP2040 } from "../index"
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
   expect(MicroModBoard).toBeDefined()
   expect(XiaoBoard).toBeDefined() // TODO: Add tests
+  expect(Microcontroller_RP2040).toBeDefined()
+})
+
+test("Microcontroller_RP2040 creates a named, positionable subcircuit", () => {
+  const element = Microcontroller_RP2040({
+    name: "MCU",
+    pcbX: 12,
+    pcbY: -4,
+    pcbRotation: 90,
+  }) as any
+
+  expect(element.type).toBe("subcircuit")
+  expect(element.props.name).toBe("MCU")
+  expect(element.props.pcbX).toBe(12)
+  expect(element.props.pcbY).toBe(-4)
+  expect(element.props.pcbRotation).toBe(90)
+})
+
+test("Microcontroller_RP2040 renders its complete support circuit", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="30mm" height="70mm" routingDisabled>
+      <Microcontroller_RP2040
+        name="MCU"
+        connections={{ GPIO0: "net.USER_IO" }}
+      />
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  expect(circuit.db.source_group.getWhere({ name: "MCU" })).toBeDefined()
+  expect(
+    circuit.db.source_component
+      .list()
+      .some((component) => component.manufacturer_part_number === "RP2040"),
+  ).toBe(true)
+  expect(circuit.db.pcb_component.list().length).toBeGreaterThan(0)
+  expect(circuit.db.source_net.getWhere({ name: "USER_IO" })).toBeDefined()
+  expect(
+    circuit
+      .getCircuitJson()
+      .filter((element) => element.type.endsWith("_error")),
+  ).toEqual([])
 })
 
 test("ArduinoShield forwards explicit boardProps and chipProps", () => {
