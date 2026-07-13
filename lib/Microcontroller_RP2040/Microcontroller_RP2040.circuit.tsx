@@ -329,7 +329,7 @@ export const Microcontroller_RP2040 = ({
     <X322512MSB4SI
       name="Y1"
       schSectionName={schSections.clock}
-      pcbX={0}
+      pcbX={-0.5}
       pcbY={-6}
     />
     <SKRPACE010
@@ -369,7 +369,7 @@ export const Microcontroller_RP2040 = ({
       resistance="10k"
       footprint="0402"
       schSectionName={schSections.controls}
-      pcbX={5.1}
+      pcbX={12}
       pcbY={17.8}
       pcbRotation={90}
     />
