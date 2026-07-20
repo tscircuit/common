@@ -322,7 +322,7 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.power}
       pcbX={-7.2}
       pcbY={20.2}
-      pcbRotation={0}
+      pcbRotation={180}
       schHeight={0.6}
     />
 
