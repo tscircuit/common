@@ -171,6 +171,8 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.controls}
       pcbX={10.4}
       pcbY={-5.5}
+      schX={10.44}
+      schY={-5.64}
     />
 
     <capacitor
@@ -293,6 +295,9 @@ export const Microcontroller_RP2040 = ({
       pcbX={0}
       pcbY={31.0}
       pcbRotation={180}
+      schX={12.44}
+      schY={-6.36}
+      schWidth={1.6}
     />
 
     <RP2040
@@ -313,7 +318,7 @@ export const Microcontroller_RP2040 = ({
       pcbX={3.4}
       pcbY={9.5}
       pcbRotation={90}
-      schX={18.02}
+      schX={18.11}
       schY={-4.16}
       schHeight={1}
     />
@@ -337,6 +342,8 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.controls}
       pcbX={8.6}
       pcbY={21.8}
+      schX={11.35}
+      schY={-7.84}
     />
     <SKRPACE010
       name="SW_RUN"
@@ -362,6 +369,7 @@ export const Microcontroller_RP2040 = ({
       pcbRotation={90}
       schX={10.2}
       schY={-18.52}
+      schRotation={180}
     />
 
     <resistor
@@ -401,6 +409,8 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.usb}
       pcbX={-0.2}
       pcbY={25.6}
+      schX={8.89}
+      schY={-7.36}
     />
     <resistor
       name="R_CC2"
@@ -444,7 +454,7 @@ export const Microcontroller_RP2040 = ({
       pcbX={-2.8}
       pcbY={26.3}
       pcbRotation={90}
-      schX={15.47}
+      schX={15.38}
       schY={-3.96}
     />
     <capacitor
@@ -533,6 +543,8 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.debug}
       pcbX={2}
       pcbY={-31}
+      schX={7.2}
+      schY={-18.305}
     />
     <testpoint
       name="TP_3V3"
