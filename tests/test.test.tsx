@@ -4,13 +4,77 @@ import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
-import { Microcontroller_RP2040 } from "../index"
+import { Microcontroller_RP2040, PowerBoost_MT3608 } from "../index"
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
   expect(MicroModBoard).toBeDefined()
   expect(XiaoBoard).toBeDefined() // TODO: Add tests
   expect(Microcontroller_RP2040).toBeDefined()
+  expect(PowerBoost_MT3608).toBeDefined()
+})
+
+test("PowerBoost_MT3608 is a pure, positionable subcircuit", () => {
+  const element = PowerBoost_MT3608({
+    name: "POWER",
+    pcbX: 8,
+    pcbY: -3,
+  }) as any
+
+  expect(element.type).toBe("subcircuit")
+  expect(element.props.name).toBe("POWER")
+  expect(element.props.pcbX).toBe(8)
+  expect(element.props.pcbY).toBe(-3)
+
+  const children = Array.isArray(element.props.children)
+    ? element.props.children
+    : [element.props.children]
+  expect(children.some((child: any) => child?.type === "board")).toBe(false)
+})
+
+test("PowerBoost_MT3608 renders the complete functional boost circuit", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="70mm" height="70mm" routingDisabled>
+      <net name="VBUS" isPowerNet />
+      <net name="VSYS" isPowerNet />
+      <net name="GND" isGroundNet />
+      <net name="BAT_LINK" isPowerNet />
+      <PowerBoost_MT3608
+        name="POWER"
+        connections={{
+          BAT_POS: "net.BAT_LINK",
+          BAT_SWITCHED: "net.BAT_LINK",
+          VBUS: "net.VBUS",
+          VSYS: "net.VSYS",
+          GND: "net.GND",
+        }}
+      />
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  const manufacturerPartNumbers = circuit.db.source_component
+    .list()
+    .map((component) => component.manufacturer_part_number)
+
+  expect(circuit.db.source_group.getWhere({ name: "POWER" })).toBeDefined()
+  expect(manufacturerPartNumbers).toContain("MT3608")
+  expect(manufacturerPartNumbers).toContain("SS34")
+  expect(manufacturerPartNumbers).toContain("AO3401A")
+  expect(manufacturerPartNumbers).toContain("MMBT3904_RANGE_100_300_")
+  expect(manufacturerPartNumbers).not.toContain("SK_12E12_G5")
+  expect(circuit.db.source_net.getWhere({ name: "BAT_LINK" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "VBUS" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "VSYS" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "GND" })).toBeDefined()
+  expect(
+    circuit
+      .getCircuitJson()
+      .filter((element: any) => element.type.endsWith("_error")),
+  ).toEqual([])
 })
 
 test("Microcontroller_RP2040 creates a named, positionable subcircuit", () => {
