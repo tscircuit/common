@@ -4,13 +4,112 @@ import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
-import { Microcontroller_RP2040 } from "../index"
+import { Microcontroller_RP2040, PowerBoost_MT3608 } from "../index"
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
   expect(MicroModBoard).toBeDefined()
   expect(XiaoBoard).toBeDefined() // TODO: Add tests
   expect(Microcontroller_RP2040).toBeDefined()
+  expect(PowerBoost_MT3608).toBeDefined()
+})
+
+test("PowerBoost_MT3608 is a pure, positionable subcircuit", () => {
+  const element = PowerBoost_MT3608({
+    name: "POWER",
+    pcbX: 8,
+    pcbY: -3,
+  }) as any
+
+  expect(element.type).toBe("subcircuit")
+  expect(element.props.name).toBe("POWER")
+  expect(element.props.pcbX).toBe(8)
+  expect(element.props.pcbY).toBe(-3)
+
+  const children = Array.isArray(element.props.children)
+    ? element.props.children
+    : [element.props.children]
+  expect(children.some((child: any) => child?.type === "board")).toBe(false)
+})
+
+test("PowerBoost_MT3608 renders the complete functional boost circuit", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="70mm" height="70mm" routingDisabled>
+      <net name="VBUS" isPowerNet />
+      <net name="VSYS" isPowerNet />
+      <net name="GND" isGroundNet />
+      <net name="BAT_LINK" isPowerNet />
+      <PowerBoost_MT3608
+        name="POWER"
+        connections={{
+          BAT_POS: "net.BAT_LINK",
+          BAT_SWITCHED: "net.BAT_LINK",
+          VBUS: "net.VBUS",
+          VSYS: "net.VSYS",
+          GND: "net.GND",
+        }}
+      />
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  const circuitJson = circuit.getCircuitJson() as any[]
+  const manufacturerPartNumbers = circuitJson.map(
+    (element) => element.manufacturer_part_number,
+  )
+
+  expect(circuit.db.source_group.getWhere({ name: "POWER" })).toBeDefined()
+  expect(manufacturerPartNumbers).toContain("MT3608")
+  expect(manufacturerPartNumbers).toContain("SS34")
+  expect(circuitJson).toContainEqual(
+    expect.objectContaining({
+      type: "source_component",
+      name: "Q_BAT_CUTOFF",
+      ftype: "simple_mosfet",
+      channel_type: "p",
+    }),
+  )
+  expect(circuitJson).toContainEqual(
+    expect.objectContaining({
+      type: "source_component",
+      name: "Q_BAT_GATE",
+      ftype: "simple_transistor",
+      transistor_type: "npn",
+    }),
+  )
+  for (const transistorName of ["Q_BAT_GATE", "Q_USB_BOOST_OFF"]) {
+    const transistor = circuitJson.find(
+      (element) =>
+        element.type === "source_component" && element.name === transistorName,
+    )
+    const baseSourcePort = circuitJson.find(
+      (element) =>
+        element.type === "source_port" &&
+        element.source_component_id === transistor.source_component_id &&
+        element.pin_number === 2,
+    )
+    const baseSchematicPort = circuitJson.find(
+      (element) =>
+        element.type === "schematic_port" &&
+        element.source_port_id === baseSourcePort.source_port_id,
+    )
+
+    expect(baseSchematicPort.display_pin_label).toBe("base")
+    expect(baseSchematicPort.is_connected).toBe(true)
+  }
+  expect(manufacturerPartNumbers).not.toContain("SK_12E12_G5")
+  expect(circuit.db.source_net.getWhere({ name: "BAT_LINK" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "VBUS" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "VSYS" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "GND" })).toBeDefined()
+  expect(
+    circuit
+      .getCircuitJson()
+      .filter((element: any) => element.type.endsWith("_error")),
+  ).toEqual([])
 })
 
 test("Microcontroller_RP2040 creates a named, positionable subcircuit", () => {

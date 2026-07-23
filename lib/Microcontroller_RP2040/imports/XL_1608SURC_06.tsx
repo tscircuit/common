@@ -1,17 +1,11 @@
 import type { LedProps } from "@tscircuit/props"
 
-const pinLabels = {
-  pin1: ["cathode", "neg"],
-  pin2: ["anode", "pos"],
-} as const
-
 export const XL_1608SURC_06 = (props: LedProps) => {
   const { name = "LED1", ...restProps } = props
 
   return (
-    <diode
+    <led
       name={name}
-      pinLabels={pinLabels}
       supplierPartNumbers={{
         jlcpcb: ["C965799"],
       }}

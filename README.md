@@ -23,3 +23,26 @@ import { Microcontroller_RP2040 } from "@tscircuit/common"
 
 return <Microcontroller_RP2040 name="MCU" pcbX={0} pcbY={0} />
 ```
+
+The MT3608 power-boost subcircuit includes its battery connector, cutoff
+MOSFET, USB-present shutdown, boost converter, feedback divider, and
+input/output filtering. Place the power switch on the parent board between
+`BAT_POS` and `BAT_SWITCHED`, or connect them to the same net for always-on
+operation:
+
+```tsx
+import { PowerBoost_MT3608 } from "@tscircuit/common"
+
+return (
+  <PowerBoost_MT3608
+    name="POWER"
+    connections={{
+      BAT_POS: "net.BAT_LINK",
+      BAT_SWITCHED: "net.BAT_LINK",
+      VBUS: "net.VBUS",
+      VSYS: "net.VSYS",
+      GND: "net.GND",
+    }}
+  />
+)
+```

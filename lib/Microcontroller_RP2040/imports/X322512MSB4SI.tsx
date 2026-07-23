@@ -1,16 +1,16 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { CrystalProps } from "@tscircuit/props"
 
-const pinLabels = {
-  pin1: ["OSC1"],
-  pin2: ["GND1"],
-  pin3: ["OSC2"],
-  pin4: ["GND2"],
-} as const
+type X322512MSB4SIProps = Omit<
+  CrystalProps,
+  "frequency" | "loadCapacitance" | "pinVariant"
+>
 
-export const X322512MSB4SI = (props: ChipProps<typeof pinLabels>) => {
+export const X322512MSB4SI = (props: X322512MSB4SIProps) => {
   return (
-    <chip
-      pinLabels={pinLabels}
+    <crystal
+      frequency="12MHz"
+      loadCapacitance="12pF"
+      pinVariant="four_pin"
       supplierPartNumbers={{
         jlcpcb: ["C9002"],
       }}
