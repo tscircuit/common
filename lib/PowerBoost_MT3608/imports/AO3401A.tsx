@@ -1,15 +1,12 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { MosfetProps } from "@tscircuit/props"
 
-const pinLabels = {
-  pin1: ["G"],
-  pin2: ["S"],
-  pin3: ["D"],
-} as const
+type AO3401AProps = Omit<MosfetProps, "channelType" | "mosfetMode">
 
-export const AO3401A = (props: ChipProps<typeof pinLabels>) => {
+export const AO3401A = (props: AO3401AProps) => {
   return (
-    <chip
-      pinLabels={pinLabels}
+    <mosfet
+      channelType="p"
+      mosfetMode="enhancement"
       supplierPartNumbers={{
         jlcpcb: ["C347476"],
       }}
@@ -17,7 +14,7 @@ export const AO3401A = (props: ChipProps<typeof pinLabels>) => {
       footprint={
         <footprint>
           <smtpad
-            portHints={["pin2"]}
+            portHints={["pin2", "source"]}
             pcbX="1.149985mm"
             pcbY="0.94996mm"
             width="0.999998mm"
@@ -25,7 +22,7 @@ export const AO3401A = (props: ChipProps<typeof pinLabels>) => {
             shape="rect"
           />
           <smtpad
-            portHints={["pin3"]}
+            portHints={["pin1", "drain"]}
             pcbX="-1.149985mm"
             pcbY="0mm"
             width="0.999998mm"
@@ -33,7 +30,7 @@ export const AO3401A = (props: ChipProps<typeof pinLabels>) => {
             shape="rect"
           />
           <smtpad
-            portHints={["pin1"]}
+            portHints={["pin3", "gate"]}
             pcbX="1.149985mm"
             pcbY="-0.94996mm"
             width="0.999998mm"

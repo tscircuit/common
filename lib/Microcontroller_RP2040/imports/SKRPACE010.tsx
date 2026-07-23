@@ -1,4 +1,4 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { PushButtonProps } from "@tscircuit/props"
 
 const pinLabels = {
   pin1: ["pin1"],
@@ -7,9 +7,9 @@ const pinLabels = {
   pin4: ["pin4"],
 } as const
 
-export const SKRPACE010 = (props: ChipProps<typeof pinLabels>) => {
+export const SKRPACE010 = (props: PushButtonProps<typeof pinLabels>) => {
   return (
-    <chip
+    <pushbutton
       pinLabels={pinLabels}
       supplierPartNumbers={{
         jlcpcb: ["C139797"],

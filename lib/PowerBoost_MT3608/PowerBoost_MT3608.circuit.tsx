@@ -75,17 +75,16 @@ export const PowerBoost_MT3608 = ({
       pcbX={-31.5}
       pcbY={25.25}
       pcbRotation={90}
-      schX={-18}
-      schY={-2}
+      schX={-10}
+      schY={4}
     />
     <AO3401A
       name="Q_BAT_CUTOFF"
       schSectionName={schSections.batteryInput}
       pcbX={-11.5}
       pcbY={21.25}
-      schX={-10}
-      schY={-2}
-      schHeight={0.4}
+      schX={-6}
+      schY={4}
     />
     <A_0603WAF1003T5E
       name="R_BAT_GATE_PULLUP"
@@ -93,8 +92,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={-11.5}
       pcbY={26.25}
       pcbRotation={90}
-      schX={-14.27}
-      schY={1}
+      schX={-10}
+      schY={0.5}
     />
     <A_0603WAF1003T5E
       name="R_BAT_GATE_BASE"
@@ -102,17 +101,16 @@ export const PowerBoost_MT3608 = ({
       pcbX={-14.5}
       pcbY={26.25}
       pcbRotation={90}
-      schX={-10.56}
-      schY={1}
+      schX={-10.78}
+      schY={-3}
     />
     <MMBT3904_RANGE_100_300_
       name="Q_BAT_GATE"
       schSectionName={schSections.batteryInput}
       pcbX={-17.5}
       pcbY={26.25}
-      schX={-5.17}
-      schY={1}
-      schHeight={0.4}
+      schX={-5.84}
+      schY={-3}
     />
 
     <SMMS0630_220M
@@ -120,16 +118,16 @@ export const PowerBoost_MT3608 = ({
       schSectionName={schSections.boostConverter}
       pcbX={-2.5}
       pcbY={21.25}
-      schX={-0.05}
-      schY={-2}
+      schX={-2}
+      schY={4}
     />
     <MT3608
       name="U_BAT_BOOST"
       schSectionName={schSections.boostConverter}
       pcbX={6.5}
       pcbY={21.25}
-      schX={4.05}
-      schY={-2}
+      schX={2}
+      schY={4}
     />
     <SS34
       name="D_BAT_BOOST"
@@ -137,8 +135,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={15.5}
       pcbY={21.25}
       pcbRotation={180}
-      schX={8}
-      schY={-2}
+      schX={6}
+      schY={4}
     />
     <CL10A106KP8NNNC
       name="C_BAT_IN"
@@ -146,8 +144,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={3.5}
       pcbY={26.25}
       pcbRotation={90}
-      schX={0}
-      schY={1}
+      schX={-2}
+      schY={0.5}
     />
     <CL10A106KP8NNNC
       name="C_BAT_IN_BULK"
@@ -155,8 +153,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={-2.5}
       pcbY={26.75}
       pcbRotation={90}
-      schX={0}
-      schY={4}
+      schX={-1.38}
+      schY={-3}
     />
     <CL10A226MQ8NRNC
       name="C_BAT_OUT"
@@ -164,8 +162,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={20.5}
       pcbY={21.25}
       pcbRotation={90}
-      schX={12}
-      schY={1}
+      schX={10}
+      schY={0.5}
     />
     <CL10A226MQ8NRNC
       name="C_BAT_OUT_BULK"
@@ -173,8 +171,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={23.5}
       pcbY={21.25}
       pcbRotation={90}
-      schX={12}
-      schY={4}
+      schX={10}
+      schY={-3}
     />
     <A_0603WAF9532T5E
       name="R_BOOST_TOP"
@@ -182,8 +180,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={11.5}
       pcbY={26.25}
       pcbRotation={90}
-      schX={8}
-      schY={1}
+      schX={6}
+      schY={0.5}
     />
     <FRC0603F1302TS
       name="R_BOOST_BOT"
@@ -191,8 +189,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={8.5}
       pcbY={26.25}
       pcbRotation={90}
-      schX={8}
-      schY={4}
+      schX={6}
+      schY={-3}
     />
     <A_0603WAF1003T5E
       name="R_BOOST_EN_PULLUP"
@@ -200,8 +198,8 @@ export const PowerBoost_MT3608 = ({
       pcbX={16.5}
       pcbY={26.25}
       pcbRotation={90}
-      schX={4}
-      schY={1}
+      schX={2}
+      schY={0.5}
     />
 
     <A_0603WAF1003T5E
@@ -210,17 +208,16 @@ export const PowerBoost_MT3608 = ({
       pcbX={24.5}
       pcbY={26.25}
       pcbRotation={90}
-      schX={18}
-      schY={-2}
+      schX={-0.86}
+      schY={-7}
     />
     <MMBT3904_RANGE_100_300_
       name="Q_USB_BOOST_OFF"
       schSectionName={schSections.usbShutdown}
       pcbX={28.5}
       pcbY={18.25}
-      schX={22}
-      schY={-2}
-      schHeight={0.4}
+      schX={4.08}
+      schY={-7}
     />
     <A_0603WAF1003T5E
       name="R_USB_BOOST_OFF_PULLDOWN"
@@ -228,208 +225,140 @@ export const PowerBoost_MT3608 = ({
       pcbX={31.5}
       pcbY={18.25}
       pcbRotation={90}
-      schX={22}
-      schY={1}
+      schX={8.78}
+      schY={-7}
     />
 
+    <trace from=".J_BAT > .pin1" to="net.BAT_POS" {...batteryTraceProps} />
     <trace
-      name="BAT_POS"
-      from=".J_BAT > .pin1"
-      to="net.BAT_POS"
-      {...batteryTraceProps}
-    />
-    <trace
-      name="BAT_SWITCHED"
       from="net.BAT_SWITCHED"
-      to=".Q_BAT_CUTOFF > .S"
+      to=".Q_BAT_CUTOFF > .source"
       {...powerTraceProps}
     />
+    <trace from="net.BAT_SWITCHED" to=".R_BOOST_EN_PULLUP > .pin1" />
     <trace
-      name="BOOST_EN_PULLUP_IN"
-      from="net.BAT_SWITCHED"
-      to=".R_BOOST_EN_PULLUP > .pin1"
-    />
-    <trace
-      name="BOOST_EN"
       from=".R_BOOST_EN_PULLUP > .pin2"
       to=".U_BAT_BOOST > .EN"
+      schDisplayLabel="BOOST_EN"
     />
+    <trace from=".Q_USB_BOOST_OFF > .pin1" to=".U_BAT_BOOST > .EN" />
+    <trace from=".Q_USB_BOOST_OFF > .pin3" to="net.GND" {...gndLabel} />
+    <trace from="net.VBUS" to=".R_USB_BOOST_OFF > .pin1" {...vbusLabel} />
     <trace
-      name="BOOST_EN_OFF_C"
-      from=".Q_USB_BOOST_OFF > .C"
-      to=".U_BAT_BOOST > .EN"
-    />
-    <trace
-      name="BOOST_EN_OFF_E"
-      from=".Q_USB_BOOST_OFF > .E"
-      to="net.GND"
-      {...gndLabel}
-    />
-    <trace
-      name="USB_BOOST_OFF_R"
-      from="net.VBUS"
-      to=".R_USB_BOOST_OFF > .pin1"
-      {...vbusLabel}
-    />
-    <trace
-      name="USB_BOOST_OFF_B"
       from=".R_USB_BOOST_OFF > .pin2"
-      to=".Q_USB_BOOST_OFF > .B"
+      to=".Q_USB_BOOST_OFF > .pin2"
+      schDisplayLabel="USB_DETECT"
     />
     <trace
-      name="USB_BOOST_OFF_B_PD"
-      from=".Q_USB_BOOST_OFF > .B"
+      from=".Q_USB_BOOST_OFF > .pin2"
       to=".R_USB_BOOST_OFF_PULLDOWN > .pin1"
     />
     <trace
-      name="USB_BOOST_OFF_PD_G"
       from=".R_USB_BOOST_OFF_PULLDOWN > .pin2"
       to="net.GND"
       {...gndLabel}
     />
     <trace
-      name="BAT_CUTOFF_OUT"
-      from=".Q_BAT_CUTOFF > .D"
+      from=".Q_BAT_CUTOFF > .drain"
       to=".U_BAT_BOOST > .IN"
       {...powerTraceProps}
+      schDisplayLabel="BOOST_IN"
     />
+    <trace from="net.BAT_SWITCHED" to=".R_BAT_GATE_PULLUP > .pin1" />
     <trace
-      name="BAT_GATE_PULLUP_IN"
-      from="net.BAT_SWITCHED"
-      to=".R_BAT_GATE_PULLUP > .pin1"
-    />
-    <trace
-      name="BAT_GATE_PULLUP"
       from=".R_BAT_GATE_PULLUP > .pin2"
-      to=".Q_BAT_CUTOFF > .G"
+      to=".Q_BAT_CUTOFF > .gate"
+      schDisplayLabel="BAT_GATE"
     />
+    <trace from=".Q_BAT_GATE > .pin1" to=".Q_BAT_CUTOFF > .gate" />
+    <trace from=".Q_BAT_GATE > .pin3" to="net.GND" {...gndLabel} />
+    <trace from=".U_BAT_BOOST > .EN" to=".R_BAT_GATE_BASE > .pin1" />
     <trace
-      name="BAT_GATE_PULLDOWN"
-      from=".Q_BAT_GATE > .C"
-      to=".Q_BAT_CUTOFF > .G"
-    />
-    <trace
-      name="BAT_GATE_G"
-      from=".Q_BAT_GATE > .E"
-      to="net.GND"
-      {...gndLabel}
-    />
-    <trace
-      name="BAT_GATE_BASE_R"
-      from=".U_BAT_BOOST > .EN"
-      to=".R_BAT_GATE_BASE > .pin1"
-    />
-    <trace
-      name="BAT_GATE_BASE"
       from=".R_BAT_GATE_BASE > .pin2"
-      to=".Q_BAT_GATE > .B"
+      to=".Q_BAT_GATE > .pin2"
+      schDisplayLabel="GATE_DRIVE"
     />
     <trace
-      name="BOOST_L_IN"
-      from=".Q_BAT_CUTOFF > .D"
+      from=".Q_BAT_CUTOFF > .drain"
       to=".L_BAT_BOOST > .pin1"
       {...powerTraceProps}
     />
     <trace
-      name="BOOST_L_SW"
       from=".L_BAT_BOOST > .pin2"
       to=".U_BAT_BOOST > .SW"
       {...powerTraceProps}
+      schDisplayLabel="SW"
     />
     <trace
-      name="BOOST_D_SW"
       from=".U_BAT_BOOST > .SW"
       to=".D_BAT_BOOST > .anode"
       {...powerTraceProps}
     />
     <trace
-      name="BOOST_VSYS"
       from=".D_BAT_BOOST > .cathode"
       to="net.VSYS"
       {...powerTraceProps}
       {...vsysLabel}
     />
     <trace
-      name="BOOST_GND"
       from=".U_BAT_BOOST > .GND"
       to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
-      name="BOOST_IN_CAP"
       from=".C_BAT_IN > .pin1"
-      to=".Q_BAT_CUTOFF > .D"
+      to=".Q_BAT_CUTOFF > .drain"
       {...powerTraceProps}
     />
     <trace
-      name="BOOST_IN_CAP_GND"
       from=".C_BAT_IN > .pin2"
       to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
-      name="BOOST_IN_BULK"
       from=".C_BAT_IN_BULK > .pin1"
-      to=".Q_BAT_CUTOFF > .D"
+      to=".Q_BAT_CUTOFF > .drain"
       {...powerTraceProps}
     />
     <trace
-      name="BOOST_IN_BULK_GND"
       from=".C_BAT_IN_BULK > .pin2"
       to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
-      name="BOOST_OUT_CAP"
       from=".C_BAT_OUT > .pin1"
       to=".D_BAT_BOOST > .cathode"
       {...powerTraceProps}
     />
     <trace
-      name="BOOST_OUT_CAP_GND"
       from=".C_BAT_OUT > .pin2"
       to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
-      name="BOOST_OUT_BULK"
       from=".C_BAT_OUT_BULK > .pin1"
       to=".D_BAT_BOOST > .cathode"
       {...powerTraceProps}
     />
     <trace
-      name="BOOST_OUT_BULK_GND"
       from=".C_BAT_OUT_BULK > .pin2"
       to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
+    <trace from=".D_BAT_BOOST > .cathode" to=".R_BOOST_TOP > .pin1" />
     <trace
-      name="BOOST_FB_TOP"
-      from=".D_BAT_BOOST > .cathode"
-      to=".R_BOOST_TOP > .pin1"
-    />
-    <trace
-      name="BOOST_FB"
       from=".R_BOOST_TOP > .pin2"
       to=".U_BAT_BOOST > .FB"
+      schDisplayLabel="FB"
     />
-    <trace
-      name="BOOST_FB_BOT"
-      from=".U_BAT_BOOST > .FB"
-      to=".R_BOOST_BOT > .pin1"
-    />
-    <trace
-      name="BOOST_FB_GND"
-      from=".R_BOOST_BOT > .pin2"
-      to="net.GND"
-      {...gndLabel}
-    />
-    <trace name="BAT_GND" from=".J_BAT > .pin2" to="net.GND" {...gndLabel} />
+    <trace from=".U_BAT_BOOST > .FB" to=".R_BOOST_BOT > .pin1" />
+    <trace from=".R_BOOST_BOT > .pin2" to="net.GND" {...gndLabel} />
+    <trace from=".J_BAT > .pin2" to="net.GND" {...gndLabel} />
   </subcircuit>
 )
 

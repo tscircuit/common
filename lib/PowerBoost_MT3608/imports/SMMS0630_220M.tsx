@@ -1,14 +1,11 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { InductorProps } from "@tscircuit/props"
 
-const pinLabels = {
-  pin1: ["pin1"],
-  pin2: ["pin2"],
-} as const
+type SMMS0630_220MProps = Omit<InductorProps, "inductance">
 
-export const SMMS0630_220M = (props: ChipProps<typeof pinLabels>) => {
+export const SMMS0630_220M = (props: SMMS0630_220MProps) => {
   return (
-    <chip
-      pinLabels={pinLabels}
+    <inductor
+      inductance="22uH"
       supplierPartNumbers={{
         jlcpcb: ["C128694"],
       }}

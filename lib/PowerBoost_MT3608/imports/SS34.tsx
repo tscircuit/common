@@ -12,6 +12,7 @@ export const SS34 = (props: DiodeProps) => {
     <diode
       name={name}
       pinLabels={pinLabels}
+      variant="schottky"
       supplierPartNumbers={{
         jlcpcb: ["C8678"],
       }}

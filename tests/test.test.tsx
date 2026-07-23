@@ -56,15 +56,50 @@ test("PowerBoost_MT3608 renders the complete functional boost circuit", async ()
 
   await circuit.renderUntilSettled()
 
-  const manufacturerPartNumbers = circuit.db.source_component
-    .list()
-    .map((component) => component.manufacturer_part_number)
+  const circuitJson = circuit.getCircuitJson() as any[]
+  const manufacturerPartNumbers = circuitJson.map(
+    (element) => element.manufacturer_part_number,
+  )
 
   expect(circuit.db.source_group.getWhere({ name: "POWER" })).toBeDefined()
   expect(manufacturerPartNumbers).toContain("MT3608")
   expect(manufacturerPartNumbers).toContain("SS34")
-  expect(manufacturerPartNumbers).toContain("AO3401A")
-  expect(manufacturerPartNumbers).toContain("MMBT3904_RANGE_100_300_")
+  expect(circuitJson).toContainEqual(
+    expect.objectContaining({
+      type: "source_component",
+      name: "Q_BAT_CUTOFF",
+      ftype: "simple_mosfet",
+      channel_type: "p",
+    }),
+  )
+  expect(circuitJson).toContainEqual(
+    expect.objectContaining({
+      type: "source_component",
+      name: "Q_BAT_GATE",
+      ftype: "simple_transistor",
+      transistor_type: "npn",
+    }),
+  )
+  for (const transistorName of ["Q_BAT_GATE", "Q_USB_BOOST_OFF"]) {
+    const transistor = circuitJson.find(
+      (element) =>
+        element.type === "source_component" && element.name === transistorName,
+    )
+    const baseSourcePort = circuitJson.find(
+      (element) =>
+        element.type === "source_port" &&
+        element.source_component_id === transistor.source_component_id &&
+        element.pin_number === 2,
+    )
+    const baseSchematicPort = circuitJson.find(
+      (element) =>
+        element.type === "schematic_port" &&
+        element.source_port_id === baseSourcePort.source_port_id,
+    )
+
+    expect(baseSchematicPort.display_pin_label).toBe("base")
+    expect(baseSchematicPort.is_connected).toBe(true)
+  }
   expect(manufacturerPartNumbers).not.toContain("SK_12E12_G5")
   expect(circuit.db.source_net.getWhere({ name: "BAT_LINK" })).toBeDefined()
   expect(circuit.db.source_net.getWhere({ name: "VBUS" })).toBeDefined()

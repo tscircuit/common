@@ -1,14 +1,11 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { CapacitorProps } from "@tscircuit/props"
 
-const pinLabels = {
-  pin1: ["pin1"],
-  pin2: ["pin2"],
-} as const
+type CL10A106KP8NNNCProps = Omit<CapacitorProps, "capacitance">
 
-export const CL10A106KP8NNNC = (props: ChipProps<typeof pinLabels>) => {
+export const CL10A106KP8NNNC = (props: CL10A106KP8NNNCProps) => {
   return (
-    <chip
-      pinLabels={pinLabels}
+    <capacitor
+      capacitance="10uF"
       supplierPartNumbers={{
         jlcpcb: ["C19702"],
       }}

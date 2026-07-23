@@ -1,15 +1,11 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { TransistorProps } from "@tscircuit/props"
 
-const pinLabels = {
-  pin1: ["B"],
-  pin2: ["E"],
-  pin3: ["C"],
-} as const
+type MMBT3904Props = Omit<TransistorProps, "type">
 
-export const MMBT3904_RANGE_100_300_ = (props: ChipProps<typeof pinLabels>) => {
+export const MMBT3904_RANGE_100_300_ = (props: MMBT3904Props) => {
   return (
-    <chip
-      pinLabels={pinLabels}
+    <transistor
+      type="npn"
       supplierPartNumbers={{
         jlcpcb: ["C20526"],
       }}
@@ -17,7 +13,7 @@ export const MMBT3904_RANGE_100_300_ = (props: ChipProps<typeof pinLabels>) => {
       footprint={
         <footprint>
           <smtpad
-            portHints={["pin1"]}
+            portHints={["pin2", "base"]}
             pcbX="0.999998mm"
             pcbY="-0.94996mm"
             width="0.999998mm"
@@ -25,7 +21,7 @@ export const MMBT3904_RANGE_100_300_ = (props: ChipProps<typeof pinLabels>) => {
             shape="rect"
           />
           <smtpad
-            portHints={["pin2"]}
+            portHints={["pin3", "emitter"]}
             pcbX="0.999998mm"
             pcbY="0.94996mm"
             width="0.999998mm"
@@ -33,7 +29,7 @@ export const MMBT3904_RANGE_100_300_ = (props: ChipProps<typeof pinLabels>) => {
             shape="rect"
           />
           <smtpad
-            portHints={["pin3"]}
+            portHints={["pin1", "collector"]}
             pcbX="-0.999998mm"
             pcbY="0mm"
             width="0.999998mm"

@@ -12,6 +12,7 @@ export const B5819W_SL = (props: DiodeProps) => {
     <diode
       name={name}
       pinLabels={pinLabels}
+      variant="schottky"
       supplierPartNumbers={{
         jlcpcb: ["C8598"],
       }}
