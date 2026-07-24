@@ -46,3 +46,23 @@ return (
   />
 )
 ```
+
+The Game Boy PAM8403 audio-amplifier subcircuit includes the PWM input filter,
+input coupling, amplifier decoupling, speaker EMI filter, and speaker
+connector:
+
+```tsx
+import { AudioAmplifier_PAM8403 } from "@tscircuit/common"
+
+return (
+  <AudioAmplifier_PAM8403
+    name="AUDIO"
+    connections={{
+      AUDIO_PWM: "net.AUDIO_PWM",
+      V3V3: "net.V3V3",
+      VSYS: "net.VSYS",
+      GND: "net.GND",
+    }}
+  />
+)
+```

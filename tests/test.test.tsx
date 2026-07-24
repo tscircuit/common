@@ -4,7 +4,11 @@ import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
-import { Microcontroller_RP2040, PowerBoost_MT3608 } from "../index"
+import {
+  AudioAmplifier_PAM8403,
+  Microcontroller_RP2040,
+  PowerBoost_MT3608,
+} from "../index"
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
@@ -12,6 +16,67 @@ test("test", () => {
   expect(XiaoBoard).toBeDefined() // TODO: Add tests
   expect(Microcontroller_RP2040).toBeDefined()
   expect(PowerBoost_MT3608).toBeDefined()
+  expect(AudioAmplifier_PAM8403).toBeDefined()
+})
+
+test("AudioAmplifier_PAM8403 is a pure, positionable subcircuit", () => {
+  const element = AudioAmplifier_PAM8403({
+    name: "AUDIO",
+    pcbX: 4,
+    pcbY: -2,
+  }) as any
+
+  expect(element.type).toBe("subcircuit")
+  expect(element.props.name).toBe("AUDIO")
+  expect(element.props.pcbX).toBe(4)
+  expect(element.props.pcbY).toBe(-2)
+
+  const children = Array.isArray(element.props.children)
+    ? element.props.children
+    : [element.props.children]
+  expect(children.some((child: any) => child?.type === "board")).toBe(false)
+})
+
+test("AudioAmplifier_PAM8403 renders the complete mono audio path", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="80mm" height="50mm" routingDisabled>
+      <net name="AUDIO_PWM" />
+      <net name="V3V3" isPowerNet />
+      <net name="VSYS" isPowerNet />
+      <net name="GND" isGroundNet />
+      <AudioAmplifier_PAM8403
+        name="AUDIO"
+        connections={{
+          AUDIO_PWM: "net.AUDIO_PWM",
+          V3V3: "net.V3V3",
+          VSYS: "net.VSYS",
+          GND: "net.GND",
+        }}
+      />
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  const circuitJson = circuit.getCircuitJson() as any[]
+  const manufacturerPartNumbers = circuitJson.map(
+    (element) => element.manufacturer_part_number,
+  )
+
+  expect(circuit.db.source_group.getWhere({ name: "AUDIO" })).toBeDefined()
+  expect(manufacturerPartNumbers).toContain("PAM8403DR_H")
+  expect(manufacturerPartNumbers).not.toContain("RK10J12E002L")
+  expect(manufacturerPartNumbers).toContain("BLM18PG121SN1D")
+  expect(manufacturerPartNumbers).toContain("SM02B_PASS_TBT_LF__SN_")
+  expect(circuit.db.source_net.getWhere({ name: "AUDIO_PWM" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "V3V3" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "VSYS" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "GND" })).toBeDefined()
+  expect(
+    circuitJson.filter((element) => element.type.endsWith("_error")),
+  ).toEqual([])
 })
 
 test("PowerBoost_MT3608 is a pure, positionable subcircuit", () => {
