@@ -132,9 +132,15 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
 
   circuit.add(
     <board width="30mm" height="70mm" routingDisabled>
+      <schematicsheet
+        name="controller"
+        displayName="RP2040 Controller"
+        sheetIndex={1}
+      />
       <Microcontroller_RP2040
         name="MCU"
         connections={{ GPIO0: "net.USER_IO" }}
+        schSheetName="controller"
       />
     </board>,
   )
@@ -181,6 +187,11 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
   expect(thermalPadPort.source_port_id).toBe(groundPort.source_port_id)
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
+  ).toEqual([])
+  expect(
+    circuitJson.filter(
+      (element) => element.type === "schematic_element_outside_sheet_warning",
+    ),
   ).toEqual([])
 })
 
