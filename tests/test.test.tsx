@@ -5,7 +5,7 @@ import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBo
 import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 import {
-  AudioAmplifier_PAM8403,
+  AudioAmplifier_PAM8403_4Ohm_8Ohm,
   Microcontroller_RP2040,
   PowerBoost_MT3608,
 } from "../index"
@@ -16,11 +16,11 @@ test("test", () => {
   expect(XiaoBoard).toBeDefined() // TODO: Add tests
   expect(Microcontroller_RP2040).toBeDefined()
   expect(PowerBoost_MT3608).toBeDefined()
-  expect(AudioAmplifier_PAM8403).toBeDefined()
+  expect(AudioAmplifier_PAM8403_4Ohm_8Ohm).toBeDefined()
 })
 
-test("AudioAmplifier_PAM8403 is a pure, positionable subcircuit", () => {
-  const element = AudioAmplifier_PAM8403({
+test("AudioAmplifier_PAM8403_4Ohm_8Ohm is a pure, positionable subcircuit", () => {
+  const element = AudioAmplifier_PAM8403_4Ohm_8Ohm({
     name: "AUDIO",
     pcbX: 4,
     pcbY: -2,
@@ -37,7 +37,7 @@ test("AudioAmplifier_PAM8403 is a pure, positionable subcircuit", () => {
   expect(children.some((child: any) => child?.type === "board")).toBe(false)
 })
 
-test("AudioAmplifier_PAM8403 renders the complete mono audio path", async () => {
+test("AudioAmplifier_PAM8403_4Ohm_8Ohm renders the complete mono audio path", async () => {
   const circuit = new Circuit()
 
   circuit.add(
@@ -46,7 +46,7 @@ test("AudioAmplifier_PAM8403 renders the complete mono audio path", async () => 
       <net name="V3V3" isPowerNet />
       <net name="VSYS" isPowerNet />
       <net name="GND" isGroundNet />
-      <AudioAmplifier_PAM8403
+      <AudioAmplifier_PAM8403_4Ohm_8Ohm
         name="AUDIO"
         connections={{
           AUDIO_PWM: "net.AUDIO_PWM",
