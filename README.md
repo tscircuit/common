@@ -47,15 +47,15 @@ return (
 )
 ```
 
-The Game Boy PAM8403 audio-amplifier subcircuit supports 4–8 ohm speakers and
-includes the PWM input filter, input coupling, amplifier decoupling, speaker EMI
-filter, and speaker connector:
+The Game Boy PAM8403 3 W audio-amplifier subcircuit includes the PWM input
+filter, input coupling, amplifier decoupling, speaker EMI filter, and speaker
+connector:
 
 ```tsx
-import { AudioAmplifier_PAM8403_4Ohm_8Ohm } from "@tscircuit/common"
+import { AudioAmplifier3W_PAM8403 } from "@tscircuit/common"
 
 return (
-  <AudioAmplifier_PAM8403_4Ohm_8Ohm
+  <AudioAmplifier3W_PAM8403
     name="AUDIO"
     connections={{
       AUDIO_PWM: "net.AUDIO_PWM",

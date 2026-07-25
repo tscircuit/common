@@ -16,21 +16,18 @@ const schSections = {
   output: "speaker-output",
 } as const
 
-export type AudioAmplifierPAM8403_4Ohm_8OhmProps = Omit<
-  SubcircuitProps,
-  "children"
->
+export type AudioAmplifier3WPAM8403Props = Omit<SubcircuitProps, "children">
 
 /**
- * Mono PWM audio amplifier for 4–8 ohm speakers, extracted from abse/gameboy.
+ * 3W mono PWM audio amplifier extracted from abse/gameboy.
  *
  * The circuit includes PWM input filtering, PAM8403 amplification, power
  * decoupling, speaker EMI filtering, and the speaker connector.
  */
-export const AudioAmplifier_PAM8403_4Ohm_8Ohm = ({
-  name = "AudioAmplifier_PAM8403_4Ohm_8Ohm",
+export const AudioAmplifier3W_PAM8403 = ({
+  name = "AudioAmplifier3W_PAM8403",
   ...props
-}: AudioAmplifierPAM8403_4Ohm_8OhmProps) => (
+}: AudioAmplifier3WPAM8403Props) => (
   <subcircuit
     minViaHoleDiameter="0.3mm"
     minViaPadDiameter="0.45mm"
@@ -406,4 +403,4 @@ export const AudioAmplifier_PAM8403_4Ohm_8Ohm = ({
   </subcircuit>
 )
 
-export default AudioAmplifier_PAM8403_4Ohm_8Ohm
+export default AudioAmplifier3W_PAM8403
