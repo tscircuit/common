@@ -93,6 +93,51 @@ export const Microcontroller_RP2040 = ({
     <trace name="EN_R" from=".R_3V3_EN > .pin2" to=".U3 > .EN" />
 
     <capacitor
+      name="C_IOVDD1"
+      capacitance="100nF"
+      footprint="0402"
+      schSectionName={schSections.rp2040}
+      schOrientation="vertical"
+      pcbX={-4}
+      pcbY={-5}
+      schX={-8.15}
+      schY={-0.86}
+    />
+    <capacitor
+      name="C_IOVDD2"
+      capacitance="100nF"
+      footprint="0402"
+      schSectionName={schSections.rp2040}
+      schOrientation="vertical"
+      pcbX={-3}
+      pcbY={6}
+      schX={-6.225}
+      schY={-0.86}
+    />
+    <capacitor
+      name="C_IOVDD3"
+      capacitance="100nF"
+      footprint="0402"
+      schSectionName={schSections.rp2040}
+      schOrientation="vertical"
+      pcbRotation={-90}
+      pcbX={-8}
+      pcbY={-1}
+      schX={-4.3}
+      schY={-0.86}
+    />
+    <capacitor
+      name="C_IOVDD4"
+      capacitance="100nF"
+      footprint="0402"
+      schSectionName={schSections.rp2040}
+      schOrientation="vertical"
+      pcbX={-4}
+      pcbY={-6}
+      schX={-8.15}
+      schY={-2.46}
+    />
+    <capacitor
       name="C_IOVDD5"
       capacitance="100nF"
       footprint="0402"
@@ -101,8 +146,8 @@ export const Microcontroller_RP2040 = ({
       pcbRotation={-90}
       pcbX={-6}
       pcbY={-10}
-      schX={-9.6}
-      schY={-0.5}
+      schX={-6.225}
+      schY={-2.46}
     />
     <capacitor
       name="C_IOVDD6"
@@ -112,8 +157,8 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={-8}
       pcbY={1.6}
-      schX={-7.2}
-      schY={1}
+      schX={-4.3}
+      schY={-2.46}
     />
 
     <trace
@@ -130,30 +175,6 @@ export const Microcontroller_RP2040 = ({
       {...v3v3Label}
     />
     <trace name="IO6_G" from=".C_IOVDD6 > .pin2" to="net.GND" {...gndLabel} />
-
-    <capacitor
-      name="C_IOVDD3"
-      capacitance="100nF"
-      footprint="0402"
-      schSectionName={schSections.rp2040}
-      schOrientation="vertical"
-      pcbRotation={-90}
-      pcbX={-8}
-      pcbY={-1}
-      schX={-7.2}
-      schY={-2}
-    />
-    <capacitor
-      name="C_IOVDD4"
-      capacitance="100nF"
-      footprint="0402"
-      schSectionName={schSections.rp2040}
-      schOrientation="vertical"
-      pcbX={-4}
-      pcbY={-6}
-      schX={-7.9}
-      schY={-0.5}
-    />
 
     <trace
       name="IO3_3V3"
@@ -190,32 +211,6 @@ export const Microcontroller_RP2040 = ({
       pcbX={-5.5}
       pcbY={10.8}
       pcbRotation={180}
-      schX={16.65}
-      schY={-6.92}
-    />
-
-    <capacitor
-      name="C_IOVDD1"
-      capacitance="100nF"
-      footprint="0402"
-      schSectionName={schSections.rp2040}
-      schOrientation="vertical"
-      pcbX={-4}
-      pcbY={-5}
-      schX={-10.8}
-      schY={-2}
-    />
-
-    <capacitor
-      name="C_IOVDD2"
-      capacitance="100nF"
-      footprint="0402"
-      schSectionName={schSections.rp2040}
-      schOrientation="vertical"
-      pcbX={-3}
-      pcbY={6}
-      schX={-10.8}
-      schY={1}
     />
 
     <capacitor
@@ -226,8 +221,6 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={7.2}
       pcbY={14.5}
-      schX={16.41}
-      schY={0.5}
     />
 
     <capacitor
@@ -238,8 +231,6 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={8}
       pcbY={-4.4}
-      schX={6.5}
-      schY={-6.3}
     />
     {/* RUN pullup */}
     <trace
@@ -320,8 +311,8 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.rp2040}
       pcbX={0}
       pcbY={0.5}
-      schX={-0.22}
-      schY={-2}
+      schX={-0.08}
+      schY={-2.5}
       schWidth={2.8}
       schHeight={5.8}
     />
@@ -355,7 +346,7 @@ export const Microcontroller_RP2040 = ({
       pcbX={-0.5}
       pcbY={-6}
       schX={1.025}
-      schY={-15.2}
+      schY={-12.5}
     />
     <SKRPACE010
       name="SW_BOOT"
@@ -382,7 +373,7 @@ export const Microcontroller_RP2040 = ({
       pcbY={4.2}
       pcbRotation={90}
       schX={9.66}
-      schY={-13.66}
+      schY={-12}
     />
     <XL_1608SURC_06
       name="D_PWR"
@@ -392,7 +383,7 @@ export const Microcontroller_RP2040 = ({
       pcbY={24.8}
       pcbRotation={90}
       schX={10.2}
-      schY={-15.5}
+      schY={-13.8}
     />
 
     <resistor
@@ -415,7 +406,7 @@ export const Microcontroller_RP2040 = ({
       pcbY={1.2}
       pcbRotation={90}
       schX={8.06}
-      schY={-13.66}
+      schY={-12}
     />
     <resistor
       name="R_PWR_LED"
@@ -427,7 +418,7 @@ export const Microcontroller_RP2040 = ({
       pcbRotation={90}
       schOrientation="horizontal"
       schX={8.6}
-      schY={-15.5}
+      schY={-13.8}
     />
     <resistor
       name="R_CC1"
@@ -446,8 +437,6 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.usb}
       pcbX={3.6}
       pcbY={26.5}
-      schX={13.91}
-      schY={-4.12}
     />
     <resistor
       name="R_USB1"
@@ -481,8 +470,6 @@ export const Microcontroller_RP2040 = ({
       pcbX={-2.8}
       pcbY={26.3}
       pcbRotation={90}
-      schX={14.7}
-      schY={-3}
     />
     <capacitor
       name="C_3V3"
@@ -492,8 +479,6 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={-8.5}
       pcbY={4.2}
-      schX={9.2}
-      schY={-8.3}
     />
     <capacitor
       name="C_CORE"
@@ -503,8 +488,8 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={3.8}
       pcbY={-5.5}
-      schX={-2.8}
-      schY={-4.8}
+      schX={-3.65}
+      schY={-3.7}
     />
     <capacitor
       name="C_USB"
@@ -514,8 +499,6 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={9.8}
       pcbY={18.4}
-      schX={16.11}
-      schY={-1.2}
     />
     <capacitor
       name="C_XIN"
@@ -525,8 +508,6 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={-8.4}
       pcbY={-11.8}
-      schX={-0.26}
-      schY={-17}
     />
     <capacitor
       name="C_XOUT"
@@ -536,8 +517,6 @@ export const Microcontroller_RP2040 = ({
       schOrientation="vertical"
       pcbX={-2.4}
       pcbY={-21}
-      schX={1.565}
-      schY={-17}
     />
     <inductor
       name="L_AVDD"
@@ -561,7 +540,7 @@ export const Microcontroller_RP2040 = ({
       pcbX={-6}
       pcbY={-31}
       schX={6}
-      schY={-18.1}
+      schY={-15.5}
     />
     <testpoint
       name="TP_GND"
@@ -572,7 +551,7 @@ export const Microcontroller_RP2040 = ({
       pcbX={-2}
       pcbY={-31}
       schX={7.5}
-      schY={-18.1}
+      schY={-15.5}
     />
     <testpoint
       name="TP_SWDIO"
@@ -583,7 +562,7 @@ export const Microcontroller_RP2040 = ({
       pcbX={2}
       pcbY={-31}
       schX={9}
-      schY={-18.1}
+      schY={-15.5}
     />
     <testpoint
       name="TP_3V3"
@@ -594,7 +573,7 @@ export const Microcontroller_RP2040 = ({
       pcbX={6}
       pcbY={-31}
       schX={10.5}
-      schY={-18.1}
+      schY={-15.5}
     />
 
     <trace
