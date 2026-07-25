@@ -240,6 +240,21 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
       element.type === "pcb_port" &&
       element.pcb_port_id === thermalPad.pcb_port_id,
   )
+  const controllerSheet = circuitJson.find(
+    (element) =>
+      element.type === "schematic_sheet" && element.name === "controller",
+  )
+  const expectedSectionTitles = [
+    "Clock",
+    "Programming USB-C & QSPI",
+    "RP2040 & Power",
+    "Status & SWD Debug",
+  ]
+  const sectionTitles = circuitJson.filter(
+    (element) =>
+      element.type === "schematic_text" &&
+      expectedSectionTitles.includes(element.text),
+  )
   const sourceComponentNames = new Map(
     circuitJson.flatMap((element) =>
       element.type === "source_component"
@@ -278,6 +293,15 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
   expect(circuit.db.source_net.getWhere({ name: "USER_IO" })).toBeDefined()
   expect(thermalPadPort.source_port_id).toBe(groundPort.source_port_id)
   expect([...iovddRows.values()].sort()).toEqual([3, 3])
+  expect(sectionTitles.map((title) => title.text).sort()).toEqual(
+    expectedSectionTitles,
+  )
+  expect(
+    sectionTitles.every(
+      (title) =>
+        title.schematic_sheet_id === controllerSheet.schematic_sheet_id,
+    ),
+  ).toBe(true)
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
   ).toEqual([])

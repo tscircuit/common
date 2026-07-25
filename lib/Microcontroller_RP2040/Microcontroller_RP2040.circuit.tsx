@@ -19,15 +19,15 @@ const adcRefLabel = {
   schDisplayLabel: "ADC_REF",
 } as const
 const schSections = {
-  rp2040: "rp2040",
-  usb: "usb",
-  power: "power",
-  flash: "flash",
-  clock: "clock",
-  controls: "controls",
-  display: "display",
-  status: "status",
-  debug: "debug",
+  rp2040: (name: string) => `${name}__rp2040`,
+  usb: (name: string) => `${name}__usb`,
+  power: (name: string) => `${name}__power`,
+  flash: (name: string) => `${name}__flash`,
+  clock: (name: string) => `${name}__clock`,
+  controls: (name: string) => `${name}__controls`,
+  display: (name: string) => `${name}__display`,
+  status: (name: string) => `${name}__status`,
+  debug: (name: string) => `${name}__debug`,
 } as const
 
 export type MicrocontrollerRP2040Props = Omit<
@@ -47,6 +47,20 @@ export const Microcontroller_RP2040 = ({
   ...props
 }: MicrocontrollerRP2040Props) => (
   <subcircuit name={name} {...props}>
+    <schematicsection
+      name={schSections.rp2040(name)}
+      displayName="RP2040 & Power"
+    />
+    <schematicsection
+      name={schSections.usb(name)}
+      displayName="Programming USB-C & QSPI"
+    />
+    <schematicsection name={schSections.clock(name)} displayName="Clock" />
+    <schematicsection
+      name={schSections.status(name)}
+      displayName="Status & SWD Debug"
+    />
+
     <trace name="Y1_G1" from=".Y1 > .pin2" to="net.GND" {...gndLabel} />
     <trace name="Y1_G2" from=".Y1 > .pin4" to="net.GND" {...gndLabel} />
 
@@ -55,7 +69,7 @@ export const Microcontroller_RP2040 = ({
 
     <B5819W_SL
       name="D_VBUS"
-      schSectionName={schSections.power}
+      schSectionName={schSections.power(name)}
       pcbX={-2}
       pcbY={21}
       pcbRotation={90}
@@ -75,7 +89,7 @@ export const Microcontroller_RP2040 = ({
       name="R_3V3_EN"
       resistance="100k"
       footprint="0402"
-      schSectionName={schSections.power}
+      schSectionName={schSections.power(name)}
       pcbX={-4.7}
       pcbY={17.3}
       pcbRotation={90}
@@ -96,7 +110,7 @@ export const Microcontroller_RP2040 = ({
       name="C_IOVDD1"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       schOrientation="vertical"
       pcbX={-4}
       pcbY={-5}
@@ -107,7 +121,7 @@ export const Microcontroller_RP2040 = ({
       name="C_IOVDD2"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       schOrientation="vertical"
       pcbX={-3}
       pcbY={6}
@@ -118,7 +132,7 @@ export const Microcontroller_RP2040 = ({
       name="C_IOVDD3"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       schOrientation="vertical"
       pcbRotation={-90}
       pcbX={-8}
@@ -130,7 +144,7 @@ export const Microcontroller_RP2040 = ({
       name="C_IOVDD4"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       schOrientation="vertical"
       pcbX={-4}
       pcbY={-6}
@@ -141,7 +155,7 @@ export const Microcontroller_RP2040 = ({
       name="C_IOVDD5"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       schOrientation="vertical"
       pcbRotation={-90}
       pcbX={-6}
@@ -153,7 +167,7 @@ export const Microcontroller_RP2040 = ({
       name="C_IOVDD6"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       schOrientation="vertical"
       pcbX={-8}
       pcbY={1.6}
@@ -195,7 +209,7 @@ export const Microcontroller_RP2040 = ({
       name="R_RUN"
       resistance="10k"
       footprint="0402"
-      schSectionName={schSections.controls}
+      schSectionName={schSections.controls(name)}
       pcbX={10.4}
       pcbY={-5.5}
       schX={12.5}
@@ -206,7 +220,7 @@ export const Microcontroller_RP2040 = ({
       name="C_FLASH"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.flash}
+      schSectionName={schSections.flash(name)}
       schOrientation="vertical"
       pcbX={-5.5}
       pcbY={10.8}
@@ -217,7 +231,7 @@ export const Microcontroller_RP2040 = ({
       name="C_USB_VDD"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       schOrientation="vertical"
       pcbX={7.2}
       pcbY={14.5}
@@ -227,7 +241,7 @@ export const Microcontroller_RP2040 = ({
       name="C_ADC"
       capacitance="100nF"
       footprint="0402"
-      schSectionName={schSections.power}
+      schSectionName={schSections.power(name)}
       schOrientation="vertical"
       pcbX={8}
       pcbY={-4.4}
@@ -290,7 +304,7 @@ export const Microcontroller_RP2040 = ({
 
     <TYPE_C_16PIN_2MD_073_
       name="J_USB"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       pcbX={0}
       pcbY={31.0}
       pcbRotation={180}
@@ -308,7 +322,7 @@ export const Microcontroller_RP2040 = ({
       name="U1"
       connections={connections}
       showPinAliases
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       pcbX={0}
       pcbY={0.5}
       schX={-0.08}
@@ -318,7 +332,7 @@ export const Microcontroller_RP2040 = ({
     />
     <W25Q16JVUXIQ
       name="U2"
-      schSectionName={schSections.flash}
+      schSectionName={schSections.flash(name)}
       pcbX={3.4}
       pcbY={9.5}
       pcbRotation={90}
@@ -331,7 +345,7 @@ export const Microcontroller_RP2040 = ({
     />
     <AP2112K_3_3TRG1
       name="U3"
-      schSectionName={schSections.power}
+      schSectionName={schSections.power(name)}
       pcbX={-7.2}
       pcbY={20.2}
       pcbRotation={180}
@@ -342,7 +356,7 @@ export const Microcontroller_RP2040 = ({
 
     <X322512MSB4SI
       name="Y1"
-      schSectionName={schSections.clock}
+      schSectionName={schSections.clock(name)}
       pcbX={-0.5}
       pcbY={-6}
       schX={1.025}
@@ -350,7 +364,7 @@ export const Microcontroller_RP2040 = ({
     />
     <SKRPACE010
       name="SW_BOOT"
-      schSectionName={schSections.controls}
+      schSectionName={schSections.controls(name)}
       pcbX={8.6}
       pcbY={21.8}
       schX={10.6}
@@ -358,7 +372,7 @@ export const Microcontroller_RP2040 = ({
     />
     <SKRPACE010
       name="SW_RUN"
-      schSectionName={schSections.controls}
+      schSectionName={schSections.controls(name)}
       pcbX={5.5}
       pcbY={-12.5}
       pcbRotation={90}
@@ -368,7 +382,7 @@ export const Microcontroller_RP2040 = ({
     <XL_1608SURC_06
       name="D1"
       color="green"
-      schSectionName={schSections.status}
+      schSectionName={schSections.status(name)}
       pcbX={10}
       pcbY={4.2}
       pcbRotation={90}
@@ -378,7 +392,7 @@ export const Microcontroller_RP2040 = ({
     <XL_1608SURC_06
       name="D_PWR"
       color="green"
-      schSectionName={schSections.status}
+      schSectionName={schSections.status(name)}
       pcbX={-9.8}
       pcbY={24.8}
       pcbRotation={90}
@@ -390,7 +404,7 @@ export const Microcontroller_RP2040 = ({
       name="R_BOOT"
       resistance="10k"
       footprint="0402"
-      schSectionName={schSections.controls}
+      schSectionName={schSections.controls(name)}
       pcbX={12}
       pcbY={17.8}
       pcbRotation={90}
@@ -401,7 +415,7 @@ export const Microcontroller_RP2040 = ({
       name="R_LED"
       resistance="330"
       footprint="0402"
-      schSectionName={schSections.status}
+      schSectionName={schSections.status(name)}
       pcbX={7.2}
       pcbY={1.2}
       pcbRotation={90}
@@ -412,7 +426,7 @@ export const Microcontroller_RP2040 = ({
       name="R_PWR_LED"
       resistance="330"
       footprint="0402"
-      schSectionName={schSections.status}
+      schSectionName={schSections.status(name)}
       pcbX={-6.2}
       pcbY={24.8}
       pcbRotation={90}
@@ -424,7 +438,7 @@ export const Microcontroller_RP2040 = ({
       name="R_CC1"
       resistance="5.1k"
       footprint="0402"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       pcbX={-0.2}
       pcbY={25.6}
       schX={8.89}
@@ -434,7 +448,7 @@ export const Microcontroller_RP2040 = ({
       name="R_CC2"
       resistance="5.1k"
       footprint="0402"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       pcbX={3.6}
       pcbY={26.5}
     />
@@ -442,7 +456,7 @@ export const Microcontroller_RP2040 = ({
       name="R_USB1"
       resistance="27"
       footprint="0402"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       pcbX={3.4}
       pcbY={22.5}
       pcbRotation={90}
@@ -453,7 +467,7 @@ export const Microcontroller_RP2040 = ({
       name="R_USB2"
       resistance="27"
       footprint="0402"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       pcbX={2.4}
       pcbY={16.5}
       pcbRotation={-90}
@@ -465,7 +479,7 @@ export const Microcontroller_RP2040 = ({
       name="C_VBUS"
       capacitance="10uF"
       footprint="0603"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       schOrientation="vertical"
       pcbX={-2.8}
       pcbY={26.3}
@@ -475,7 +489,7 @@ export const Microcontroller_RP2040 = ({
       name="C_3V3"
       capacitance="10uF"
       footprint="0603"
-      schSectionName={schSections.power}
+      schSectionName={schSections.power(name)}
       schOrientation="vertical"
       pcbX={-8.5}
       pcbY={4.2}
@@ -484,7 +498,7 @@ export const Microcontroller_RP2040 = ({
       name="C_CORE"
       capacitance="1uF"
       footprint="0402"
-      schSectionName={schSections.rp2040}
+      schSectionName={schSections.rp2040(name)}
       schOrientation="vertical"
       pcbX={3.8}
       pcbY={-5.5}
@@ -495,7 +509,7 @@ export const Microcontroller_RP2040 = ({
       name="C_USB"
       capacitance="1uF"
       footprint="0402"
-      schSectionName={schSections.usb}
+      schSectionName={schSections.usb(name)}
       schOrientation="vertical"
       pcbX={9.8}
       pcbY={18.4}
@@ -504,7 +518,7 @@ export const Microcontroller_RP2040 = ({
       name="C_XIN"
       capacitance="18pF"
       footprint="0402"
-      schSectionName={schSections.clock}
+      schSectionName={schSections.clock(name)}
       schOrientation="vertical"
       pcbX={-8.4}
       pcbY={-11.8}
@@ -513,7 +527,7 @@ export const Microcontroller_RP2040 = ({
       name="C_XOUT"
       capacitance="18pF"
       footprint="0402"
-      schSectionName={schSections.clock}
+      schSectionName={schSections.clock(name)}
       schOrientation="vertical"
       pcbX={-2.4}
       pcbY={-21}
@@ -522,7 +536,7 @@ export const Microcontroller_RP2040 = ({
       name="L_AVDD"
       inductance="600ohm@100MHz"
       footprint="0603"
-      schSectionName={schSections.power}
+      schSectionName={schSections.power(name)}
       pcbX={8.5}
       pcbY={-1.8}
       supplierPartNumbers={{ jlcpcb: ["C1002"] }}
@@ -536,7 +550,7 @@ export const Microcontroller_RP2040 = ({
       footprintVariant="pad"
       padShape="circle"
       padDiameter="1.1mm"
-      schSectionName={schSections.debug}
+      schSectionName={schSections.debug(name)}
       pcbX={-6}
       pcbY={-31}
       schX={6}
@@ -547,7 +561,7 @@ export const Microcontroller_RP2040 = ({
       footprintVariant="pad"
       padShape="circle"
       padDiameter="1.1mm"
-      schSectionName={schSections.debug}
+      schSectionName={schSections.debug(name)}
       pcbX={-2}
       pcbY={-31}
       schX={7.5}
@@ -558,7 +572,7 @@ export const Microcontroller_RP2040 = ({
       footprintVariant="pad"
       padShape="circle"
       padDiameter="1.1mm"
-      schSectionName={schSections.debug}
+      schSectionName={schSections.debug(name)}
       pcbX={2}
       pcbY={-31}
       schX={9}
@@ -569,7 +583,7 @@ export const Microcontroller_RP2040 = ({
       footprintVariant="pad"
       padShape="circle"
       padDiameter="1.1mm"
-      schSectionName={schSections.debug}
+      schSectionName={schSections.debug(name)}
       pcbX={6}
       pcbY={-31}
       schX={10.5}
