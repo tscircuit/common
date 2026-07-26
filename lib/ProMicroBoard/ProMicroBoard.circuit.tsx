@@ -1,5 +1,5 @@
-import { ProMicroBoardFootprint } from "./ProMicroBoardFootprint"
 import type { BoardProps, ChipProps } from "@tscircuit/props"
+import { ProMicroBoardFootprint } from "./ProMicroBoardFootprint"
 
 export type ProMicroBoardProps = {
   name?: string

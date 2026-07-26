@@ -1,14 +1,15 @@
-import { test, expect } from "bun:test"
+import { expect, test } from "bun:test"
 import { Circuit } from "tscircuit"
-import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
-import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
-import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
-import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 import {
   AudioAmplifier3W_PAM8403,
   Microcontroller_RP2040,
   PowerBoost_MT3608,
 } from "../index"
+import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
+import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
+import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
+import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
+
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
@@ -416,4 +417,3 @@ test("ArduinoShield forwards top-level name prop to chip", () => {
   expect(chip.type).toBe("chip")
   expect(chip.props.name).toBe("SHIELD1_chip")
 })
-

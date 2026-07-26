@@ -1,9 +1,9 @@
-import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { grid } from "@tscircuit/math-utils"
+import type { BoardProps, ChipProps } from "@tscircuit/props"
 import {
-  ViaGridVia,
-  ViaGridPlus,
   pacmanPolygonOutline,
+  ViaGridPlus,
+  ViaGridVia,
 } from "./viaGridElements"
 
 type ViaGridBoardProps = {

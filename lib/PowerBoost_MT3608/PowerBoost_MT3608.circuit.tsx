@@ -1,7 +1,7 @@
 import type { SubcircuitProps } from "@tscircuit/props"
-import { AO3401A } from "./imports/AO3401A"
 import { A_0603WAF1003T5E } from "./imports/A_0603WAF1003T5E"
 import { A_0603WAF9532T5E } from "./imports/A_0603WAF9532T5E"
+import { AO3401A } from "./imports/AO3401A"
 import { CL10A106KP8NNNC } from "./imports/CL10A106KP8NNNC"
 import { CL10A226MQ8NRNC } from "./imports/CL10A226MQ8NRNC"
 import { FRC0603F1302TS } from "./imports/FRC0603F1302TS"

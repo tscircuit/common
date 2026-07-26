@@ -1,5 +1,5 @@
-import React, { type ReactElement } from "react"
 import type { PlatedHoleProps, SmtPadProps } from "@tscircuit/props"
+import React, { type ReactElement } from "react"
 
 // ---------- Helpers ----------
 const createSmtPad = (props: SmtPadProps): ReactElement =>

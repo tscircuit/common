@@ -1,5 +1,5 @@
-import { ArduinoShieldFootprint } from "./ArduinoShieldFootprint"
 import type { BoardProps, ChipProps } from "@tscircuit/props"
+import { ArduinoShieldFootprint } from "./ArduinoShieldFootprint"
 
 export type ArduinoShieldProps = {
   name?: string

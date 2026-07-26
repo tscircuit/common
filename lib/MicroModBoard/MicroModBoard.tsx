@@ -1,7 +1,6 @@
-import { MicroModBoardFootprint } from "./MicroModBoardFootprint"
-import { processorOutline, functionOutline } from "./outlines/boardOutlines"
-
 import type { BoardProps, ChipProps } from "@tscircuit/props"
+import { MicroModBoardFootprint } from "./MicroModBoardFootprint"
+import { functionOutline, processorOutline } from "./outlines/boardOutlines"
 
 export type MicroModBoardProps = {
   name?: string

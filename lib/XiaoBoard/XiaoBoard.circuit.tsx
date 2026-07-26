@@ -1,7 +1,6 @@
-import { XiaoBoardFootprint } from "./XiaoBoardFootprint"
-import { outlineBuilder } from "../../util/outlineBuilder"
-
 import type { BoardProps, ChipProps } from "@tscircuit/props"
+import { outlineBuilder } from "../../util/outlineBuilder"
+import { XiaoBoardFootprint } from "./XiaoBoardFootprint"
 
 export type XiaoBoardProps = {
   name?: string

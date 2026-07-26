@@ -1,5 +1,5 @@
-import { OutlineBuilder } from "../../util/outlineBuilder"
 import type { BoardProps, ChipProps } from "@tscircuit/props"
+import { OutlineBuilder } from "../../util/outlineBuilder"
 
 export type RaspberryPiHatBoardProps = {
   name?: string
