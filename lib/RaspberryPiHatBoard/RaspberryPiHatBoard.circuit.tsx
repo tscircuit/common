@@ -2,7 +2,6 @@ import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
 
 export type RaspberryPiHatBoardProps = {
-  name?: string
   boardProps?: BoardProps
   chipProps?: Partial<ChipProps>
   children?: any
@@ -15,9 +14,10 @@ export const RaspberryPiHatBoard = ({
   children,
   ...rest
 }: RaspberryPiHatBoardProps) => {
-  const name = nameProp ?? "RaspberryPiHatBoard"
-  const resolvedChipName = chipProps.name ?? `${name}_chip`
-  const chipRest = { ...chipProps, ...rest }
+  const { name: chipPropsName, ...chipPropsRest } = chipProps
+  const resolvedChipName =
+    nameProp ?? `${chipPropsName ?? "RaspberryPiHatBoard"}_chip`
+  const chipRest = { ...chipPropsRest, ...rest }
 
   const outline = new OutlineBuilder(0, 28)
     .lineTo(32.5, 28)

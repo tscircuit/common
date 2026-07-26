@@ -7,6 +7,7 @@ import {
 } from "../index"
 import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
 import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
+import { ProMicroBoard } from "../lib/ProMicroBoard/ProMicroBoard.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 
@@ -382,7 +383,7 @@ test("ArduinoShield forwards explicit boardProps and chipProps", () => {
 
   const chip = element.props.children[0]
   expect(chip.type).toBe("chip")
-  expect(chip.props.name).toBe("A1")
+  expect(chip.props.name).toBe("A1_chip")
   expect(chip.props.manufacturerPartNumber).toBe("arduino-shield")
 })
 
@@ -405,7 +406,7 @@ test("RaspberryPiHatBoard forwards top-level name prop to chip", () => {
 
   const chip = element.props.children[0]
   expect(chip.type).toBe("chip")
-  expect(chip.props.name).toBe("HAT1_chip")
+  expect(chip.props.name).toBe("HAT1")
 })
 
 test("ArduinoShield forwards top-level name prop to chip", () => {
@@ -415,5 +416,35 @@ test("ArduinoShield forwards top-level name prop to chip", () => {
 
   const chip = element.props.children[0]
   expect(chip.type).toBe("chip")
-  expect(chip.props.name).toBe("SHIELD1_chip")
+  expect(chip.props.name).toBe("SHIELD1")
+})
+
+test("MicroModBoard forwards top-level name prop to chip", () => {
+  const element = MicroModBoard({
+    name: "MICROMOD1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("MICROMOD1")
+})
+
+test("ProMicroBoard forwards top-level name prop to chip", () => {
+  const element = ProMicroBoard({
+    name: "PROMICRO1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("PROMICRO1")
+})
+
+test("XiaoBoard forwards top-level name prop to chip", () => {
+  const element = XiaoBoard({
+    name: "XIAO1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("XIAO1")
 })

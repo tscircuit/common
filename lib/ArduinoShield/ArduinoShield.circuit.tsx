@@ -2,7 +2,6 @@ import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { ArduinoShieldFootprint } from "./ArduinoShieldFootprint"
 
 export type ArduinoShieldProps = {
-  name?: string
   boardProps?: BoardProps
   chipProps?: Partial<ChipProps>
   children?: any
@@ -15,9 +14,9 @@ export const ArduinoShield = ({
   children,
   ...rest
 }: ArduinoShieldProps) => {
-  const name = nameProp ?? "ArduinoShield"
-  const resolvedName = chipProps.name ?? `${name}_chip`
-  const chipRest = { ...chipProps, ...rest }
+  const { name: chipPropsName, ...chipPropsRest } = chipProps
+  const resolvedName = nameProp ?? `${chipPropsName ?? "ArduinoShield"}_chip`
+  const chipRest = { ...chipPropsRest, ...rest }
 
   return (
     <board

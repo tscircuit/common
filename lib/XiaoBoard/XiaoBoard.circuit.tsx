@@ -9,14 +9,16 @@ export type XiaoBoardProps = {
   children?: any
   variant?: "RP2040" | "Receiver"
   withPlatedHoles?: boolean
-}
+} & Partial<ChipProps>
 
 export const XiaoBoard = ({
+  name: nameProp,
   boardProps = {},
   chipProps = {},
   variant,
   withPlatedHoles = false,
   children,
+  ...rest
 }: XiaoBoardProps) => {
   const defaultName =
     variant === "RP2040"
@@ -24,7 +26,9 @@ export const XiaoBoard = ({
       : variant === "Receiver"
         ? "XiaoReceiver"
         : "XiaoBoard"
-  const { name: resolvedName = defaultName, ...chipRest } = chipProps
+  const { name: chipPropsName, ...chipPropsRest } = chipProps
+  const resolvedName = nameProp ?? chipPropsName ?? defaultName
+  const chipRest = { ...chipPropsRest, ...rest }
 
   const DefaultPinLabels = {
     pin1: "A0",
