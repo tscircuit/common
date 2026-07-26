@@ -32,7 +32,7 @@
     "@biomejs/biome": "^2.2.4",
     "@tscircuit/footprinter": "^0.0.380",
     "@types/react": "^19.1.12",
-    "tscircuit": "^0.0.2150",
+    "tscircuit": "^0.0.2153",
     "tsup": "^8.5.0"
   }
 }
