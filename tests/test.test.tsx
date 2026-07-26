@@ -292,7 +292,7 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
   expect(circuit.db.pcb_component.list().length).toBeGreaterThan(0)
   expect(circuit.db.source_net.getWhere({ name: "USER_IO" })).toBeDefined()
   expect(thermalPadPort.source_port_id).toBe(groundPort.source_port_id)
-  expect([...iovddRows.values()].sort()).toEqual([3, 3])
+  expect([...iovddRows.values()]).toEqual([6])
   expect(sectionTitles.map((title) => title.text).sort()).toEqual(
     expectedSectionTitles,
   )
