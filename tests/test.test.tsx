@@ -396,3 +396,24 @@ test("ArduinoShield uses a default chip name when chipProps.name is omitted", ()
   expect(chip.type).toBe("chip")
   expect(chip.props.name).toBe("ArduinoShield_chip")
 })
+
+test("RaspberryPiHatBoard forwards top-level name prop to chip", () => {
+  const element = RaspberryPiHatBoard({
+    name: "HAT1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("HAT1_chip")
+})
+
+test("ArduinoShield forwards top-level name prop to chip", () => {
+  const element = ArduinoShield({
+    name: "SHIELD1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("SHIELD1_chip")
+})
+
