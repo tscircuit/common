@@ -302,6 +302,57 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
         title.schematic_sheet_id === controllerSheet.schematic_sheet_id,
     ),
   ).toBe(true)
+  for (const switchName of ["SW_BOOT", "SW_RUN"]) {
+    const switchComponent = circuit.db.source_component.getWhere({
+      name: switchName,
+    })!
+    const switchPorts = circuit.db.source_port
+      .list()
+      .filter(
+        (port) =>
+          port.source_component_id === switchComponent.source_component_id,
+      )
+    const switchPortNamesById = new Map(
+      switchPorts.map((port) => [port.source_port_id, port.name]),
+    )
+    const internalPinGroups = circuit.db.source_component_internal_connection
+      .list()
+      .filter(
+        (connection) =>
+          connection.source_port_ids.length > 0 &&
+          connection.source_port_ids.every((sourcePortId) =>
+            switchPortNamesById.has(sourcePortId),
+          ),
+      )
+      .map((connection) =>
+        connection.source_port_ids
+          .map((sourcePortId) => switchPortNamesById.get(sourcePortId)!)
+          .sort(),
+      )
+      .sort((a, b) => a.join(",").localeCompare(b.join(",")))
+    const switchSchematicPorts = circuit.db.schematic_port
+      .list()
+      .filter(
+        (port) =>
+          port.source_port_id && switchPortNamesById.has(port.source_port_id),
+      )
+    const directlyConnectedPinNames =
+      switchName === "SW_BOOT" ? ["pin1", "pin3"] : ["pin1", "pin4"]
+
+    expect(internalPinGroups).toEqual([
+      ["pin1", "pin2"],
+      ["pin3", "pin4"],
+    ])
+    expect(switchSchematicPorts).toHaveLength(4)
+    for (const pinName of directlyConnectedPinNames) {
+      const sourcePort = switchPorts.find((port) => port.name === pinName)!
+      const schematicPort = switchSchematicPorts.find(
+        (port) => port.source_port_id === sourcePort.source_port_id,
+      )!
+
+      expect(schematicPort.is_connected).toBe(true)
+    }
+  }
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
   ).toEqual([])

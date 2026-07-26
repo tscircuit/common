@@ -16,6 +16,10 @@ export const SKRPACE010 = (props: PushButtonProps<typeof pinLabels>) => {
       }}
       manufacturerPartNumber="SKRPACE010"
       footprint="smdpushbutton"
+      internallyConnectedPins={[
+        ["pin1", "pin2"],
+        ["pin3", "pin4"],
+      ]}
       cadModel={{
         objUrl:
           "https://modelcdn.tscircuit.com/easyeda_models/assets/C139797.obj?uuid=00d848a7e8384bbd9286566957e8bb9c",
