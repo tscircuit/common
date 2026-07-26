@@ -1,5 +1,5 @@
-import type { PlatedHoleProps } from "@tscircuit/props"
 import React, { type ReactElement } from "react"
+import type { PlatedHoleProps } from "@tscircuit/props"
 
 const createPlatedHole = (props: PlatedHoleProps): ReactElement =>
   React.createElement("platedhole", props as any)
