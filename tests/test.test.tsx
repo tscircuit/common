@@ -197,9 +197,15 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
 
   circuit.add(
     <board width="30mm" height="70mm" routingDisabled>
+      <schematicsheet
+        name="controller"
+        displayName="RP2040 Controller"
+        sheetIndex={1}
+      />
       <Microcontroller_RP2040
         name="MCU"
         connections={{ GPIO0: "net.USER_IO" }}
+        schSheetName="controller"
       />
     </board>,
   )
@@ -234,6 +240,48 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
       element.type === "pcb_port" &&
       element.pcb_port_id === thermalPad.pcb_port_id,
   )
+  const controllerSheet = circuitJson.find(
+    (element) =>
+      element.type === "schematic_sheet" && element.name === "controller",
+  )
+  const expectedSectionTitles = [
+    "Clock",
+    "Programming USB-C & QSPI",
+    "RP2040 & Power",
+    "Status & SWD Debug",
+  ]
+  const sectionTitles = circuitJson.filter(
+    (element) =>
+      element.type === "schematic_text" &&
+      expectedSectionTitles.includes(element.text),
+  )
+  const sourceComponentNames = new Map(
+    circuitJson.flatMap((element) =>
+      element.type === "source_component"
+        ? [[element.source_component_id, element.name] as const]
+        : [],
+    ),
+  )
+  const schematicComponentsByName = new Map(
+    circuitJson.flatMap((element) => {
+      if (element.type !== "schematic_component") return []
+      const name = sourceComponentNames.get(element.source_component_id)
+      return name ? [[name, element] as const] : []
+    }),
+  )
+  const iovddCapacitors = [
+    "C_IOVDD1",
+    "C_IOVDD2",
+    "C_IOVDD3",
+    "C_IOVDD4",
+    "C_IOVDD5",
+    "C_IOVDD6",
+  ].map((name) => schematicComponentsByName.get(name))
+  const iovddRows = new Map<number, number>()
+  for (const capacitor of iovddCapacitors) {
+    const rowKey = Math.round(capacitor.center.y * 1000)
+    iovddRows.set(rowKey, (iovddRows.get(rowKey) ?? 0) + 1)
+  }
 
   expect(circuit.db.source_group.getWhere({ name: "MCU" })).toBeDefined()
   expect(
@@ -244,8 +292,23 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
   expect(circuit.db.pcb_component.list().length).toBeGreaterThan(0)
   expect(circuit.db.source_net.getWhere({ name: "USER_IO" })).toBeDefined()
   expect(thermalPadPort.source_port_id).toBe(groundPort.source_port_id)
+  expect([...iovddRows.values()]).toEqual([6])
+  expect(sectionTitles.map((title) => title.text).sort()).toEqual(
+    expectedSectionTitles,
+  )
+  expect(
+    sectionTitles.every(
+      (title) =>
+        title.schematic_sheet_id === controllerSheet.schematic_sheet_id,
+    ),
+  ).toBe(true)
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
+  ).toEqual([])
+  expect(
+    circuitJson.filter(
+      (element) => element.type === "schematic_element_outside_sheet_warning",
+    ),
   ).toEqual([])
 })
 
