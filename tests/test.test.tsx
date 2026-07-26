@@ -382,7 +382,7 @@ test("ArduinoShield forwards explicit boardProps and chipProps", () => {
 
   const chip = element.props.children[0]
   expect(chip.type).toBe("chip")
-  expect(chip.props.name).toBe("A1_chip")
+  expect(chip.props.name).toBe("A1")
   expect(chip.props.manufacturerPartNumber).toBe("arduino-shield")
 })
 

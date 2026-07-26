@@ -15,8 +15,8 @@ export const RaspberryPiHatBoard = ({
   children,
   ...rest
 }: RaspberryPiHatBoardProps) => {
-  const name = nameProp ?? chipProps.name ?? "RaspberryPiHatBoard"
-  const resolvedChipName = name.endsWith("_chip") ? name : `${name}_chip`
+  const name = nameProp ?? "RaspberryPiHatBoard"
+  const resolvedChipName = chipProps.name ?? `${name}_chip`
   const chipRest = { ...chipProps, ...rest }
 
   const outline = new OutlineBuilder(0, 28)

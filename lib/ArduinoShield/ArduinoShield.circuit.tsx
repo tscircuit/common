@@ -15,8 +15,8 @@ export const ArduinoShield = ({
   children,
   ...rest
 }: ArduinoShieldProps) => {
-  const name = nameProp ?? chipProps.name ?? "ArduinoShield"
-  const resolvedName = name.endsWith("_chip") ? name : `${name}_chip`
+  const name = nameProp ?? "ArduinoShield"
+  const resolvedName = chipProps.name ?? `${name}_chip`
   const chipRest = { ...chipProps, ...rest }
 
   return (
