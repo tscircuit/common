@@ -425,7 +425,9 @@ test("ArduinoShield forwards top-level name prop to chip", () => {
 test("ArduinoShield top-level name survives a complete circuit render", async () => {
   const circuit = new Circuit()
 
-  circuit.add(<ArduinoShield name="SHIELD1" routingDisabled />)
+  circuit.add(
+    <ArduinoShield name="SHIELD1" boardProps={{ routingDisabled: true }} />,
+  )
   await circuit.renderUntilSettled()
 
   expect(
