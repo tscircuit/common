@@ -39,7 +39,3 @@ export const pacmanPolygonOutline = new OutlineBuilder(-0.2, -0.2)
   .arcTo(2.5, -0.2, { radius: 2.5, sweep: true })
   .lineTo(-0.2, -0.2)
   .toArray()
-  .map(({ x, y }) => ({
-    x: Number(x.toFixed(12)),
-    y: Number(y.toFixed(12)),
-  }))

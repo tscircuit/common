@@ -21,6 +21,8 @@ export const MicroModBoard = ({
   const defaultName =
     variant === "function" ? "MicroModBoardFunction" : "MicroModBoardProcessor"
   const { name: chipPropsName, ...chipPropsRest } = chipProps
+  // Keep the historical chipProps suffix, but treat the top-level name as the
+  // exact component name requested by the caller.
   const resolvedName = nameProp ?? `${chipPropsName ?? defaultName}_chip`
   const chipRest = { ...chipPropsRest, ...rest }
 

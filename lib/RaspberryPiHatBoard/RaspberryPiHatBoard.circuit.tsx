@@ -15,6 +15,8 @@ export const RaspberryPiHatBoard = ({
   ...rest
 }: RaspberryPiHatBoardProps) => {
   const { name: chipPropsName, ...chipPropsRest } = chipProps
+  // Keep the historical chipProps suffix, but treat the top-level name as the
+  // exact component name requested by the caller.
   const resolvedChipName =
     nameProp ?? `${chipPropsName ?? "RaspberryPiHatBoard"}_chip`
   const chipRest = { ...chipPropsRest, ...rest }

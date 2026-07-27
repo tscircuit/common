@@ -1,11 +1,11 @@
 import type { ChipProps, SubcircuitProps } from "@tscircuit/props"
-import { AP2112K_3_3TRG1 } from "./imports/AP2112K_3_3TRG1"
-import { B5819W_SL } from "./imports/B5819W_SL"
 import { RP2040 } from "./imports/RP2040"
-import { SKRPACE010 } from "./imports/SKRPACE010"
 import { TYPE_C_16PIN_2MD_073_ } from "./imports/TYPE_C_16PIN_2MD_073_"
 import { W25Q16JVUXIQ } from "./imports/W25Q16JVUXIQ"
+import { AP2112K_3_3TRG1 } from "./imports/AP2112K_3_3TRG1"
 import { X322512MSB4SI } from "./imports/X322512MSB4SI"
+import { SKRPACE010 } from "./imports/SKRPACE010"
+import { B5819W_SL } from "./imports/B5819W_SL"
 import { XL_1608SURC_06 } from "./imports/XL_1608SURC_06"
 
 const denseTraceProps = { thickness: "0.1mm" } as const

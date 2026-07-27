@@ -412,11 +412,28 @@ test("RaspberryPiHatBoard forwards top-level name prop to chip", () => {
 test("ArduinoShield forwards top-level name prop to chip", () => {
   const element = ArduinoShield({
     name: "SHIELD1",
+    chipProps: {
+      name: "LEGACY_NAME",
+    },
   }) as any
 
   const chip = element.props.children[0]
   expect(chip.type).toBe("chip")
   expect(chip.props.name).toBe("SHIELD1")
+})
+
+test("ArduinoShield top-level name survives a complete circuit render", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(<ArduinoShield name="SHIELD1" routingDisabled />)
+  await circuit.renderUntilSettled()
+
+  expect(
+    circuit.db.source_component.getWhere({ name: "SHIELD1" }),
+  ).toBeDefined()
+  expect(
+    circuit.db.source_component.getWhere({ name: "SHIELD1_chip" }),
+  ).toBeUndefined()
 })
 
 test("MicroModBoard forwards top-level name prop to chip", () => {

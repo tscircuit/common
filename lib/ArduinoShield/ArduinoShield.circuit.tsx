@@ -15,6 +15,8 @@ export const ArduinoShield = ({
   ...rest
 }: ArduinoShieldProps) => {
   const { name: chipPropsName, ...chipPropsRest } = chipProps
+  // Keep the historical chipProps suffix, but treat the top-level name as the
+  // exact component name requested by the caller.
   const resolvedName = nameProp ?? `${chipPropsName ?? "ArduinoShield"}_chip`
   const chipRest = { ...chipPropsRest, ...rest }
 
