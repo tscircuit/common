@@ -10,58 +10,7 @@ export const SMMS0630_220M = (props: SMMS0630_220MProps) => {
         jlcpcb: ["C128694"],
       }}
       manufacturerPartNumber="SMMS0630_220M"
-      footprint={
-        <footprint>
-          <smtpad
-            portHints={["pin2"]}
-            pcbX="3.077972mm"
-            pcbY="0mm"
-            width="2.523998mm"
-            height="3.120009mm"
-            shape="rect"
-          />
-          <smtpad
-            portHints={["pin1"]}
-            pcbX="-3.077972mm"
-            pcbY="0mm"
-            width="2.523998mm"
-            height="3.120009mm"
-            shape="rect"
-          />
-          <silkscreenpath
-            route={[
-              { x: -3.5761929999999893, y: 1.7123917999999776 },
-              { x: -3.5761929999999893, y: 3.3761934000000338 },
-              { x: 3.5761929999998756, y: 3.3761934000000338 },
-              { x: 3.5761929999998756, y: 1.7123917999999776 },
-            ]}
-          />
-          <silkscreenpath
-            route={[
-              { x: -3.5761929999999893, y: -1.7123917999999776 },
-              { x: -3.5761929999999893, y: -3.3761934000000338 },
-              { x: 3.5761929999998756, y: -3.3761934000000338 },
-              { x: 3.5761929999998756, y: -1.7123917999999776 },
-            ]}
-          />
-          <silkscreentext
-            text="{NAME}"
-            pcbX="0mm"
-            pcbY="4.3782mm"
-            anchorAlignment="center"
-            fontSize="1mm"
-          />
-          <courtyardoutline
-            outline={[
-              { x: -4.593399999999974, y: 3.6282000000001062 },
-              { x: 4.593399999999974, y: 3.6282000000001062 },
-              { x: 4.593399999999974, y: -3.6281999999999925 },
-              { x: -4.593399999999974, y: -3.6281999999999925 },
-              { x: -4.593399999999974, y: 3.6282000000001062 },
-            ]}
-          />
-        </footprint>
-      }
+      footprint="res_p6.16mm_pw2.52mm_ph3.12mm"
       cadModel={{
         objUrl:
           "https://modelcdn.tscircuit.com/easyeda_models/assets/C128694.obj?uuid=fd41bc67ad4c4c5f978bcfd3746341ff",
