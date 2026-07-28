@@ -1,18 +1,21 @@
 import { ProMicroBoardFootprint } from "./ProMicroBoardFootprint"
 import type { BoardProps, ChipProps } from "@tscircuit/props"
 
-type ProMicroBoardProps = {
+export type ProMicroBoardProps = {
+  name?: string
   boardProps?: BoardProps
   chipProps?: Partial<ChipProps>
   children?: any
 }
 
 export const ProMicroBoard = ({
+  name: nameProp,
   boardProps = {},
   chipProps = {},
   children,
 }: ProMicroBoardProps) => {
-  const { name: resolvedName = "ProMicroBoard", ...chipRest } = chipProps
+  const { name: chipPropsName, ...chipPropsRest } = chipProps
+  const resolvedName = nameProp ?? chipPropsName ?? "ProMicroBoard"
 
   const DefaultPinLabels = {
     pin1: "RAW",
@@ -91,7 +94,7 @@ export const ProMicroBoard = ({
       ]}
     >
       <chip
-        {...chipRest}
+        {...chipPropsRest}
         name={resolvedName}
         footprint={<ProMicroBoardFootprint />}
         doNotPlace

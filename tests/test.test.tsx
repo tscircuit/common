@@ -1,14 +1,16 @@
-import { test, expect } from "bun:test"
+import { expect, test } from "bun:test"
 import { Circuit } from "tscircuit"
-import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
-import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
-import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
-import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 import {
   AudioAmplifier3W_PAM8403,
   Microcontroller_RP2040,
   PowerBoost_MT3608,
 } from "../index"
+import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
+import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
+import { ProMicroBoard } from "../lib/ProMicroBoard/ProMicroBoard.circuit"
+import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
+import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
+
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
@@ -395,4 +397,73 @@ test("ArduinoShield uses a default chip name when chipProps.name is omitted", ()
   const chip = element.props.children[0]
   expect(chip.type).toBe("chip")
   expect(chip.props.name).toBe("ArduinoShield_chip")
+})
+
+test("RaspberryPiHatBoard forwards top-level name prop to chip", () => {
+  const element = RaspberryPiHatBoard({
+    name: "HAT1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("HAT1")
+})
+
+test("ArduinoShield forwards top-level name prop to chip", () => {
+  const element = ArduinoShield({
+    name: "SHIELD1",
+    chipProps: {
+      name: "LEGACY_NAME",
+    },
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("SHIELD1")
+})
+
+test("ArduinoShield top-level name survives a complete circuit render", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <ArduinoShield name="SHIELD1" boardProps={{ routingDisabled: true }} />,
+  )
+  await circuit.renderUntilSettled()
+
+  expect(
+    circuit.db.source_component.getWhere({ name: "SHIELD1" }),
+  ).toBeDefined()
+  expect(
+    circuit.db.source_component.getWhere({ name: "SHIELD1_chip" }),
+  ).toBeUndefined()
+})
+
+test("MicroModBoard forwards top-level name prop to chip", () => {
+  const element = MicroModBoard({
+    name: "MICROMOD1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("MICROMOD1")
+})
+
+test("ProMicroBoard forwards top-level name prop to chip", () => {
+  const element = ProMicroBoard({
+    name: "PROMICRO1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("PROMICRO1")
+})
+
+test("XiaoBoard forwards top-level name prop to chip", () => {
+  const element = XiaoBoard({
+    name: "XIAO1",
+  }) as any
+
+  const chip = element.props.children[0]
+  expect(chip.type).toBe("chip")
+  expect(chip.props.name).toBe("XIAO1")
 })
