@@ -2,24 +2,23 @@ import type { BoardProps, ChipProps } from "@tscircuit/props"
 import { OutlineBuilder } from "../../util/outlineBuilder"
 
 export type RaspberryPiHatBoardProps = {
+  name?: string
   boardProps?: BoardProps
   chipProps?: Partial<ChipProps>
   children?: any
-} & Partial<ChipProps>
+}
 
 export const RaspberryPiHatBoard = ({
   name: nameProp,
   boardProps = {},
   chipProps = {},
   children,
-  ...rest
 }: RaspberryPiHatBoardProps) => {
   const { name: chipPropsName, ...chipPropsRest } = chipProps
   // Keep the historical chipProps suffix, but treat the top-level name as the
   // exact component name requested by the caller.
   const resolvedChipName =
     nameProp ?? `${chipPropsName ?? "RaspberryPiHatBoard"}_chip`
-  const chipRest = { ...chipPropsRest, ...rest }
 
   const outline = new OutlineBuilder(0, 28)
     .lineTo(32.5, 28)
@@ -92,7 +91,7 @@ export const RaspberryPiHatBoard = ({
   return (
     <board {...boardProps} outline={outline}>
       <chip
-        {...chipRest}
+        {...chipPropsRest}
         name={resolvedChipName}
         schWidth={3.5}
         pinLabels={pinLabels}

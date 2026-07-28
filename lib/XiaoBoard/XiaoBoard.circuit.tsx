@@ -4,12 +4,13 @@ import { outlineBuilder } from "../../util/outlineBuilder"
 import type { BoardProps, ChipProps } from "@tscircuit/props"
 
 export type XiaoBoardProps = {
+  name?: string
   boardProps?: BoardProps
   chipProps?: Partial<ChipProps>
   children?: any
   variant?: "RP2040" | "Receiver"
   withPlatedHoles?: boolean
-} & Partial<ChipProps>
+}
 
 export const XiaoBoard = ({
   name: nameProp,
@@ -18,7 +19,6 @@ export const XiaoBoard = ({
   variant,
   withPlatedHoles = false,
   children,
-  ...rest
 }: XiaoBoardProps) => {
   const defaultName =
     variant === "RP2040"
@@ -28,7 +28,6 @@ export const XiaoBoard = ({
         : "XiaoBoard"
   const { name: chipPropsName, ...chipPropsRest } = chipProps
   const resolvedName = nameProp ?? chipPropsName ?? defaultName
-  const chipRest = { ...chipPropsRest, ...rest }
 
   const DefaultPinLabels = {
     pin1: "A0",
@@ -117,7 +116,7 @@ export const XiaoBoard = ({
   return (
     <board {...boardProps} outline={outline}>
       <chip
-        {...chipRest}
+        {...chipPropsRest}
         name={resolvedName}
         footprint={
           <XiaoBoardFootprint
