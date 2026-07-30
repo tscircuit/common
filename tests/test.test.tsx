@@ -499,9 +499,14 @@ test("Microcontroller_RP2040 partitions its PCB into independent functional subc
       expect(bridgeTraces).toHaveLength(1)
     }
   }
-  const duplicateScopedNets = Object.values(
-    Object.groupBy(sourceNets, (net) => `${net.subcircuit_id}:${net.name}`),
-  ).filter((nets) => nets && nets.length > 1)
+  const scopedNetCounts = new Map<string, number>()
+  for (const net of sourceNets) {
+    const scopedName = `${net.subcircuit_id}:${net.name}`
+    scopedNetCounts.set(scopedName, (scopedNetCounts.get(scopedName) ?? 0) + 1)
+  }
+  const duplicateScopedNets = [...scopedNetCounts.entries()].filter(
+    ([, count]) => count > 1,
+  )
   expect(duplicateScopedNets).toEqual([])
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
