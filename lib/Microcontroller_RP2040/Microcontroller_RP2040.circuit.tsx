@@ -173,3 +173,15 @@ export const Microcontroller_RP2040 = ({
     <silkscreentext text="USB-C" fontSize="0.9mm" pcbX={0} pcbY={25} />
   </subcircuit>
 )
+
+/**
+ * Keep the standalone component snapshot deterministic across Bun versions.
+ * Routed integration coverage lives in the USB-C example snapshot.
+ */
+export default function MicrocontrollerRP2040Snapshot() {
+  return (
+    <board width="30mm" height="70mm" routingDisabled>
+      <Microcontroller_RP2040 />
+    </board>
+  )
+}
