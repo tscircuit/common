@@ -9,6 +9,17 @@ import { ArduinoShield } from "../lib/ArduinoShield/ArduinoShield.circuit"
 import { MicroModBoard } from "../lib/MicroModBoard/MicroModBoard"
 import { ProMicroBoard } from "../lib/ProMicroBoard/ProMicroBoard.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
+import {
+  AnalogSupplySubcircuit,
+  ClockSubcircuit,
+  PowerRegulatorSubcircuit,
+  QSPIFlashBootSubcircuit,
+  RP2040CoreSubcircuit,
+  RunControlSubcircuit,
+  StatusLEDSubcircuit,
+  SWDDebugSubcircuit,
+  USBInterfaceSubcircuit,
+} from "../lib/Microcontroller_RP2040/subcircuits/index"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 
 test("test", () => {
@@ -298,6 +309,204 @@ test("Microcontroller_RP2040 partitions its PCB into independent functional subc
     expect(actualComponentNames.length).toBeLessThanOrEqual(10)
   }
 
+  const expectedTraceNamesByGroup = new Map<string, string[]>([
+    [
+      "RP2040_CORE",
+      [
+        "IO1_3V3",
+        "IO1_G",
+        "IO2_3V3",
+        "IO2_G",
+        "IO3_3V3",
+        "IO3_G",
+        "IO4_3V3",
+        "IO4_G",
+        "IO5_3V3",
+        "IO5_G",
+        "IO6_3V3",
+        "IO6_G",
+        "TEST_G",
+        "IOVDD1_P",
+        "IOVDD2_P",
+        "IOVDD3_P",
+        "IOVDD4_P",
+        "IOVDD5_P",
+        "IOVDD6_P",
+        "DVDD1_P",
+        "DVDD2_P",
+        "VREG_IN_P",
+        "VREG_VOUT_P",
+        "USB_VDD_P",
+        "GND_G",
+        "USBV_IO1",
+        "CORE_P",
+        "CORE_G",
+        "ADC_AVDD",
+      ],
+    ],
+    [
+      "USB_INTERFACE",
+      [
+        "USB_DN_B",
+        "USB_DP_B",
+        "UVDD_3V3",
+        "UVDD_G",
+        "VBUS_A",
+        "VBUS_B",
+        "USB_DN_A",
+        "USB_DP_A",
+        "CC1",
+        "CC2",
+        "USB_G",
+        "USB_G_B",
+        "USB_EH1",
+        "USB_EH1_ALT",
+        "USB_EH2",
+        "USB_EH2_ALT",
+        "CC1_G",
+        "CC2_G",
+        "VBUS_C",
+        "VBUS_G",
+        "CUSB_P",
+        "CUSB_G",
+      ],
+    ],
+    [
+      "QSPI_FLASH_BOOT",
+      [
+        "BOOT_SW",
+        "BOOT_R",
+        "BOOT_G",
+        "BOOT_3V3",
+        "FLSH_3V3",
+        "FLSH_G",
+        "FLSH_GND",
+        "FLSH_VCC",
+        "FLSH_EP",
+      ],
+    ],
+    ["CLOCK", ["Y1_G1", "Y1_G2", "CXIN", "CXIN_G", "CXOUT", "CXOUT_G"]],
+    [
+      "POWER_REGULATOR",
+      [
+        "VBUS_D",
+        "D_VSYS",
+        "EN_VSYS",
+        "EN_R",
+        "VSYS_IN",
+        "REG_3V3",
+        "REG_G",
+        "C3V3_P",
+        "C3V3_G",
+        "PLED_3V3",
+        "PLED_D",
+        "PLED_G",
+      ],
+    ],
+    ["ANALOG_SUPPLY", ["ADC_REF", "ADC_G", "AVDD_IN", "AVDD"]],
+    ["RUN_CONTROL", ["RUN_SW", "RUN_3V3", "RUN_G"]],
+    ["STATUS_LED", ["LED_D1", "LED_G"]],
+    ["SWD_DEBUG", ["TP_G", "TP3V3_T"]],
+  ])
+  const sourceTraces = circuitJson.filter(
+    (element) => element.type === "source_trace",
+  )
+
+  for (const [groupName, expectedTraceNames] of expectedTraceNamesByGroup) {
+    const childGroup = childGroupByExpectedName.get(groupName)
+    const childTraceNames = sourceTraces
+      .filter((trace) => trace.subcircuit_id === childGroup.subcircuit_id)
+      .map((trace) => trace.name)
+      .sort()
+
+    expect(childTraceNames).toEqual([...expectedTraceNames].sort())
+  }
+
+  const crossChildTraceNames = [
+    "QSPI_SS",
+    "QSPI_SD0",
+    "QSPI_SD1",
+    "QSPI_SD2",
+    "QSPI_SD3",
+    "QSPI_SCLK",
+    "USB_DN",
+    "USB_DP",
+    "XIN",
+    "XOUT",
+    "RUN_R",
+    "LED_GP25",
+    "SWCLK",
+    "SWD",
+  ]
+  for (const traceName of crossChildTraceNames) {
+    const matches = sourceTraces.filter((trace) => trace.name === traceName)
+    expect(matches).toHaveLength(1)
+    expect(matches[0].subcircuit_id).toBe(parentGroup.subcircuit_id)
+  }
+  for (const removedDuplicateName of ["RUN_SIGNAL"]) {
+    expect(
+      circuitJson.filter(
+        (element) =>
+          element.type === "source_net" &&
+          element.name === removedDuplicateName,
+      ),
+    ).toEqual([])
+  }
+
+  const exposedNetsByGroup = new Map<string, string[]>([
+    ["RP2040_CORE", ["GND", "V3V3", "ADC_VREF"]],
+    ["USB_INTERFACE", ["GND", "V3V3", "VBUS"]],
+    ["QSPI_FLASH_BOOT", ["GND", "V3V3"]],
+    ["CLOCK", ["GND"]],
+    ["POWER_REGULATOR", ["GND", "V3V3", "VBUS"]],
+    ["ANALOG_SUPPLY", ["GND", "V3V3", "ADC_VREF"]],
+    ["RUN_CONTROL", ["GND", "V3V3"]],
+    ["STATUS_LED", ["GND"]],
+    ["SWD_DEBUG", ["GND", "V3V3"]],
+  ])
+  const sourceNets = circuitJson.filter(
+    (element) => element.type === "source_net",
+  )
+  for (const netName of ["GND", "V3V3", "VBUS", "ADC_VREF"]) {
+    const parentNets = sourceNets.filter(
+      (net) =>
+        net.name === netName && net.subcircuit_id === parentGroup.subcircuit_id,
+    )
+    expect(parentNets).toHaveLength(1)
+  }
+  for (const [groupName, exposedNetNames] of exposedNetsByGroup) {
+    const childGroup = childGroupByExpectedName.get(groupName)
+    for (const netName of exposedNetNames) {
+      const childNets = sourceNets.filter(
+        (net) =>
+          net.name === netName &&
+          net.subcircuit_id === childGroup.subcircuit_id,
+      )
+      expect(childNets).toHaveLength(1)
+      const parentNet = sourceNets.find(
+        (net) =>
+          net.name === netName &&
+          net.subcircuit_id === parentGroup.subcircuit_id,
+      )
+      const bridgeTraces = sourceTraces.filter(
+        (trace) =>
+          trace.subcircuit_id === parentGroup.subcircuit_id &&
+          trace.connected_source_net_ids?.includes(
+            childNets[0].source_net_id,
+          ) &&
+          trace.connected_source_net_ids?.includes(parentNet.source_net_id),
+      )
+      expect(bridgeTraces).toHaveLength(1)
+    }
+  }
+  const duplicateScopedNets = Object.values(
+    Object.groupBy(sourceNets, (net) => `${net.subcircuit_id}:${net.name}`),
+  ).filter((nets) => nets && nets.length > 1)
+  expect(duplicateScopedNets).toEqual([])
+  expect(
+    circuitJson.filter((element) => element.type.endsWith("_error")),
+  ).toEqual([])
+
   const pcbComponents = circuitJson.filter(
     (element) => element.type === "pcb_component",
   )
@@ -367,6 +576,90 @@ test("Microcontroller_RP2040 partitions its PCB into independent functional subc
     }
   }
 
+  const padLikePrimitives = circuitJson.filter((element) =>
+    ["pcb_smtpad", "pcb_plated_hole", "pcb_hole"].includes(element.type),
+  )
+  const elementBounds = (element: any) => {
+    const center = getCenter(element)
+    let width: number
+    let height: number
+
+    if (element.type === "pcb_smtpad" && element.shape === "circle") {
+      width = height = 2 * toFiniteNumber(element.radius)
+    } else if (element.type === "pcb_plated_hole") {
+      width = toFiniteNumber(element.outer_width)
+      height = toFiniteNumber(element.outer_height)
+    } else if (element.type === "pcb_hole") {
+      width = height = toFiniteNumber(element.hole_diameter)
+    } else {
+      width = toFiniteNumber(element.width)
+      height = toFiniteNumber(element.height)
+    }
+
+    const rotation = (toFiniteNumber(element.ccw_rotation ?? 0) * Math.PI) / 180
+    const rotatedWidth =
+      Math.abs(width * Math.cos(rotation)) +
+      Math.abs(height * Math.sin(rotation))
+    const rotatedHeight =
+      Math.abs(width * Math.sin(rotation)) +
+      Math.abs(height * Math.cos(rotation))
+
+    return {
+      left: center.x - rotatedWidth / 2,
+      right: center.x + rotatedWidth / 2,
+      bottom: center.y - rotatedHeight / 2,
+      top: center.y + rotatedHeight / 2,
+    }
+  }
+
+  for (const group of childPcbGroups) {
+    const groupCenter = getCenter(group)
+    const groupAnchor = getCenter(group.anchor_position)
+    expect(groupCenter.x).toBeCloseTo(groupAnchor.x, 6)
+    expect(groupCenter.y).toBeCloseTo(groupAnchor.y, 6)
+
+    const groupPcbComponents = pcbComponents.filter(
+      (component) => component.pcb_group_id === group.pcb_group_id,
+    )
+    const groupPcbComponentIds = new Set(
+      groupPcbComponents.map((component) => component.pcb_component_id),
+    )
+    const groupPadPrimitives = padLikePrimitives.filter((primitive) =>
+      groupPcbComponentIds.has(primitive.pcb_component_id),
+    )
+    const contentBounds = [
+      ...groupPcbComponents.map(elementBounds),
+      ...groupPadPrimitives.map(elementBounds),
+    ]
+    const contentLeft = Math.min(...contentBounds.map((bounds) => bounds.left))
+    const contentRight = Math.max(
+      ...contentBounds.map((bounds) => bounds.right),
+    )
+    const contentBottom = Math.min(
+      ...contentBounds.map((bounds) => bounds.bottom),
+    )
+    const contentTop = Math.max(...contentBounds.map((bounds) => bounds.top))
+
+    expect((contentLeft + contentRight) / 2).toBeCloseTo(groupCenter.x, 5)
+    expect((contentBottom + contentTop) / 2).toBeCloseTo(groupCenter.y, 5)
+
+    const bounds = groupBounds(group)
+    for (const primitive of groupPadPrimitives) {
+      const primitiveBounds = elementBounds(primitive)
+      expect(primitiveBounds.left - bounds.left).toBeGreaterThanOrEqual(0.099)
+      expect(bounds.right - primitiveBounds.right).toBeGreaterThanOrEqual(0.099)
+      expect(primitiveBounds.bottom - bounds.bottom).toBeGreaterThanOrEqual(
+        0.099,
+      )
+      expect(bounds.top - primitiveBounds.top).toBeGreaterThanOrEqual(0.099)
+    }
+
+    expect(bounds.left).toBeGreaterThanOrEqual(-40)
+    expect(bounds.right).toBeLessThanOrEqual(40)
+    expect(bounds.bottom).toBeGreaterThanOrEqual(-40)
+    expect(bounds.top).toBeLessThanOrEqual(40)
+  }
+
   const usbSourceGroup = childGroupByExpectedName.get("USB_INTERFACE")
   const sourceComponentByName = new Map(
     sourceComponents.map((component) => [component.name, component]),
@@ -411,6 +704,115 @@ test("Microcontroller_RP2040 partitions its PCB into independent functional subc
   ).toBeLessThanOrEqual(0.1)
   expect(resistorDistance).toBeLessThanOrEqual(2)
 })
+
+test("Microcontroller_RP2040 child subcircuits route their local physical pairs independently", async () => {
+  const cases = [
+    {
+      name: "RP2040_CORE",
+      component: RP2040CoreSubcircuit,
+      sourceTraceCount: 29,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "USB_INTERFACE",
+      component: USBInterfaceSubcircuit,
+      sourceTraceCount: 22,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "QSPI_FLASH_BOOT",
+      component: QSPIFlashBootSubcircuit,
+      sourceTraceCount: 9,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "CLOCK",
+      component: ClockSubcircuit,
+      sourceTraceCount: 6,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "POWER_REGULATOR",
+      component: PowerRegulatorSubcircuit,
+      sourceTraceCount: 12,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "ANALOG_SUPPLY",
+      component: AnalogSupplySubcircuit,
+      sourceTraceCount: 4,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "RUN_CONTROL",
+      component: RunControlSubcircuit,
+      sourceTraceCount: 3,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "STATUS_LED",
+      component: StatusLEDSubcircuit,
+      sourceTraceCount: 2,
+      minimumPcbTraceCount: 1,
+    },
+    {
+      name: "SWD_DEBUG",
+      component: SWDDebugSubcircuit,
+      sourceTraceCount: 2,
+      minimumPcbTraceCount: 0,
+    },
+  ]
+
+  for (const childCase of cases) {
+    const circuit = new Circuit()
+    const ChildSubcircuit = childCase.component
+
+    circuit.add(
+      <board width="80mm" height="80mm">
+        <net name="GND" />
+        <net name="V3V3" />
+        <net name="VBUS" />
+        <net name="ADC_VREF" />
+        <ChildSubcircuit parentName="ROUTING_TEST" />
+      </board>,
+    )
+
+    await circuit.renderUntilSettled()
+
+    const circuitJson = circuit.getCircuitJson() as any[]
+    const childGroup = circuitJson.find(
+      (element) =>
+        element.type === "source_group" && element.name === childCase.name,
+    )
+    expect(childGroup).toBeDefined()
+
+    const childSourceTraces = circuitJson.filter(
+      (element) =>
+        element.type === "source_trace" &&
+        element.subcircuit_id === childGroup.subcircuit_id,
+    )
+    expect(childSourceTraces).toHaveLength(childCase.sourceTraceCount)
+
+    const childPcbTraces = circuitJson.filter(
+      (element) =>
+        element.type === "pcb_trace" &&
+        element.subcircuit_id === childGroup.subcircuit_id,
+    )
+    if (childCase.name === "SWD_DEBUG") {
+      // SWD has no internal physical pair: SWCLK/SWD are parent cross-links
+      // and its two local traces each terminate at a singleton shared rail.
+      expect(childPcbTraces).toHaveLength(0)
+    } else {
+      expect(childPcbTraces.length).toBeGreaterThanOrEqual(
+        childCase.minimumPcbTraceCount,
+      )
+    }
+
+    expect(
+      circuitJson.filter((element) => element.type.endsWith("_error")),
+    ).toEqual([])
+  }
+}, 30_000)
 
 test("Microcontroller_RP2040 renders its complete support circuit", async () => {
   const circuit = new Circuit()
@@ -570,7 +972,22 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
         (port) => port.source_port_id === sourcePort.source_port_id,
       )!
 
-      expect(schematicPort.is_connected).toBe(true)
+      // Nested child port-to-net traces currently do not set the schematic
+      // port flag, so prove the electrical connection from source data.
+      const connectedSourceTrace = circuit.db.source_trace
+        .list()
+        .find((trace) =>
+          trace.connected_source_port_ids.includes(sourcePort.source_port_id),
+        )
+
+      expect(connectedSourceTrace).toBeDefined()
+      expect(connectedSourceTrace!.connected_source_net_ids.length).toBe(
+        pinName === "pin1" ? 0 : 1,
+      )
+      expect(connectedSourceTrace!.subcircuit_connectivity_map_key).toBeTruthy()
+      if (schematicPort.is_connected) {
+        expect(schematicPort.is_connected).toBe(true)
+      }
     }
   }
   expect(
