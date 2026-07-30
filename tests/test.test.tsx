@@ -194,6 +194,224 @@ test("Microcontroller_RP2040 creates a named, positionable subcircuit", () => {
   expect(element.props.pcbRotation).toBe(90)
 })
 
+test("Microcontroller_RP2040 partitions its PCB into independent functional subcircuits", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="80mm" height="80mm" routingDisabled>
+      <Microcontroller_RP2040 name="MCU" />
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  const circuitJson = circuit.getCircuitJson() as any[]
+  const sourceGroups = circuitJson.filter(
+    (element) => element.type === "source_group",
+  )
+  const parentGroup = sourceGroups.find((group) => group.name === "MCU")
+  expect(parentGroup).toBeDefined()
+
+  const childGroups = sourceGroups.filter(
+    (group) =>
+      group.is_subcircuit &&
+      (group.parent_source_group_id === parentGroup.source_group_id ||
+        (!group.parent_source_group_id &&
+          group.parent_subcircuit_id === parentGroup.subcircuit_id)),
+  )
+  const expectedComponentsByGroup = new Map<string, string[]>([
+    [
+      "RP2040_CORE",
+      [
+        "U1",
+        "C_IOVDD1",
+        "C_IOVDD2",
+        "C_IOVDD3",
+        "C_IOVDD4",
+        "C_IOVDD5",
+        "C_IOVDD6",
+        "C_CORE",
+      ],
+    ],
+    [
+      "USB_INTERFACE",
+      [
+        "J_USB",
+        "R_CC1",
+        "R_CC2",
+        "R_USB1",
+        "R_USB2",
+        "C_VBUS",
+        "C_USB_VDD",
+        "C_USB",
+      ],
+    ],
+    ["QSPI_FLASH_BOOT", ["U2", "C_FLASH", "SW_BOOT", "R_BOOT"]],
+    ["CLOCK", ["Y1", "C_XIN", "C_XOUT"]],
+    [
+      "POWER_REGULATOR",
+      ["D_VBUS", "U3", "R_3V3_EN", "C_3V3", "D_PWR", "R_PWR_LED"],
+    ],
+    ["ANALOG_SUPPLY", ["L_AVDD", "C_ADC"]],
+    ["RUN_CONTROL", ["R_RUN", "SW_RUN"]],
+    ["STATUS_LED", ["D1", "R_LED"]],
+    ["SWD_DEBUG", ["TP_SWCLK", "TP_GND", "TP_SWDIO", "TP_3V3"]],
+  ])
+
+  expect(childGroups).toHaveLength(expectedComponentsByGroup.size)
+
+  const sourceComponents = circuitJson.filter(
+    (element) => element.type === "source_component",
+  )
+  const childGroupIds = new Set(
+    childGroups.map((group) => group.source_group_id),
+  )
+
+  expect(sourceComponents).toHaveLength(39)
+  expect(
+    sourceComponents.every((component) =>
+      childGroupIds.has(component.source_group_id),
+    ),
+  ).toBe(true)
+
+  const childGroupByExpectedName = new Map<string, any>()
+  for (const expectedName of expectedComponentsByGroup.keys()) {
+    const matches = childGroups.filter(
+      (group) =>
+        group.name === expectedName ||
+        group.name?.endsWith(`__${expectedName}`),
+    )
+    expect(matches).toHaveLength(1)
+    childGroupByExpectedName.set(expectedName, matches[0])
+  }
+
+  for (const [groupName, expectedComponentNames] of expectedComponentsByGroup) {
+    const childGroup = childGroupByExpectedName.get(groupName)
+    const actualComponentNames = sourceComponents
+      .filter(
+        (component) => component.source_group_id === childGroup.source_group_id,
+      )
+      .map((component) => component.name)
+      .sort()
+
+    expect(actualComponentNames).toEqual([...expectedComponentNames].sort())
+    expect(actualComponentNames.length).toBeLessThanOrEqual(10)
+  }
+
+  const pcbComponents = circuitJson.filter(
+    (element) => element.type === "pcb_component",
+  )
+  const pcbGroups = circuitJson.filter(
+    (element) => element.type === "pcb_group",
+  )
+  const childPcbGroups = childGroups.map((sourceGroup) => {
+    const matches = pcbGroups.filter(
+      (pcbGroup) => pcbGroup.source_group_id === sourceGroup.source_group_id,
+    )
+    expect(matches).toHaveLength(1)
+    return matches[0]
+  })
+
+  expect(pcbComponents).toHaveLength(39)
+  expect(
+    new Set(pcbComponents.map((component) => component.pcb_component_id)).size,
+  ).toBe(39)
+
+  for (const component of pcbComponents) {
+    const owners = childPcbGroups.filter(
+      (group) =>
+        component.pcb_group_id === group.pcb_group_id ||
+        group.pcb_component_ids?.includes(component.pcb_component_id),
+    )
+    expect(owners).toHaveLength(1)
+  }
+
+  const toFiniteNumber = (value: unknown) => {
+    const number =
+      typeof value === "number"
+        ? value
+        : typeof value === "string"
+          ? Number.parseFloat(value)
+          : Number.NaN
+    expect(Number.isFinite(number)).toBe(true)
+    return number
+  }
+  const getCenter = (element: any) => ({
+    x: toFiniteNumber(element.center?.x ?? element.x),
+    y: toFiniteNumber(element.center?.y ?? element.y),
+  })
+  const groupBounds = (group: any) => {
+    const center = getCenter(group)
+    const width = toFiniteNumber(group.width)
+    const height = toFiniteNumber(group.height)
+    expect(width).toBeGreaterThan(0)
+    expect(height).toBeGreaterThan(0)
+    return {
+      left: center.x - width / 2,
+      right: center.x + width / 2,
+      bottom: center.y - height / 2,
+      top: center.y + height / 2,
+    }
+  }
+
+  for (let i = 0; i < childPcbGroups.length; i++) {
+    for (let j = i + 1; j < childPcbGroups.length; j++) {
+      const first = groupBounds(childPcbGroups[i])
+      const second = groupBounds(childPcbGroups[j])
+      const overlapX =
+        Math.min(first.right, second.right) - Math.max(first.left, second.left)
+      const overlapY =
+        Math.min(first.top, second.top) - Math.max(first.bottom, second.bottom)
+
+      expect(overlapX <= 1e-6 || overlapY <= 1e-6).toBe(true)
+    }
+  }
+
+  const usbSourceGroup = childGroupByExpectedName.get("USB_INTERFACE")
+  const sourceComponentByName = new Map(
+    sourceComponents.map((component) => [component.name, component]),
+  )
+  for (const name of ["J_USB", "R_USB1", "R_USB2"]) {
+    expect(sourceComponentByName.get(name)?.source_group_id).toBe(
+      usbSourceGroup.source_group_id,
+    )
+  }
+
+  const pcbComponentBySourceId = new Map(
+    pcbComponents.map((component) => [
+      component.source_component_id,
+      component,
+    ]),
+  )
+  const getPcbComponent = (name: string) =>
+    pcbComponentBySourceId.get(
+      sourceComponentByName.get(name)?.source_component_id,
+    )
+  const usbResistor1 = getPcbComponent("R_USB1")
+  const usbResistor2 = getPcbComponent("R_USB2")
+  expect(usbResistor1).toBeDefined()
+  expect(usbResistor2).toBeDefined()
+  const resistor1Center = getCenter(usbResistor1)
+  const resistor2Center = getCenter(usbResistor2)
+  const normalizeRotation = (rotation: unknown) =>
+    ((toFiniteNumber(rotation) % 360) + 360) % 360
+  const resistorDistance = Math.hypot(
+    resistor1Center.x - resistor2Center.x,
+    resistor1Center.y - resistor2Center.y,
+  )
+
+  expect(normalizeRotation(usbResistor1.rotation)).toBe(
+    normalizeRotation(usbResistor2.rotation),
+  )
+  expect(
+    Math.min(
+      Math.abs(resistor1Center.x - resistor2Center.x),
+      Math.abs(resistor1Center.y - resistor2Center.y),
+    ),
+  ).toBeLessThanOrEqual(0.1)
+  expect(resistorDistance).toBeLessThanOrEqual(2)
+})
+
 test("Microcontroller_RP2040 renders its complete support circuit", async () => {
   const circuit = new Circuit()
 
