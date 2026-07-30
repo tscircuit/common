@@ -180,7 +180,7 @@ export const Microcontroller_RP2040 = ({
  */
 export default function MicrocontrollerRP2040Snapshot() {
   return (
-    <board width="30mm" height="70mm" routingDisabled>
+    <board width="30mm" height="70mm">
       <Microcontroller_RP2040 />
     </board>
   )
