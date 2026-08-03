@@ -355,6 +355,26 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
       expect(schematicPort.is_connected).toBe(true)
     }
   }
+  for (const ledName of ["D1", "D_PWR"]) {
+    const ledComponent = circuit.db.source_component.getWhere({
+      name: ledName,
+    })!
+    const ledPorts = circuit.db.source_port
+      .list()
+      .filter(
+        (port) => port.source_component_id === ledComponent.source_component_id,
+      )
+      .sort((a, b) => a.pin_number - b.pin_number)
+
+    expect(ledPorts[0].pin_number).toBe(1)
+    expect(ledPorts[0].port_hints).toContain("cathode")
+    expect(ledPorts[0].port_hints).toContain("neg")
+    expect(ledPorts[0].port_hints).not.toContain("anode")
+    expect(ledPorts[1].pin_number).toBe(2)
+    expect(ledPorts[1].port_hints).toContain("anode")
+    expect(ledPorts[1].port_hints).toContain("pos")
+    expect(ledPorts[1].port_hints).not.toContain("cathode")
+  }
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
   ).toEqual([])
