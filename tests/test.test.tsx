@@ -364,7 +364,7 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
       .filter(
         (port) => port.source_component_id === ledComponent.source_component_id,
       )
-      .sort((a, b) => a.pin_number - b.pin_number)
+      .sort((a, b) => (a.pin_number ?? 0) - (b.pin_number ?? 0))
 
     expect(ledPorts[0].pin_number).toBe(1)
     expect(ledPorts[0].port_hints).toContain("cathode")
