@@ -22,8 +22,12 @@ export const AP2112K_3_3TRG1 = (props: ChipProps<typeof pinLabels>) => {
           "https://modelcdn.tscircuit.com/easyeda_models/assets/C23380830.obj?uuid=8c971aea3af54c53b74baeb1f489d393",
         stepUrl:
           "https://modelcdn.tscircuit.com/easyeda_models/assets/C23380830.step?uuid=8c971aea3af54c53b74baeb1f489d393",
-        pcbRotationOffset: -90,
-        modelOriginPosition: { x: 0, y: 0, z: -0.7 },
+        pcbRotationOffset: 90,
+        modelOriginPosition: {
+          x: -0.000012699999956566899,
+          y: 0.00006349999989652133,
+          z: -0.7,
+        },
       }}
       {...props}
     />
