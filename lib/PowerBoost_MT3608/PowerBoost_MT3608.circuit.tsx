@@ -44,17 +44,21 @@ export const PowerBoost_MT3608 = ({
     {...props}
     name={name}
   >
-    <net name="GND" isGroundNet />
-    <net name="VBUS" isPowerNet />
-    <net name="VSYS" isPowerNet />
-    <net name="BAT_POS" isPowerNet />
-    <net name="BAT_SWITCHED" isPowerNet />
+    <net name="GND_INTERNAL" isGroundNet />
+    <net name="VBUS_INTERNAL" isPowerNet />
+    <net name="VSYS_INTERNAL" isPowerNet />
+    <net name="BAT_POS_INTERNAL" isPowerNet />
+    <net name="BAT_SWITCHED_INTERNAL" isPowerNet />
 
-    <port name="BAT_POS" direction="left" connectsTo="net.BAT_POS" />
-    <port name="BAT_SWITCHED" direction="left" connectsTo="net.BAT_SWITCHED" />
-    <port name="VBUS" direction="left" connectsTo="net.VBUS" />
-    <port name="VSYS" direction="right" connectsTo="net.VSYS" />
-    <port name="GND" direction="down" connectsTo="net.GND" />
+    <port name="BAT_POS" direction="left" connectsTo="net.BAT_POS_INTERNAL" />
+    <port
+      name="BAT_SWITCHED"
+      direction="left"
+      connectsTo="net.BAT_SWITCHED_INTERNAL"
+    />
+    <port name="VBUS" direction="left" connectsTo="net.VBUS_INTERNAL" />
+    <port name="VSYS" direction="right" connectsTo="net.VSYS_INTERNAL" />
+    <port name="GND" direction="down" connectsTo="net.GND_INTERNAL" />
 
     <schematicsection
       name={schSections.batteryInput}
@@ -229,21 +233,33 @@ export const PowerBoost_MT3608 = ({
       schY={-7}
     />
 
-    <trace from=".J_BAT > .pin1" to="net.BAT_POS" {...batteryTraceProps} />
     <trace
-      from="net.BAT_SWITCHED"
+      from=".J_BAT > .pin1"
+      to="net.BAT_POS_INTERNAL"
+      {...batteryTraceProps}
+    />
+    <trace
+      from="net.BAT_SWITCHED_INTERNAL"
       to=".Q_BAT_CUTOFF > .source"
       {...powerTraceProps}
     />
-    <trace from="net.BAT_SWITCHED" to=".R_BOOST_EN_PULLUP > .pin1" />
+    <trace from="net.BAT_SWITCHED_INTERNAL" to=".R_BOOST_EN_PULLUP > .pin1" />
     <trace
       from=".R_BOOST_EN_PULLUP > .pin2"
       to=".U_BAT_BOOST > .EN"
       schDisplayLabel="BOOST_EN"
     />
     <trace from=".Q_USB_BOOST_OFF > .pin1" to=".U_BAT_BOOST > .EN" />
-    <trace from=".Q_USB_BOOST_OFF > .pin3" to="net.GND" {...gndLabel} />
-    <trace from="net.VBUS" to=".R_USB_BOOST_OFF > .pin1" {...vbusLabel} />
+    <trace
+      from=".Q_USB_BOOST_OFF > .pin3"
+      to="net.GND_INTERNAL"
+      {...gndLabel}
+    />
+    <trace
+      from="net.VBUS_INTERNAL"
+      to=".R_USB_BOOST_OFF > .pin1"
+      {...vbusLabel}
+    />
     <trace
       from=".R_USB_BOOST_OFF > .pin2"
       to=".Q_USB_BOOST_OFF > .pin2"
@@ -255,7 +271,7 @@ export const PowerBoost_MT3608 = ({
     />
     <trace
       from=".R_USB_BOOST_OFF_PULLDOWN > .pin2"
-      to="net.GND"
+      to="net.GND_INTERNAL"
       {...gndLabel}
     />
     <trace
@@ -264,14 +280,14 @@ export const PowerBoost_MT3608 = ({
       {...powerTraceProps}
       schDisplayLabel="BOOST_IN"
     />
-    <trace from="net.BAT_SWITCHED" to=".R_BAT_GATE_PULLUP > .pin1" />
+    <trace from="net.BAT_SWITCHED_INTERNAL" to=".R_BAT_GATE_PULLUP > .pin1" />
     <trace
       from=".R_BAT_GATE_PULLUP > .pin2"
       to=".Q_BAT_CUTOFF > .gate"
       schDisplayLabel="BAT_GATE"
     />
     <trace from=".Q_BAT_GATE > .pin1" to=".Q_BAT_CUTOFF > .gate" />
-    <trace from=".Q_BAT_GATE > .pin3" to="net.GND" {...gndLabel} />
+    <trace from=".Q_BAT_GATE > .pin3" to="net.GND_INTERNAL" {...gndLabel} />
     <trace from=".U_BAT_BOOST > .EN" to=".R_BAT_GATE_BASE > .pin1" />
     <trace
       from=".R_BAT_GATE_BASE > .pin2"
@@ -296,13 +312,13 @@ export const PowerBoost_MT3608 = ({
     />
     <trace
       from=".D_BAT_BOOST > .cathode"
-      to="net.VSYS"
+      to="net.VSYS_INTERNAL"
       {...powerTraceProps}
       {...vsysLabel}
     />
     <trace
       from=".U_BAT_BOOST > .GND"
-      to="net.GND"
+      to="net.GND_INTERNAL"
       {...powerTraceProps}
       {...gndLabel}
     />
@@ -313,7 +329,7 @@ export const PowerBoost_MT3608 = ({
     />
     <trace
       from=".C_BAT_IN > .pin2"
-      to="net.GND"
+      to="net.GND_INTERNAL"
       {...powerTraceProps}
       {...gndLabel}
     />
@@ -324,7 +340,7 @@ export const PowerBoost_MT3608 = ({
     />
     <trace
       from=".C_BAT_IN_BULK > .pin2"
-      to="net.GND"
+      to="net.GND_INTERNAL"
       {...powerTraceProps}
       {...gndLabel}
     />
@@ -335,7 +351,7 @@ export const PowerBoost_MT3608 = ({
     />
     <trace
       from=".C_BAT_OUT > .pin2"
-      to="net.GND"
+      to="net.GND_INTERNAL"
       {...powerTraceProps}
       {...gndLabel}
     />
@@ -346,7 +362,7 @@ export const PowerBoost_MT3608 = ({
     />
     <trace
       from=".C_BAT_OUT_BULK > .pin2"
-      to="net.GND"
+      to="net.GND_INTERNAL"
       {...powerTraceProps}
       {...gndLabel}
     />
@@ -357,8 +373,8 @@ export const PowerBoost_MT3608 = ({
       schDisplayLabel="FB"
     />
     <trace from=".U_BAT_BOOST > .FB" to=".R_BOOST_BOT > .pin1" />
-    <trace from=".R_BOOST_BOT > .pin2" to="net.GND" {...gndLabel} />
-    <trace from=".J_BAT > .pin2" to="net.GND" {...gndLabel} />
+    <trace from=".R_BOOST_BOT > .pin2" to="net.GND_INTERNAL" {...gndLabel} />
+    <trace from=".J_BAT > .pin2" to="net.GND_INTERNAL" {...gndLabel} />
   </subcircuit>
 )
 

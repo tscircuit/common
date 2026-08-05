@@ -21,6 +21,39 @@ test("test", () => {
   expect(AudioAmplifier3W_PAM8403).toBeDefined()
 })
 
+test("exported power and audio subcircuits have unique immediate child names", () => {
+  const subcircuits = [
+    {
+      element: PowerBoost_MT3608({ name: "POWER" }) as any,
+      publicPorts: ["BAT_POS", "BAT_SWITCHED", "VBUS", "VSYS", "GND"],
+    },
+    {
+      element: AudioAmplifier3W_PAM8403({ name: "AUDIO" }) as any,
+      publicPorts: ["AUDIO_PWM", "V3V3", "VSYS", "GND"],
+    },
+  ]
+
+  for (const { element, publicPorts } of subcircuits) {
+    const children = Array.isArray(element.props.children)
+      ? element.props.children
+      : [element.props.children]
+    const namedChildren = children.filter(
+      (child: any) => typeof child?.props?.name === "string",
+    )
+    const childNames = namedChildren.map((child: any) => child.props.name)
+
+    expect(childNames).toEqual([...new Set(childNames)])
+    for (const portName of publicPorts) {
+      expect(
+        namedChildren.some(
+          (child: any) =>
+            child.type === "port" && child.props.name === portName,
+        ),
+      ).toBe(true)
+    }
+  }
+})
+
 test("AudioAmplifier3W_PAM8403 is a pure, positionable subcircuit", () => {
   const element = AudioAmplifier3W_PAM8403({
     name: "AUDIO",
