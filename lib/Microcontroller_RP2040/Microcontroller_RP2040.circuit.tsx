@@ -554,8 +554,8 @@ export const Microcontroller_RP2040 = ({
       footprint="0402"
       schSectionName={schSections.clock(name)}
       schOrientation="vertical"
-      pcbX={-2.4}
-      pcbY={-21}
+      pcbX={2.8}
+      pcbY={-9}
       schX={2.2}
       schY={-14.2}
     />
