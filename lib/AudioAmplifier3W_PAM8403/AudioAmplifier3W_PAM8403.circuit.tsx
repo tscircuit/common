@@ -22,7 +22,8 @@ export type AudioAmplifier3WPAM8403Props = Omit<SubcircuitProps, "children">
  * 3W mono PWM audio amplifier extracted from abse/gameboy.
  *
  * The circuit includes PWM input filtering, PAM8403 amplification, power
- * decoupling, speaker EMI filtering, and the speaker connector.
+ * decoupling, speaker EMI filtering, and the speaker connector. Use
+ * exposedNets to expose only the selected signal and power nets.
  */
 export const AudioAmplifier3W_PAM8403 = ({
   name = "AudioAmplifier3W_PAM8403",
@@ -34,19 +35,10 @@ export const AudioAmplifier3W_PAM8403 = ({
     {...props}
     name={name}
   >
-    <net name="AUDIO_PWM_INTERNAL" />
-    <net name="V3V3_INTERNAL" isPowerNet />
-    <net name="VSYS_INTERNAL" isPowerNet />
-    <net name="GND_INTERNAL" isGroundNet />
-
-    <port
-      name="AUDIO_PWM"
-      direction="left"
-      connectsTo="net.AUDIO_PWM_INTERNAL"
-    />
-    <port name="V3V3" direction="up" connectsTo="net.V3V3_INTERNAL" />
-    <port name="VSYS" direction="up" connectsTo="net.VSYS_INTERNAL" />
-    <port name="GND" direction="down" connectsTo="net.GND_INTERNAL" />
+    <net name="AUDIO_PWM" />
+    <net name="V3V3" isPowerNet />
+    <net name="VSYS" isPowerNet />
+    <net name="GND" isGroundNet />
 
     <schematicsection name={schSections.input} displayName="PWM Input Filter" />
     <schematicsection
@@ -225,7 +217,7 @@ export const AudioAmplifier3W_PAM8403 = ({
     />
 
     <trace
-      from="net.AUDIO_PWM_INTERNAL"
+      from="net.AUDIO_PWM"
       to=".R_AMP_IN > .pin1"
       {...signalTraceProps}
       schDisplayLabel="AUDIO_PWM"
@@ -238,7 +230,7 @@ export const AudioAmplifier3W_PAM8403 = ({
     />
     <trace
       from=".C_AMP_PWM_FILTER > .pin2"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...signalTraceProps}
       {...gndLabel}
     />
@@ -256,80 +248,80 @@ export const AudioAmplifier3W_PAM8403 = ({
     />
     <trace
       from=".U_SPK_AMP > .INR"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...signalTraceProps}
       {...gndLabel}
     />
     <trace
       from=".U_SPK_AMP > .MUTE"
-      to="net.V3V3_INTERNAL"
+      to="net.V3V3"
       {...signalTraceProps}
       {...v3v3Label}
     />
     <trace
       from=".U_SPK_AMP > .SHND"
-      to="net.V3V3_INTERNAL"
+      to="net.V3V3"
       {...signalTraceProps}
       {...v3v3Label}
     />
 
     <trace
       from=".U_SPK_AMP > .VDD"
-      to="net.VSYS_INTERNAL"
+      to="net.VSYS"
       {...powerTraceProps}
       {...vsysLabel}
     />
     <trace
       from=".U_SPK_AMP > .PVDD1"
-      to="net.VSYS_INTERNAL"
+      to="net.VSYS"
       {...powerTraceProps}
       {...vsysLabel}
     />
     <trace
       from=".U_SPK_AMP > .PVDD2"
-      to="net.VSYS_INTERNAL"
+      to="net.VSYS"
       {...powerTraceProps}
       {...vsysLabel}
     />
     <trace
       from=".U_SPK_AMP > .GND"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
       from=".U_SPK_AMP > .PGND1"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
       from=".U_SPK_AMP > .PGND2"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
       from=".C_AMP_VDD > .pin1"
-      to="net.VSYS_INTERNAL"
+      to="net.VSYS"
       {...powerTraceProps}
       {...vsysLabel}
     />
     <trace
       from=".C_AMP_VDD > .pin2"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
     <trace
       from=".C_AMP_VDD_BULK > .pin1"
-      to="net.VSYS_INTERNAL"
+      to="net.VSYS"
       {...powerTraceProps}
       {...vsysLabel}
     />
     <trace
       from=".C_AMP_VDD_BULK > .pin2"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...powerTraceProps}
       {...gndLabel}
     />
@@ -341,7 +333,7 @@ export const AudioAmplifier3W_PAM8403 = ({
     />
     <trace
       from=".C_AMP_VREF > .pin2"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...signalTraceProps}
       {...gndLabel}
     />
@@ -365,7 +357,7 @@ export const AudioAmplifier3W_PAM8403 = ({
     />
     <trace
       from=".C_SPK_EMI_POS > .pin2"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...signalTraceProps}
       {...gndLabel}
     />
@@ -388,19 +380,19 @@ export const AudioAmplifier3W_PAM8403 = ({
     />
     <trace
       from=".C_SPK_EMI_NEG > .pin2"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...signalTraceProps}
       {...gndLabel}
     />
     <trace
       from=".J_SPK > .pin3"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...signalTraceProps}
       {...gndLabel}
     />
     <trace
       from=".J_SPK > .pin4"
-      to="net.GND_INTERNAL"
+      to="net.GND"
       {...signalTraceProps}
       {...gndLabel}
     />
