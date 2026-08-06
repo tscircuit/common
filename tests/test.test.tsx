@@ -11,7 +11,10 @@ import { ProMicroBoard } from "../lib/ProMicroBoard/ProMicroBoard.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 
-const expectNetsExposed = (circuit: Circuit, netNames: string[]) => {
+const expectNetsExposed = (
+  circuit: InstanceType<typeof Circuit>,
+  netNames: string[],
+) => {
   const sourceNets = circuit.db.source_net.list()
   const sourceTraces = circuit.db.source_trace.list()
 
