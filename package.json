@@ -1,6 +1,6 @@
 {
   "name": "@tscircuit/common",
-  "version": "0.0.53",
+  "version": "0.0.54",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -35,7 +35,7 @@
     "@tscircuit/footprinter": "^0.0.394",
     "@types/react": "^19.1.12",
     "circuit-json-to-footprinter": "^0.0.21",
-    "tscircuit": "^0.0.2212",
+    "tscircuit": "^0.0.2242",
     "tsup": "^8.5.0"
   }
 }
