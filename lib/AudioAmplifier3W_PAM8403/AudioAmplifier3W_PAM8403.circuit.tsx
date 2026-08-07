@@ -22,7 +22,8 @@ export type AudioAmplifier3WPAM8403Props = Omit<SubcircuitProps, "children">
  * 3W mono PWM audio amplifier extracted from abse/gameboy.
  *
  * The circuit includes PWM input filtering, PAM8403 amplification, power
- * decoupling, speaker EMI filtering, and the speaker connector.
+ * decoupling, speaker EMI filtering, and the speaker connector. Use
+ * exposedNets to expose only the selected signal and power nets.
  */
 export const AudioAmplifier3W_PAM8403 = ({
   name = "AudioAmplifier3W_PAM8403",
@@ -38,11 +39,6 @@ export const AudioAmplifier3W_PAM8403 = ({
     <net name="V3V3" isPowerNet />
     <net name="VSYS" isPowerNet />
     <net name="GND" isGroundNet />
-
-    <port name="AUDIO_PWM" direction="left" connectsTo="net.AUDIO_PWM" />
-    <port name="V3V3" direction="up" connectsTo="net.V3V3" />
-    <port name="VSYS" direction="up" connectsTo="net.VSYS" />
-    <port name="GND" direction="down" connectsTo="net.GND" />
 
     <schematicsection name={schSections.input} displayName="PWM Input Filter" />
     <schematicsection

@@ -34,18 +34,18 @@ operation:
 import { PowerBoost_MT3608 } from "@tscircuit/common"
 
 return (
-  <PowerBoost_MT3608
-    name="POWER"
-    connections={{
-      BAT_POS: "net.BAT_LINK",
-      BAT_SWITCHED: "net.BAT_LINK",
-      VBUS: "net.VBUS",
-      VSYS: "net.VSYS",
-      GND: "net.GND",
-    }}
-  />
+  <>
+    <PowerBoost_MT3608
+      name="POWER"
+      exposedNets={["BAT_POS", "BAT_SWITCHED", "VBUS", "VSYS", "GND"]}
+    />
+    <trace from="net.BAT_POS" to="net.BAT_SWITCHED" />
+  </>
 )
 ```
+
+The trace above configures the battery input as always on. Replace it with a
+switch between `BAT_POS` and `BAT_SWITCHED` when switched operation is needed.
 
 The Game Boy PAM8403 3 W audio-amplifier subcircuit includes the PWM input
 filter, input coupling, amplifier decoupling, speaker EMI filter, and speaker
@@ -57,12 +57,10 @@ import { AudioAmplifier3W_PAM8403 } from "@tscircuit/common"
 return (
   <AudioAmplifier3W_PAM8403
     name="AUDIO"
-    connections={{
-      AUDIO_PWM: "net.AUDIO_PWM",
-      V3V3: "net.V3V3",
-      VSYS: "net.VSYS",
-      GND: "net.GND",
-    }}
+    exposedNets={["AUDIO_PWM", "V3V3", "VSYS", "GND"]}
   />
 )
 ```
+
+Internal nets remain private by default. Use `exposedNets` to expose a selected
+set, or `exposeNets` when every internal net should be exposed.

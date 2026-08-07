@@ -11,6 +11,28 @@ import { ProMicroBoard } from "../lib/ProMicroBoard/ProMicroBoard.circuit"
 import { RaspberryPiHatBoard } from "../lib/RaspberryPiHatBoard/RaspberryPiHatBoard.circuit"
 import { XiaoBoard } from "../lib/XiaoBoard/XiaoBoard.circuit"
 
+const expectNetsExposed = (
+  circuit: InstanceType<typeof Circuit>,
+  netNames: string[],
+) => {
+  const sourceNets = circuit.db.source_net.list()
+  const sourceTraces = circuit.db.source_trace.list()
+
+  for (const netName of netNames) {
+    const matchingNets = sourceNets.filter((net) => net.name === netName)
+    expect(matchingNets).toHaveLength(2)
+    expect(
+      sourceTraces.some(
+        (trace) =>
+          trace.connected_source_port_ids.length === 0 &&
+          matchingNets.every((net) =>
+            trace.connected_source_net_ids.includes(net.source_net_id),
+          ),
+      ),
+    ).toBe(true)
+  }
+}
+
 test("test", () => {
   expect(ArduinoShield).toBeDefined()
   expect(RaspberryPiHatBoard).toBeDefined()
@@ -19,6 +41,51 @@ test("test", () => {
   expect(Microcontroller_RP2040).toBeDefined()
   expect(PowerBoost_MT3608).toBeDefined()
   expect(AudioAmplifier3W_PAM8403).toBeDefined()
+})
+
+test("power and audio subcircuits keep internal nets private by default", () => {
+  const subcircuits = [
+    {
+      element: PowerBoost_MT3608({ name: "POWER" }) as any,
+      internalNets: ["GND", "VBUS", "VSYS", "BAT_POS", "BAT_SWITCHED"],
+    },
+    {
+      element: AudioAmplifier3W_PAM8403({ name: "AUDIO" }) as any,
+      internalNets: ["AUDIO_PWM", "V3V3", "VSYS", "GND"],
+    },
+  ]
+
+  for (const { element, internalNets } of subcircuits) {
+    const children = Array.isArray(element.props.children)
+      ? element.props.children
+      : [element.props.children]
+    const namedChildren = children.filter(
+      (child: any) => typeof child?.props?.name === "string",
+    )
+    const childNames = namedChildren.map((child: any) => child.props.name)
+
+    expect(childNames).toEqual([...new Set(childNames)])
+    expect(
+      namedChildren
+        .filter((child: any) => child.type === "net")
+        .map((child: any) => child.props.name),
+    ).toEqual(internalNets)
+    expect(namedChildren.some((child: any) => child.type === "port")).toBe(
+      false,
+    )
+    expect(element.props.exposedNets).toBeUndefined()
+    expect(element.props.exposeNets).toBeUndefined()
+  }
+})
+
+test("power and audio subcircuits forward opt-in net exposure props", () => {
+  const selective = AudioAmplifier3W_PAM8403({
+    exposedNets: ["AUDIO_PWM", "GND"],
+  }) as any
+  const all = PowerBoost_MT3608({ exposeNets: true }) as any
+
+  expect(selective.props.exposedNets).toEqual(["AUDIO_PWM", "GND"])
+  expect(all.props.exposeNets).toBe(true)
 })
 
 test("AudioAmplifier3W_PAM8403 is a pure, positionable subcircuit", () => {
@@ -50,12 +117,7 @@ test("AudioAmplifier3W_PAM8403 renders the complete mono audio path", async () =
       <net name="GND" isGroundNet />
       <AudioAmplifier3W_PAM8403
         name="AUDIO"
-        connections={{
-          AUDIO_PWM: "net.AUDIO_PWM",
-          V3V3: "net.V3V3",
-          VSYS: "net.VSYS",
-          GND: "net.GND",
-        }}
+        exposedNets={["AUDIO_PWM", "V3V3", "VSYS", "GND"]}
       />
     </board>,
   )
@@ -76,6 +138,7 @@ test("AudioAmplifier3W_PAM8403 renders the complete mono audio path", async () =
   expect(circuit.db.source_net.getWhere({ name: "V3V3" })).toBeDefined()
   expect(circuit.db.source_net.getWhere({ name: "VSYS" })).toBeDefined()
   expect(circuit.db.source_net.getWhere({ name: "GND" })).toBeDefined()
+  expectNetsExposed(circuit, ["AUDIO_PWM", "V3V3", "VSYS", "GND"])
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
   ).toEqual([])
@@ -107,17 +170,13 @@ test("PowerBoost_MT3608 renders the complete functional boost circuit", async ()
       <net name="VBUS" isPowerNet />
       <net name="VSYS" isPowerNet />
       <net name="GND" isGroundNet />
-      <net name="BAT_LINK" isPowerNet />
+      <net name="BAT_POS" isPowerNet />
+      <net name="BAT_SWITCHED" isPowerNet />
       <PowerBoost_MT3608
         name="POWER"
-        connections={{
-          BAT_POS: "net.BAT_LINK",
-          BAT_SWITCHED: "net.BAT_LINK",
-          VBUS: "net.VBUS",
-          VSYS: "net.VSYS",
-          GND: "net.GND",
-        }}
+        exposedNets={["BAT_POS", "BAT_SWITCHED", "VBUS", "VSYS", "GND"]}
       />
+      <trace from="net.BAT_POS" to="net.BAT_SWITCHED" />
     </board>,
   )
 
@@ -168,10 +227,12 @@ test("PowerBoost_MT3608 renders the complete functional boost circuit", async ()
     expect(baseSchematicPort.is_connected).toBe(true)
   }
   expect(manufacturerPartNumbers).not.toContain("SK_12E12_G5")
-  expect(circuit.db.source_net.getWhere({ name: "BAT_LINK" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "BAT_POS" })).toBeDefined()
+  expect(circuit.db.source_net.getWhere({ name: "BAT_SWITCHED" })).toBeDefined()
   expect(circuit.db.source_net.getWhere({ name: "VBUS" })).toBeDefined()
   expect(circuit.db.source_net.getWhere({ name: "VSYS" })).toBeDefined()
   expect(circuit.db.source_net.getWhere({ name: "GND" })).toBeDefined()
+  expectNetsExposed(circuit, ["BAT_POS", "BAT_SWITCHED", "VBUS", "VSYS", "GND"])
   expect(
     circuit
       .getCircuitJson()

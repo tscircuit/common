@@ -1,7 +1,7 @@
 import type { SubcircuitProps } from "@tscircuit/props"
-import { AO3401A } from "./imports/AO3401A"
 import { A_0603WAF1003T5E } from "./imports/A_0603WAF1003T5E"
 import { A_0603WAF9532T5E } from "./imports/A_0603WAF9532T5E"
+import { AO3401A } from "./imports/AO3401A"
 import { CL10A106KP8NNNC } from "./imports/CL10A106KP8NNNC"
 import { CL10A226MQ8NRNC } from "./imports/CL10A226MQ8NRNC"
 import { FRC0603F1302TS } from "./imports/FRC0603F1302TS"
@@ -29,9 +29,9 @@ export type PowerBoostMT3608Props = Omit<SubcircuitProps, "children">
  * Battery-powered 5 V boost supply extracted from abse/gameboy.
  *
  * VBUS disables the MT3608 while USB power is present. VSYS is the boosted
- * output and GND is the common return. Connect an external switch between
- * BAT_POS and BAT_SWITCHED, or connect both ports to the same net for
- * always-on operation.
+ * output and GND is the common return. Use exposedNets to expose the selected
+ * power domains to the parent circuit. Connect an external switch between
+ * BAT_POS and BAT_SWITCHED, or connect both nets for always-on operation.
  */
 export const PowerBoost_MT3608 = ({
   name = "PowerBoost_MT3608",
@@ -49,12 +49,6 @@ export const PowerBoost_MT3608 = ({
     <net name="VSYS" isPowerNet />
     <net name="BAT_POS" isPowerNet />
     <net name="BAT_SWITCHED" isPowerNet />
-
-    <port name="BAT_POS" direction="left" connectsTo="net.BAT_POS" />
-    <port name="BAT_SWITCHED" direction="left" connectsTo="net.BAT_SWITCHED" />
-    <port name="VBUS" direction="left" connectsTo="net.VBUS" />
-    <port name="VSYS" direction="right" connectsTo="net.VSYS" />
-    <port name="GND" direction="down" connectsTo="net.GND" />
 
     <schematicsection
       name={schSections.batteryInput}
