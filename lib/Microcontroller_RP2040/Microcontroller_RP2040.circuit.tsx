@@ -751,7 +751,7 @@ export const Microcontroller_RP2040 = ({
       name="USB_DATA_MCU"
       positiveConnection="USB_DP"
       negativeConnection="USB_DN"
-      maxLengthSkew="0.3mm"
+      maxLengthSkew="0.5mm"
     />
     <trace
       {...denseTraceProps}
