@@ -139,6 +139,28 @@ test("AudioAmplifier3W_PAM8403 renders the complete mono audio path", async () =
   expect(circuit.db.source_net.getWhere({ name: "VSYS" })).toBeDefined()
   expect(circuit.db.source_net.getWhere({ name: "GND" })).toBeDefined()
   expectNetsExposed(circuit, ["AUDIO_PWM", "V3V3", "VSYS", "GND"])
+  const vrefCapacitor = circuit.db.source_component.getWhere({
+    name: "C_AMP_VREF",
+  })
+  const vrefCapacitorPortIds = new Set(
+    circuit.db.source_port
+      .list()
+      .filter(
+        (port) =>
+          port.source_component_id === vrefCapacitor?.source_component_id,
+      )
+      .map((port) => port.source_port_id),
+  )
+  expect(
+    circuit.db.source_trace
+      .list()
+      .filter((trace) =>
+        trace.connected_source_port_ids.some((portId) =>
+          vrefCapacitorPortIds.has(portId),
+        ),
+      )
+      .map((trace) => trace.max_length),
+  ).toEqual([5.5, 5.5])
   expect(
     circuitJson.filter((element) => element.type.endsWith("_error")),
   ).toEqual([])

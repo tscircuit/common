@@ -328,12 +328,14 @@ export const AudioAmplifier3W_PAM8403 = ({
     <trace
       from=".U_SPK_AMP > .VREF"
       to=".C_AMP_VREF > .pin1"
+      maxLength="5.5mm"
       {...signalTraceProps}
       schDisplayLabel="VREF"
     />
     <trace
       from=".C_AMP_VREF > .pin2"
       to="net.GND"
+      maxLength="5.5mm"
       {...signalTraceProps}
       {...gndLabel}
     />
