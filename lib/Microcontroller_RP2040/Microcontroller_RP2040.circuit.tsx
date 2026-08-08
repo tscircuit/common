@@ -476,7 +476,7 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.usb(name)}
       pcbX={3.4}
       pcbY={22.5}
-      pcbRotation={90}
+      pcbRotation={-90}
       schX={13.3}
       schY={-7.7}
     />
@@ -486,7 +486,7 @@ export const Microcontroller_RP2040 = ({
       footprint="0402"
       schSectionName={schSections.usb(name)}
       pcbX={2.4}
-      pcbY={16.5}
+      pcbY={22.5}
       pcbRotation={-90}
       schX={13.3}
       schY={-6.6}
@@ -747,6 +747,12 @@ export const Microcontroller_RP2040 = ({
     <trace name="VBUS_A" from=".J_USB > .A4B9" to="net.VBUS" {...vbusLabel} />
     <trace name="VBUS_B" from=".J_USB > .B4A9" to="net.VBUS" {...vbusLabel} />
     <trace name="USB_DN_A" from=".J_USB > .A7" to=".R_USB1 > .pin1" />
+    <differentialpair
+      name="USB_DATA_MCU"
+      positiveConnection="USB_DP"
+      negativeConnection="USB_DN"
+      maxLengthSkew="0.5mm"
+    />
     <trace
       {...denseTraceProps}
       name="USB_DN"
