@@ -365,6 +365,7 @@ export const Microcontroller_RP2040 = ({
 
     <X322512MSB4SI
       name="Y1"
+      maxTraceLength="20mm"
       schSectionName={schSections.clock(name)}
       pcbX={-0.5}
       pcbY={-6}
