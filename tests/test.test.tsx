@@ -277,6 +277,15 @@ test("Microcontroller_RP2040 creates a named, positionable subcircuit", () => {
   expect(element.props.pcbRotation).toBe(90)
 })
 
+test("Microcontroller_RP2040 allows its placed crystal traces to be routed", () => {
+  const element = Microcontroller_RP2040({}) as any
+  const crystal = element.props.children.find(
+    (child: any) => child?.props?.name === "Y1",
+  )
+
+  expect(crystal.props.maxTraceLength).toBe("20mm")
+})
+
 test("Microcontroller_RP2040 renders its complete support circuit", async () => {
   const circuit = new Circuit()
 
