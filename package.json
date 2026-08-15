@@ -35,7 +35,8 @@
     "@tscircuit/footprinter": "^0.0.394",
     "@types/react": "^19.1.12",
     "circuit-json-to-footprinter": "^0.0.21",
-    "tscircuit": "^0.0.2242",
+    "format-si-unit": "^0.0.12",
+    "tscircuit": "^0.0.2346",
     "tsup": "^8.5.0"
   }
 }
