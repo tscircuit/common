@@ -455,6 +455,7 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.usb(name)}
       pcbX={-0.2}
       pcbY={25.6}
+      pcbRotation={180}
       schX={7.2}
       schY={-7.5}
       schRotation={270}
