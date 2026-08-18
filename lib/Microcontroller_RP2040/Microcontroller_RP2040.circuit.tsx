@@ -398,7 +398,7 @@ export const Microcontroller_RP2040 = ({
       pcbRotation={90}
       schX={10.4}
       schY={-13.2}
-      schRotation={270}
+      schRotation={90}
     />
     <XL_1608SURC_06
       name="D_PWR"
@@ -409,7 +409,7 @@ export const Microcontroller_RP2040 = ({
       pcbRotation={90}
       schX={14.5}
       schY={-13.4}
-      schRotation={270}
+      schRotation={90}
     />
 
     <resistor

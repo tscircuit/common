@@ -6,6 +6,10 @@ export const XL_1608SURC_06 = (props: LedProps) => {
   return (
     <led
       name={name}
+      pinLabels={{
+        pin1: ["cathode", "neg"],
+        pin2: ["anode", "pos"],
+      }}
       supplierPartNumbers={{
         jlcpcb: ["C965799"],
       }}
@@ -14,12 +18,12 @@ export const XL_1608SURC_06 = (props: LedProps) => {
         <footprint>
           {/*
             The XINGLIGHT datasheet numbers cathode as pad 1 and anode as
-            pad 2, opposite tscircuit's generic LED source-pin numbering.
-            Keep the standard schematic symbol semantics and swap only the
-            physical pad-to-source-port mapping here.
+            pad 2. The source pin labels and physical pad hints both follow
+            that supplier pinout; semantic anode/cathode selectors remain
+            independent of the numeric pin order.
           */}
           <smtpad
-            portHints={["pin2", "cathode", "neg"]}
+            portHints={["pin1", "cathode", "neg"]}
             pcbX="-0.749mm"
             pcbY="0mm"
             width="0.8mm"
@@ -27,7 +31,7 @@ export const XL_1608SURC_06 = (props: LedProps) => {
             shape="rect"
           />
           <smtpad
-            portHints={["pin1", "anode", "pos"]}
+            portHints={["pin2", "anode", "pos"]}
             pcbX="0.749mm"
             pcbY="0mm"
             width="0.8mm"

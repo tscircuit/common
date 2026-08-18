@@ -459,13 +459,13 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
       .sort((a, b) => (a.pin_number ?? 0) - (b.pin_number ?? 0))
 
     expect(ledPorts[0].pin_number).toBe(1)
-    expect(ledPorts[0].port_hints).toContain("anode")
-    expect(ledPorts[0].port_hints).toContain("pos")
-    expect(ledPorts[0].port_hints).not.toContain("cathode")
+    expect(ledPorts[0].port_hints).toContain("cathode")
+    expect(ledPorts[0].port_hints).toContain("neg")
+    expect(ledPorts[0].port_hints).not.toContain("anode")
     expect(ledPorts[1].pin_number).toBe(2)
-    expect(ledPorts[1].port_hints).toContain("cathode")
-    expect(ledPorts[1].port_hints).toContain("neg")
-    expect(ledPorts[1].port_hints).not.toContain("anode")
+    expect(ledPorts[1].port_hints).toContain("anode")
+    expect(ledPorts[1].port_hints).toContain("pos")
+    expect(ledPorts[1].port_hints).not.toContain("cathode")
 
     const pcbComponent = circuit.db.pcb_component.getWhere({
       source_component_id: ledComponent.source_component_id,
@@ -478,16 +478,16 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
     )!
     const anodePad = pcbPads.find((pad) => pad.port_hints?.includes("anode"))!
 
-    expect(cathodePad.port_hints).toContain("pin2")
-    expect(anodePad.port_hints).toContain("pin1")
+    expect(cathodePad.port_hints).toContain("pin1")
+    expect(anodePad.port_hints).toContain("pin2")
     expect(cathodePad.pcb_port_id).toBe(
       circuit.db.pcb_port.getWhere({
-        source_port_id: ledPorts[1].source_port_id,
+        source_port_id: ledPorts[0].source_port_id,
       })!.pcb_port_id,
     )
     expect(anodePad.pcb_port_id).toBe(
       circuit.db.pcb_port.getWhere({
-        source_port_id: ledPorts[0].source_port_id,
+        source_port_id: ledPorts[1].source_port_id,
       })!.pcb_port_id,
     )
   }
