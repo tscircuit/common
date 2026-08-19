@@ -1,6 +1,10 @@
 {
   "name": "@tscircuit/common",
   "version": "0.0.59",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tscircuit/common.git"
+  },
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
