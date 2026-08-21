@@ -2,6 +2,7 @@ import { expect, test } from "bun:test"
 import { Circuit } from "tscircuit"
 import {
   AudioAmplifier3W_PAM8403,
+  MicrocontrollerRP2040,
   Microcontroller_RP2040,
   PowerBoost_MT3608,
 } from "../index"
@@ -276,6 +277,64 @@ test("Microcontroller_RP2040 creates a named, positionable subcircuit", () => {
   expect(element.props.pcbY).toBe(-4)
   expect(element.props.pcbRotation).toBe(90)
 })
+
+test("Microcontroller_RP2040 moves USB-C through its composable child", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board
+      width="30mm"
+      height="70mm"
+      autorouter="auto_local"
+      autorouterEffortLevel="10x"
+    >
+      <Microcontroller_RP2040>
+        <MicrocontrollerRP2040.USBC pcbX={3} pcbY={31} />
+      </Microcontroller_RP2040>
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  const usbSourceComponent = circuit.db.source_component.getWhere({
+    name: "J_USB",
+  })!
+  const usbPcbComponent = circuit.db.pcb_component.getWhere({
+    source_component_id: usbSourceComponent.source_component_id,
+  })!
+  const sourceTraceNamesById = new Map(
+    circuit.db.source_trace
+      .list()
+      .map((trace) => [trace.source_trace_id, trace.name]),
+  )
+  const routedTraceNames = new Set(
+    circuit.db.pcb_trace
+      .list()
+      .map((trace) => sourceTraceNamesById.get(trace.source_trace_id!))
+      .filter((name): name is string => name !== undefined),
+  )
+  const expectedRoutedUSBTraceNames = [
+    "USB_DN_B",
+    "USB_DP_B",
+    "VBUS_A",
+    "VBUS_B",
+    "CC1",
+    "CC2",
+  ]
+
+  expect(Number(usbPcbComponent.display_offset_x)).toBe(3)
+  expect(Number(usbPcbComponent.display_offset_y)).toBe(31)
+  expect(usbPcbComponent.rotation).toBe(180)
+  expect(circuit.db.pcb_trace.list().length).toBeGreaterThan(0)
+  expect(
+    expectedRoutedUSBTraceNames.filter((name) => routedTraceNames.has(name)),
+  ).toEqual(expectedRoutedUSBTraceNames)
+  expect(
+    circuit
+      .getCircuitJson()
+      .filter((element: any) => element.type.endsWith("_error")),
+  ).toEqual([])
+}, 15_000)
 
 test("Microcontroller_RP2040 allows its placed crystal traces to be routed", () => {
   const element = Microcontroller_RP2040({}) as any
