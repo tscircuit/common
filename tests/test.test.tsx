@@ -282,9 +282,14 @@ test("Microcontroller_RP2040 moves USB-C through its composable child", async ()
   const circuit = new Circuit()
 
   circuit.add(
-    <board width="50mm" height="70mm" routingDisabled>
+    <board
+      width="30mm"
+      height="70mm"
+      autorouter="auto_local"
+      autorouterEffortLevel="10x"
+    >
       <Microcontroller_RP2040>
-        <MicrocontrollerRP2040.USBC pcbX={7.5} pcbY={27} pcbRotation={90} />
+        <MicrocontrollerRP2040.USBC pcbX={3} pcbY={31} />
       </Microcontroller_RP2040>
     </board>,
   )
@@ -297,11 +302,39 @@ test("Microcontroller_RP2040 moves USB-C through its composable child", async ()
   const usbPcbComponent = circuit.db.pcb_component.getWhere({
     source_component_id: usbSourceComponent.source_component_id,
   })!
+  const sourceTraceNamesById = new Map(
+    circuit.db.source_trace
+      .list()
+      .map((trace) => [trace.source_trace_id, trace.name]),
+  )
+  const routedTraceNames = new Set(
+    circuit.db.pcb_trace
+      .list()
+      .map((trace) => sourceTraceNamesById.get(trace.source_trace_id!))
+      .filter((name): name is string => name !== undefined),
+  )
+  const expectedRoutedUSBTraceNames = [
+    "USB_DN_B",
+    "USB_DP_B",
+    "VBUS_A",
+    "VBUS_B",
+    "CC1",
+    "CC2",
+  ]
 
-  expect(Number(usbPcbComponent.display_offset_x)).toBe(7.5)
-  expect(Number(usbPcbComponent.display_offset_y)).toBe(27)
-  expect(usbPcbComponent.rotation).toBe(90)
-})
+  expect(Number(usbPcbComponent.display_offset_x)).toBe(3)
+  expect(Number(usbPcbComponent.display_offset_y)).toBe(31)
+  expect(usbPcbComponent.rotation).toBe(180)
+  expect(circuit.db.pcb_trace.list().length).toBeGreaterThan(0)
+  expect(
+    expectedRoutedUSBTraceNames.filter((name) => routedTraceNames.has(name)),
+  ).toEqual(expectedRoutedUSBTraceNames)
+  expect(
+    circuit
+      .getCircuitJson()
+      .filter((element: any) => element.type.endsWith("_error")),
+  ).toEqual([])
+}, 15_000)
 
 test("Microcontroller_RP2040 allows its placed crystal traces to be routed", () => {
   const element = Microcontroller_RP2040({}) as any

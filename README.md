@@ -26,7 +26,7 @@ import {
 
 return (
   <Microcontroller_RP2040 name="MCU" pcbX={0} pcbY={0}>
-    <MicrocontrollerRP2040.USBC pcbX={4} pcbY={28} />
+    <MicrocontrollerRP2040.USBC pcbX={3} pcbY={31} />
   </Microcontroller_RP2040>
 )
 ```
