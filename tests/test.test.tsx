@@ -2,6 +2,7 @@ import { expect, test } from "bun:test"
 import { Circuit } from "tscircuit"
 import {
   AudioAmplifier3W_PAM8403,
+  MicrocontrollerRP2040,
   Microcontroller_RP2040,
   PowerBoost_MT3608,
 } from "../index"
@@ -275,6 +276,31 @@ test("Microcontroller_RP2040 creates a named, positionable subcircuit", () => {
   expect(element.props.pcbX).toBe(12)
   expect(element.props.pcbY).toBe(-4)
   expect(element.props.pcbRotation).toBe(90)
+})
+
+test("Microcontroller_RP2040 moves USB-C through its composable child", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="50mm" height="70mm" routingDisabled>
+      <Microcontroller_RP2040>
+        <MicrocontrollerRP2040.USBC pcbX={7.5} pcbY={27} pcbRotation={90} />
+      </Microcontroller_RP2040>
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  const usbSourceComponent = circuit.db.source_component.getWhere({
+    name: "J_USB",
+  })!
+  const usbPcbComponent = circuit.db.pcb_component.getWhere({
+    source_component_id: usbSourceComponent.source_component_id,
+  })!
+
+  expect(usbPcbComponent.display_offset_x).toBe(7.5)
+  expect(usbPcbComponent.display_offset_y).toBe(27)
+  expect(usbPcbComponent.rotation).toBe(90)
 })
 
 test("Microcontroller_RP2040 allows its placed crystal traces to be routed", () => {

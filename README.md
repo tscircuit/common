@@ -19,10 +19,19 @@ The RP2040 subcircuit includes the microcontroller, QSPI flash, crystal, USB-C,
 power regulation, decoupling, boot/run controls, and SWD test points:
 
 ```tsx
-import { Microcontroller_RP2040 } from "@tscircuit/common"
+import {
+  MicrocontrollerRP2040,
+  Microcontroller_RP2040,
+} from "@tscircuit/common"
 
-return <Microcontroller_RP2040 name="MCU" pcbX={0} pcbY={0} />
+return (
+  <Microcontroller_RP2040 name="MCU" pcbX={0} pcbY={0}>
+    <MicrocontrollerRP2040.USBC pcbX={4} pcbY={28} />
+  </Microcontroller_RP2040>
+)
 ```
+
+Omit the `USBC` child to keep the default connector position.
 
 The MT3608 power-boost subcircuit includes its battery connector, cutoff
 MOSFET, USB-present shutdown, boost converter, feedback divider, and
