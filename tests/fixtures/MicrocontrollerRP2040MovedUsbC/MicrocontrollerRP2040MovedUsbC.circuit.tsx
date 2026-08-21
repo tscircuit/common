@@ -1,4 +1,4 @@
-import { MicrocontrollerRP2040, Microcontroller_RP2040 } from "../../index"
+import { MicrocontrollerRP2040, Microcontroller_RP2040 } from "../../../index"
 
 export default function MicrocontrollerRP2040MovedUsbC() {
   return (
