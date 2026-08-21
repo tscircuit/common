@@ -298,8 +298,8 @@ test("Microcontroller_RP2040 moves USB-C through its composable child", async ()
     source_component_id: usbSourceComponent.source_component_id,
   })!
 
-  expect(usbPcbComponent.display_offset_x).toBe(7.5)
-  expect(usbPcbComponent.display_offset_y).toBe(27)
+  expect(Number(usbPcbComponent.display_offset_x)).toBe(7.5)
+  expect(Number(usbPcbComponent.display_offset_y)).toBe(27)
   expect(usbPcbComponent.rotation).toBe(90)
 })
 
