@@ -3,7 +3,7 @@ import { basename, relative, resolve } from "node:path"
 import { pathToFileURL } from "node:url"
 import {
   circuitJsonToFootprinter,
-  circuitJsonToPreview,
+  circuitJsonToFootprint,
   summarizeCopperComparison,
 } from "circuit-json-to-footprinter"
 import ts from "typescript"
@@ -515,7 +515,7 @@ export const run = async (args = process.argv.slice(2)) => {
 
         const runtimeComparison = summarizeCopperComparison(
           result.target,
-          circuitJsonToPreview(
+          circuitJsonToFootprint(
             asFootprinterCircuitJson(replacementCircuitJson),
           ),
         )
