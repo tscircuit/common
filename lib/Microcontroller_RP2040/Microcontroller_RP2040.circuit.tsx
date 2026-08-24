@@ -63,6 +63,12 @@ export const Microcontroller_RP2040 = ({
       displayName="Status & SWD Debug"
     />
 
+    <autoroutingphase
+      name="crystal-signals"
+      phaseIndex={0}
+      connections={["Y1.X1", "Y1.X2"]}
+    />
+
     <trace name="Y1_G1" from=".Y1 > .pin2" to="net.GND" {...gndLabel} />
     <trace name="Y1_G2" from=".Y1 > .pin4" to="net.GND" {...gndLabel} />
 
@@ -849,11 +855,11 @@ export const Microcontroller_RP2040 = ({
     <trace name="FLSH_VCC" from=".U2 > .VCC" to="net.V3V3" {...v3v3Label} />
     <trace name="FLSH_EP" from=".U2 > .EP" to="net.GND" {...gndLabel} />
 
-    <trace name="XIN" from=".Y1 > .pin1" to=".U1 > .XIN" />
-    <trace name="XOUT" from=".Y1 > .pin3" to=".U1 > .XOUT" />
-    <trace name="CXIN" from=".C_XIN > .pin1" to=".Y1 > .pin1" />
+    <trace name="XIN" from=".Y1 > .X1" to=".U1 > .XIN" />
+    <trace name="XOUT" from=".Y1 > .X2" to=".U1 > .XOUT" />
+    <trace name="CXIN" from=".C_XIN > .pin1" to=".Y1 > .X1" />
     <trace name="CXIN_G" from=".C_XIN > .pin2" to="net.GND" {...gndLabel} />
-    <trace name="CXOUT" from=".C_XOUT > .pin1" to=".Y1 > .pin3" />
+    <trace name="CXOUT" from=".C_XOUT > .pin1" to=".Y1 > .X2" />
     <trace name="CXOUT_G" from=".C_XOUT > .pin2" to="net.GND" {...gndLabel} />
 
     <trace name="BOOT_SW" from=".SW_BOOT > .pin1" to=".U1 > .QSPI_SS" />
