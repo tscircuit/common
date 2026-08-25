@@ -17,7 +17,7 @@ export const B5819W_SL = (props: DiodeProps) => {
         jlcpcb: ["C8598"],
       }}
       manufacturerPartNumber="B5819W_SL"
-      footprint="sod123w_p3.4mm_pw0.95mm"
+      footprint="sod123w_p3.4mm_pw0.95mm_cathodepin1"
       cadModel={{
         objUrl:
           "https://modelcdn.tscircuit.com/easyeda_models/assets/C8598.obj?uuid=e9d505c99b6c436aaf827a29c5ba4f84",
