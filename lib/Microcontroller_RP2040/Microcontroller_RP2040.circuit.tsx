@@ -1,4 +1,9 @@
-import type { ChipProps, SubcircuitProps } from "@tscircuit/props"
+import type {
+  ChipProps,
+  ConnectorProps,
+  SubcircuitProps,
+} from "@tscircuit/props"
+import { Children, isValidElement, type ReactNode } from "react"
 import { RP2040 } from "./imports/RP2040"
 import { TYPE_C_16PIN_2MD_073_ } from "./imports/TYPE_C_16PIN_2MD_073_"
 import { W25Q16JVUXIQ } from "./imports/W25Q16JVUXIQ"
@@ -37,17 +42,40 @@ export type MicrocontrollerRP2040Props = Omit<
   "children" | "connections"
 > & {
   connections?: ChipProps["connections"]
+  children?: ReactNode
+}
+
+export type MicrocontrollerRP2040USBCProps = Pick<
+  ConnectorProps,
+  "pcbX" | "pcbY" | "pcbRotation"
+>
+
+const MicrocontrollerRP2040USBC = (_props: MicrocontrollerRP2040USBCProps) =>
+  null
+
+const getUSBCPlacement = (children: ReactNode) => {
+  for (const child of Children.toArray(children)) {
+    if (
+      isValidElement<MicrocontrollerRP2040USBCProps>(child) &&
+      child.type === MicrocontrollerRP2040USBC
+    ) {
+      return child.props
+    }
+  }
 }
 
 /**
  * Complete Pico-style RP2040 support circuit adapted from
  * https://tscircuit.com/abse/gameboy.
  */
-export const Microcontroller_RP2040 = ({
-  name = "Microcontroller_RP2040",
-  connections,
-  ...props
-}: MicrocontrollerRP2040Props) => (
+const renderMicrocontrollerRP2040 = (
+  {
+    name = "Microcontroller_RP2040",
+    connections,
+    ...props
+  }: Omit<MicrocontrollerRP2040Props, "children">,
+  usbcPlacement?: MicrocontrollerRP2040USBCProps,
+) => (
   <subcircuit name={name} {...props}>
     <schematicsection
       name={schSections.rp2040(name)}
@@ -320,9 +348,9 @@ export const Microcontroller_RP2040 = ({
     <TYPE_C_16PIN_2MD_073_
       name="J_USB"
       schSectionName={schSections.usb(name)}
-      pcbX={0}
-      pcbY={31.0}
-      pcbRotation={180}
+      pcbX={usbcPlacement?.pcbX ?? 0}
+      pcbY={usbcPlacement?.pcbY ?? 31}
+      pcbRotation={usbcPlacement?.pcbRotation ?? 180}
       schX={10.5}
       schY={-5.3}
       schWidth={2.6}
@@ -897,3 +925,18 @@ export const Microcontroller_RP2040 = ({
     <silkscreentext text="USB-C" fontSize="0.9mm" pcbX={0} pcbY={25} />
   </subcircuit>
 )
+
+const MicrocontrollerRP2040Component = (props: MicrocontrollerRP2040Props) => {
+  const { children, ...subcircuitProps } = props
+  return renderMicrocontrollerRP2040(
+    subcircuitProps,
+    getUSBCPlacement(children),
+  )
+}
+
+export const MicrocontrollerRP2040 = Object.assign(
+  MicrocontrollerRP2040Component,
+  { USBC: MicrocontrollerRP2040USBC },
+)
+
+export const Microcontroller_RP2040 = MicrocontrollerRP2040
