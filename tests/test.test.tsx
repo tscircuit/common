@@ -50,7 +50,8 @@ test("CM5Receiver is publicly exported and renders both 100-pin connectors", asy
 
   circuit.add(
     <board width="60mm" height="50mm" routingDisabled>
-      <CM5Receiver name="CM5" />
+      <schematicsheet name="main" displayName="CM5 Receiver" sheetIndex={1} />
+      <CM5Receiver name="CM5" schSheetName="main" />
     </board>,
   )
 
@@ -65,6 +66,27 @@ test("CM5Receiver is publicly exported and renders both 100-pin connectors", asy
       ),
   ).toHaveLength(2)
   expect(circuit.db.pcb_smtpad.list()).toHaveLength(200)
+
+  const schematicComponents = circuit.db.schematic_component.list()
+  expect(schematicComponents).toHaveLength(2)
+  for (const component of schematicComponents) {
+    expect(component.size.height).toBeCloseTo(15.25, 6)
+    expect(
+      circuit.db.schematic_port
+        .list()
+        .filter(
+          (port) =>
+            port.schematic_component_id === component.schematic_component_id,
+        ),
+    ).toHaveLength(100)
+  }
+  expect(
+    circuit.db.schematic_component_styling_warning
+      .list()
+      .filter((warning) =>
+        warning.message.includes("outside the drawing area"),
+      ),
+  ).toEqual([])
 })
 
 test("power and audio subcircuits keep internal nets private by default", () => {
