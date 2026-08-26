@@ -2,6 +2,7 @@ import { expect, test } from "bun:test"
 import { Circuit } from "tscircuit"
 import {
   AudioAmplifier3W_PAM8403,
+  CM5Receiver,
   Microcontroller_RP2040,
   PowerBoost_MT3608,
 } from "../index"
@@ -41,6 +42,29 @@ test("test", () => {
   expect(Microcontroller_RP2040).toBeDefined()
   expect(PowerBoost_MT3608).toBeDefined()
   expect(AudioAmplifier3W_PAM8403).toBeDefined()
+  expect(CM5Receiver).toBeDefined()
+})
+
+test("CM5Receiver is publicly exported and renders both 100-pin connectors", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="60mm" height="50mm" routingDisabled>
+      <CM5Receiver name="CM5" />
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  expect(circuit.db.source_group.getWhere({ name: "CM5" })).toBeDefined()
+  expect(
+    circuit.db.source_component
+      .list()
+      .filter((component) =>
+        ["CM5_LEFT", "CM5_RIGHT"].includes(component.name),
+      ),
+  ).toHaveLength(2)
+  expect(circuit.db.pcb_smtpad.list()).toHaveLength(200)
 })
 
 test("power and audio subcircuits keep internal nets private by default", () => {
