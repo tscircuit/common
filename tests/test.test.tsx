@@ -2,6 +2,7 @@ import { expect, test } from "bun:test"
 import { Circuit } from "tscircuit"
 import {
   AudioAmplifier3W_PAM8403,
+  CM5Receiver,
   Microcontroller_RP2040,
   PowerBoost_MT3608,
 } from "../index"
@@ -41,6 +42,51 @@ test("test", () => {
   expect(Microcontroller_RP2040).toBeDefined()
   expect(PowerBoost_MT3608).toBeDefined()
   expect(AudioAmplifier3W_PAM8403).toBeDefined()
+  expect(CM5Receiver).toBeDefined()
+})
+
+test("CM5Receiver is publicly exported and renders both 100-pin connectors", async () => {
+  const circuit = new Circuit()
+
+  circuit.add(
+    <board width="60mm" height="50mm" routingDisabled>
+      <schematicsheet name="main" displayName="CM5 Receiver" sheetIndex={1} />
+      <CM5Receiver name="CM5" schSheetName="main" />
+    </board>,
+  )
+
+  await circuit.renderUntilSettled()
+
+  expect(circuit.db.source_group.getWhere({ name: "CM5" })).toBeDefined()
+  expect(
+    circuit.db.source_component
+      .list()
+      .filter((component) =>
+        ["CM5_LEFT", "CM5_RIGHT"].includes(component.name),
+      ),
+  ).toHaveLength(2)
+  expect(circuit.db.pcb_smtpad.list()).toHaveLength(200)
+
+  const schematicComponents = circuit.db.schematic_component.list()
+  expect(schematicComponents).toHaveLength(2)
+  for (const component of schematicComponents) {
+    expect(component.size.height).toBeCloseTo(15.25, 6)
+    expect(
+      circuit.db.schematic_port
+        .list()
+        .filter(
+          (port) =>
+            port.schematic_component_id === component.schematic_component_id,
+        ),
+    ).toHaveLength(100)
+  }
+  expect(
+    circuit.db.schematic_component_styling_warning
+      .list()
+      .filter((warning) =>
+        warning.message.includes("outside the drawing area"),
+      ),
+  ).toEqual([])
 })
 
 test("power and audio subcircuits keep internal nets private by default", () => {

@@ -1,4 +1,11 @@
-import type { ChipProps } from "@tscircuit/props"
+import type { ChipProps, SchematicPinStyle } from "@tscircuit/props"
+
+const compactSchematicPinStyle = Object.fromEntries(
+  Array.from({ length: 99 }, (_, index) => [
+    `pin${index + 2}`,
+    { marginTop: "-0.05mm" },
+  ]),
+) satisfies SchematicPinStyle
 
 export const CM5Connector = (
   props: ChipProps & {
@@ -9,11 +16,12 @@ export const CM5Connector = (
   return (
     <chip
       schWidth={3}
+      schPinStyle={compactSchematicPinStyle}
       pcbRotation={90}
       supplierPartNumbers={{
         jlcpcb: ["C6782225"],
       }}
-      manufacturerPartNumber="A_10164227_1001A1RLF"
+      manufacturerPartNumber="10164227-1001A1RLF"
       footprint={
         <footprint>
           <smtpad
