@@ -9,7 +9,7 @@ export const X322512MSB4SI = (props: X322512MSB4SIProps) => {
   return (
     <crystal
       frequency="12MHz"
-      loadCapacitance="20pF"
+      loadCapacitance="12pF"
       pinVariant="four_pin"
       supplierPartNumbers={{
         jlcpcb: ["C9002"],
