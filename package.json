@@ -41,5 +41,8 @@
     "circuit-json-to-footprinter": "^0.0.53",
     "tscircuit": "^0.0.2395",
     "tsup": "^8.5.0"
+  },
+  "dependencies": {
+    "@tscircuit/math-utils": "^0.0.36"
   }
 }
