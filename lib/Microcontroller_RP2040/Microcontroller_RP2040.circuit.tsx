@@ -544,8 +544,8 @@ export const Microcontroller_RP2040 = ({
       pcbX={-0.8}
       pcbY={5.7}
       pcbRotation={90}
-      schX={4.5}
-      schY={-6.4}
+      schX={-9.6}
+      schY={-8.4}
     />
     <trace name="DVDD1_CAP" from=".C_DVDD1 > .pin1" to=".U1 > .DVDD1" />
     <trace
@@ -565,8 +565,8 @@ export const Microcontroller_RP2040 = ({
       pcbX={2.8}
       pcbY={-4.5}
       pcbRotation={0}
-      schX={6.2}
-      schY={-6.4}
+      schX={-7.9}
+      schY={-8.4}
     />
     <trace name="DVDD2_CAP" from=".C_DVDD2 > .pin1" to=".U1 > .DVDD2" />
     <trace
