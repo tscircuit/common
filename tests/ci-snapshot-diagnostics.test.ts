@@ -1,3 +1,4 @@
+import { gzipSync } from "node:zlib"
 import { test, expect } from "bun:test"
 
 test("temporary CI snapshot diagnostics", async () => {
@@ -15,7 +16,9 @@ test("temporary CI snapshot diagnostics", async () => {
     "examples/MicrocontrollerRP2040WithUsbC/__snapshots__/MicrocontrollerRP2040WithUsbC.circuit-pcb.snap.svg",
     "lib/Microcontroller_RP2040/__snapshots__/Microcontroller_RP2040.circuit-pcb.snap.svg",
   ]) {
-    const encoded = Buffer.from(await Bun.file(path).text()).toString("base64")
+    const encoded = gzipSync(Buffer.from(await Bun.file(path).text())).toString(
+      "base64",
+    )
     console.log(`RP2040_SVG_BEGIN ${path}`)
     for (let offset = 0; offset < encoded.length; offset += 1000)
       console.log(`RP2040_SVG_DATA ${encoded.slice(offset, offset + 1000)}`)
