@@ -3,7 +3,7 @@ import { RP2040 } from "./imports/RP2040"
 import { TYPE_C_16PIN_2MD_073_ } from "./imports/TYPE_C_16PIN_2MD_073_"
 import { W25Q16JVUXIQ } from "./imports/W25Q16JVUXIQ"
 import { AP2112K_3_3TRG1 } from "./imports/AP2112K_3_3TRG1"
-import { X322512MSB4SI } from "./imports/X322512MSB4SI"
+import { ABM8_272_T3 } from "./imports/ABM8_272_T3"
 import { SKRPACE010 } from "./imports/SKRPACE010"
 import { B5819W_SL } from "./imports/B5819W_SL"
 import { XL_1608SURC_06 } from "./imports/XL_1608SURC_06"
@@ -66,7 +66,7 @@ export const Microcontroller_RP2040 = ({
     <autoroutingphase
       name="crystal-signals"
       phaseIndex={0}
-      connections={["Y1.X1", "Y1.X2"]}
+      connections={["Y1.X1", "Y1.X2", "U1.XOUT"]}
     />
 
     <trace name="Y1_G1" from=".Y1 > .pin2" to="net.GND" {...gndLabel} />
@@ -369,13 +369,24 @@ export const Microcontroller_RP2040 = ({
       schHeight={0.6}
     />
 
-    <X322512MSB4SI
+    <ABM8_272_T3
       name="Y1"
       maxTraceLength="20mm"
       schSectionName={schSections.clock(name)}
       pcbX={-0.5}
       pcbY={-6}
       schX={1.2}
+      schY={-12.5}
+    />
+    <resistor
+      name="R_XOUT"
+      resistance="1k"
+      footprint="0402"
+      supplierPartNumbers={{ jlcpcb: ["C11702"] }}
+      schSectionName={schSections.clock(name)}
+      pcbX={1.8}
+      pcbY={-8}
+      schX={3.6}
       schY={-12.5}
     />
     <SKRPACE010
@@ -524,6 +535,48 @@ export const Microcontroller_RP2040 = ({
       schY={-7.8}
     />
     <capacitor
+      name="C_DVDD1"
+      capacitance="100nF"
+      footprint="0402"
+      supplierPartNumbers={{ jlcpcb: ["C1525"] }}
+      schSectionName={schSections.rp2040(name)}
+      schOrientation="vertical"
+      pcbX={-0.8}
+      pcbY={5.7}
+      pcbRotation={90}
+      schX={-9.6}
+      schY={-8.4}
+    />
+    <trace name="DVDD1_CAP" from=".C_DVDD1 > .pin1" to=".U1 > .DVDD1" />
+    <trace
+      name="DVDD1_CAP_G"
+      from=".C_DVDD1 > .pin2"
+      to="net.GND"
+      {...gndLabel}
+    />
+
+    <capacitor
+      name="C_DVDD2"
+      capacitance="100nF"
+      footprint="0402"
+      supplierPartNumbers={{ jlcpcb: ["C1525"] }}
+      schSectionName={schSections.rp2040(name)}
+      schOrientation="vertical"
+      pcbX={2.8}
+      pcbY={-4.5}
+      pcbRotation={0}
+      schX={-7.9}
+      schY={-8.4}
+    />
+    <trace name="DVDD2_CAP" from=".C_DVDD2 > .pin1" to=".U1 > .DVDD2" />
+    <trace
+      name="DVDD2_CAP_G"
+      from=".C_DVDD2 > .pin2"
+      to="net.GND"
+      {...gndLabel}
+    />
+
+    <capacitor
       name="C_CORE"
       capacitance="1uF"
       footprint="0402"
@@ -547,7 +600,7 @@ export const Microcontroller_RP2040 = ({
     />
     <capacitor
       name="C_XIN"
-      capacitance="18pF"
+      capacitance="15pF"
       footprint="0402"
       schSectionName={schSections.clock(name)}
       schOrientation="vertical"
@@ -558,7 +611,7 @@ export const Microcontroller_RP2040 = ({
     />
     <capacitor
       name="C_XOUT"
-      capacitance="18pF"
+      capacitance="15pF"
       footprint="0402"
       schSectionName={schSections.clock(name)}
       schOrientation="vertical"
@@ -574,7 +627,8 @@ export const Microcontroller_RP2040 = ({
       schSectionName={schSections.power(name)}
       pcbX={8.5}
       pcbY={-1.8}
-      supplierPartNumbers={{ jlcpcb: ["C1002"] }}
+      supplierPartNumbers={{ jlcpcb: ["C19330"] }}
+      manufacturerPartNumber="BLM18AG601SN1D"
       pcbRotation={90}
       schX={3.7}
       schY={-9.2}
@@ -856,7 +910,18 @@ export const Microcontroller_RP2040 = ({
     <trace name="FLSH_EP" from=".U2 > .EP" to="net.GND" {...gndLabel} />
 
     <trace name="XIN" from=".Y1 > .X1" to=".U1 > .XIN" />
-    <trace name="XOUT" from=".Y1 > .X2" to=".U1 > .XOUT" />
+    <trace
+      name="XOUT_R"
+      from=".Y1 > .X2"
+      to=".R_XOUT > .pin1"
+      maxViaCount={0}
+    />
+    <trace
+      name="XOUT"
+      from=".R_XOUT > .pin2"
+      to=".U1 > .XOUT"
+      maxViaCount={0}
+    />
     <trace name="CXIN" from=".C_XIN > .pin1" to=".Y1 > .X1" />
     <trace name="CXIN_G" from=".C_XIN > .pin2" to="net.GND" {...gndLabel} />
     <trace name="CXOUT" from=".C_XOUT > .pin1" to=".Y1 > .X2" />
