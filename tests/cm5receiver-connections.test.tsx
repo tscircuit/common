@@ -2,7 +2,7 @@ import { expect, test } from "bun:test"
 import { Circuit } from "tscircuit"
 import { CM5Receiver } from "../index"
 
-test("reproduce CM5Receiver forwarding USB_P to the right connector", async () => {
+test.failing("CM5Receiver connects USB_P without a missing-pin error", async () => {
   const circuit = new Circuit()
 
   circuit.add(
@@ -37,9 +37,5 @@ test("reproduce CM5Receiver forwarding USB_P to the right connector", async () =
     }),
   )
 
-  expect(circuit.db.source_trace_not_connected_error.list()).toEqual([
-    expect.objectContaining({
-      selectors_not_found: [".CM5_RIGHT > .USB_P"],
-    }),
-  ])
+  expect(circuit.db.source_trace_not_connected_error.list()).toEqual([])
 })
