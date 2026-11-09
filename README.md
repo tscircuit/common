@@ -79,6 +79,6 @@ return (
 
 The badge includes an embedded monochrome adaptation of the tscircuit ts/dot
 logo, so it needs no network access. Use `scale` (default `1`) to resize the
-approximately 13 × 6 mm badge uniformly, `pcbRotation` to rotate it in degrees,
+approximately 16 × 6 mm badge uniformly, `pcbRotation` to rotate it in degrees,
 and `layer="bottom"` for bottom silkscreen. `pcbX` and `pcbY` position the badge
 relative to its parent. It adds no electrical components or copper.

@@ -35,11 +35,11 @@
     "format:check": "biome format"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.4",
-    "@tscircuit/footprinter": "^0.0.426",
-    "@types/react": "^19.1.12",
-    "circuit-json-to-footprinter": "^0.0.53",
-    "tscircuit": "^0.0.2395",
-    "tsup": "^8.5.0"
+    "@biomejs/biome": "^2.6.6",
+    "@tscircuit/footprinter": "^0.0.450",
+    "@types/react": "^19.3.0",
+    "circuit-json-to-footprinter": "^0.0.61",
+    "tscircuit": "^0.0.3122",
+    "tsup": "^9.0.0"
   }
 }

@@ -3,7 +3,7 @@ import { tscircuitLogoImageUrl } from "./tscircuitLogo"
 
 export interface MadeByAiSilkscreenProps
   extends Pick<GroupProps, "name" | "pcbX" | "pcbY" | "pcbRotation"> {
-  /** Uniform scale; the default badge is approximately 13 mm wide by 6 mm tall. */
+  /** Uniform scale; the default badge is approximately 16 mm wide by 6 mm tall. */
   scale?: number
   layer?: "top" | "bottom"
 }
