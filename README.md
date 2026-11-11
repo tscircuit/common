@@ -65,20 +65,19 @@ return (
 Internal nets remain private by default. Use `exposedNets` to expose a selected
 set, or `exposeNets` when every internal net should be exposed.
 
-Add a tscircuit logo and “Made by AI with tscircuit” to your board's silkscreen:
+Add the tscircuit ts/dot logo to your board's silkscreen:
 
 ```tsx
-import { MadeByAiSilkscreen } from "@tscircuit/common"
+import { TscircuitLogo } from "@tscircuit/common"
 
 return (
   <board width="40mm" height="25mm">
-    <MadeByAiSilkscreen pcbX={0} pcbY={-7} />
+    <TscircuitLogo pcbX={0} pcbY={-7} />
   </board>
 )
 ```
 
-The badge includes an embedded monochrome adaptation of the tscircuit ts/dot
-logo, so it needs no network access. Use `scale` (default `1`) to resize the
-approximately 16 × 6 mm badge uniformly, `pcbRotation` to rotate it in degrees,
-and `layer="bottom"` for bottom silkscreen. `pcbX` and `pcbY` position the badge
-relative to its parent. It adds no electrical components or copper.
+The embedded monochrome logo needs no network access. It is centered at `pcbX`
+and `pcbY` and defaults to 6 × 6 mm. Use `scale` (default `1`) to resize it
+uniformly, `pcbRotation` to rotate it in degrees, and `layer="bottom"` for bottom
+silkscreen. It adds no text, electrical components, or copper.
