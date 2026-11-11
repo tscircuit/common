@@ -64,3 +64,20 @@ return (
 
 Internal nets remain private by default. Use `exposedNets` to expose a selected
 set, or `exposeNets` when every internal net should be exposed.
+
+Add the tscircuit ts/dot logo to your board's silkscreen:
+
+```tsx
+import { TscircuitLogo } from "@tscircuit/common"
+
+return (
+  <board width="40mm" height="25mm">
+    <TscircuitLogo pcbX={0} pcbY={-7} />
+  </board>
+)
+```
+
+The embedded monochrome logo needs no network access. It is centered at `pcbX`
+and `pcbY` and defaults to 6 × 6 mm. Use `scale` (default `1`) to resize it
+uniformly, `pcbRotation` to rotate it in degrees, and `layer="bottom"` for bottom
+silkscreen. It adds no text, electrical components, or copper.

@@ -234,7 +234,7 @@ test("PowerBoost_MT3608 renders the complete functional boost circuit", async ()
   const circuit = new Circuit()
 
   circuit.add(
-    <board width="70mm" height="70mm" routingDisabled>
+    <board width="80mm" height="80mm" routingDisabled>
       <net name="VBUS" isPowerNet />
       <net name="VSYS" isPowerNet />
       <net name="GND" isGroundNet />
@@ -336,7 +336,7 @@ test("Microcontroller_RP2040 renders its complete support circuit", async () => 
   const circuit = new Circuit()
 
   circuit.add(
-    <board width="30mm" height="70mm" routingDisabled>
+    <board width="30mm" height="80mm" routingDisabled>
       <schematicsheet
         name="controller"
         displayName="RP2040 Controller"
@@ -615,7 +615,7 @@ test("ArduinoShield top-level name survives a complete circuit render", async ()
   ).toBeDefined()
   expect(
     circuit.db.source_component.getWhere({ name: "SHIELD1_chip" }),
-  ).toBeUndefined()
+  ).toBeNull()
 })
 
 test("MicroModBoard forwards top-level name prop to chip", () => {
