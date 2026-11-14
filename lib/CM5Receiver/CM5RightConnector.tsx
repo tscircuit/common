@@ -1,7 +1,7 @@
 import type { ChipProps } from "@tscircuit/props"
 import { CM5Connector } from "./CM5Connector"
 
-const pinLabelsRightSide = {
+export const pinLabelsRightSide = {
   pin1: ["GND_1"],
   pin2: ["GND_2"],
   pin3: ["Ethernet_Pair3_P"],
