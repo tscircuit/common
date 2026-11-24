@@ -103,13 +103,13 @@ export const XiaoBoard = ({
   }
   const outline = outlineBuilder(0, 10.55)
     .lineTo(8.89, 10.55)
-    .corner({ radius: 1.8, turn: "ccw" })
+    .corner({ radius: 1.8, turn: "cw" })
     .lineTo(8.89, -10.55)
-    .corner({ radius: 1.8, turn: "ccw" })
+    .corner({ radius: 1.8, turn: "cw" })
     .lineTo(-8.89, -10.55)
-    .corner({ radius: 1.8, turn: "ccw" })
+    .corner({ radius: 1.8, turn: "cw" })
     .lineTo(-8.89, 10.55)
-    .corner({ radius: 1.8, turn: "ccw" })
+    .corner({ radius: 1.8, turn: "cw" })
     .lineTo(0, 10.55)
     .toArray()
 

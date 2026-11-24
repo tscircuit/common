@@ -31,8 +31,8 @@ export class OutlineBuilder {
   private updateDirection(x: number, y: number): void {
     if (x > this.currentX) this.lastDirection = "right"
     else if (x < this.currentX) this.lastDirection = "left"
-    else if (y > this.currentY) this.lastDirection = "down"
-    else if (y < this.currentY) this.lastDirection = "up"
+    else if (y > this.currentY) this.lastDirection = "up"
+    else if (y < this.currentY) this.lastDirection = "down"
   }
 
   lineTo(x: number, y: number): this {
@@ -53,9 +53,9 @@ export class OutlineBuilder {
       case "left":
         return { x: -1, y: 0 }
       case "down":
-        return { x: 0, y: 1 }
-      case "up":
         return { x: 0, y: -1 }
+      case "up":
+        return { x: 0, y: 1 }
     }
   }
 
@@ -67,12 +67,12 @@ export class OutlineBuilder {
     switch (last) {
       case "right":
         return turn === "cw"
-          ? { unit: { x: 0, y: 1 }, dir: "down" }
-          : { unit: { x: 0, y: -1 }, dir: "up" }
+          ? { unit: { x: 0, y: -1 }, dir: "down" }
+          : { unit: { x: 0, y: 1 }, dir: "up" }
       case "left":
         return turn === "cw"
-          ? { unit: { x: 0, y: -1 }, dir: "up" }
-          : { unit: { x: 0, y: 1 }, dir: "down" }
+          ? { unit: { x: 0, y: 1 }, dir: "up" }
+          : { unit: { x: 0, y: -1 }, dir: "down" }
       case "down":
         return turn === "cw"
           ? { unit: { x: -1, y: 0 }, dir: "left" }
